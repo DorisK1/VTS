@@ -1,4 +1,5 @@
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -23,6 +24,8 @@ public class KundenGUI_Dialog1 extends Dialog<ButtonType> {
 	Label lb4 = new Label("Schuhgröße");
 	Label lb5 = new Label("Technisches Können");
 	Label lb6 = new Label("Pistenpräferenz");
+	
+	Button bt1 = new Button("OK");
 	
 	
 	public KundenGUI_Dialog1 () {
@@ -52,13 +55,19 @@ public class KundenGUI_Dialog1 extends Dialog<ButtonType> {
 		borderPane.setPrefSize(700, 580);
 		borderPane.setTop(lb1);
 		borderPane.setCenter(gridPane);
+		borderPane.setBottom(bt1);
 		
 		//borderPane.getChildren().addAll(lb1);
 		
 		this.getDialogPane().setContent(borderPane);
-		ButtonType close = ButtonType.OK;
+		//ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
-		this.getDialogPane().getButtonTypes().addAll(close, cancel);
+		this.getDialogPane().getButtonTypes().addAll(cancel);
+		
+		bt1.setOnAction(gd -> {
+			System.out.println("Präferenzen gewählt");
+			new KundenGUI_Dialog2().showAndWait();
+		});
 	}
 
 }
