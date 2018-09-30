@@ -27,7 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class GUI_main extends Application {
+public class KundenGUI_main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -76,11 +76,11 @@ public class GUI_main extends Application {
 		hb2.getChildren().addAll(bt1, bt2);
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
-			new GUI_Dialog1().showAndWait();
+			new KundenGUI_Dialog1().showAndWait();
 		});
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
-			new GUI_Dialog1().showAndWait();
+			new KundenGUI_Dialog1().showAndWait();
 		});
 
 		// VBOXES
