@@ -52,7 +52,7 @@ public class GUI_main extends Application {
 		Label lbl4 = new Label("bis: ");
 		TextField tf1 = new TextField();
 		TextField tf2 = new TextField();
-		tf1.setPromptText("dd.mm.jjjj"); //erscheint nicht wenn Cursor im ersten TF ist?!?!
+		tf1.setPromptText("dd.mm.jjjj"); // erscheint nicht wenn Cursor im ersten TF ist?!?!
 		tf2.setPromptText("dd.mm.jjjj");
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(lbl3, tf1, lbl4, tf2);
@@ -62,18 +62,27 @@ public class GUI_main extends Application {
 		bt1.setPrefSize(120, 60);
 		bt1.setTextFill(Color.BLUE);
 		bt1.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
-		bt1.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); 
-		//mit Hintergrundfarbe sieht man anklicken nicht mehr?!?
+		bt1.setBorder(new Border(
+				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		// mit Hintergrundfarbe sieht man anklicken nicht mehr?!?
 		Button bt2 = new Button("SNOWBOARD");
 		bt2.setPrefSize(120, 60);
 		bt2.setTextFill(Color.BLUE);
-		//bt2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
-		bt2.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		// bt2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null,
+		// null)));
+		bt2.setBorder(new Border(
+				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		HBox hb2 = new HBox();
 		hb2.getChildren().addAll(bt1, bt2);
-		bt1.setOnAction(gd -> new GUI_Dialog1().showAndWait());
-		bt2.setOnAction(gd -> new GUI_Dialog1().showAndWait());
-		
+		bt1.setOnAction(gd -> {
+			System.out.println("SKI Button clicked");
+			new GUI_Dialog1().showAndWait();
+		});
+		bt2.setOnAction(gd -> {
+			System.out.println("SNOWBOARD Button clicked");
+			new GUI_Dialog1().showAndWait();
+		});
+
 		// VBOXES
 		VBox vb1 = new VBox();
 		VBox vb2 = new VBox();
