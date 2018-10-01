@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.geometry.Insets;
@@ -97,12 +98,17 @@ public class KundenGUI_Dialog3 extends Dialog<ButtonType> {
 		ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
-		
+		bt1.setPrefSize(120, 60);
 		
 	
 		bt1.setOnAction(gd -> {
 			System.out.println("Präferenzen gewählt");
-			new KundenGUI_Dialog4().showAndWait();
+			try {
+				new KundenGUI_Dialog4().showAndWait();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 	}
 

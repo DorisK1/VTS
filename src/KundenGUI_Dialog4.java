@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.Optional;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,8 +21,9 @@ public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 	GridPane gridPane = new GridPane();
 	Label lb1 = new Label("Ihre Abholnummer lautet: ");
 	Button bt1 = new Button("FERTIG");
+	private Stage primaryStage;
 		
-	public KundenGUI_Dialog4 () {
+	public KundenGUI_Dialog4 () throws IOException {
 		super();
 		this.setTitle("");
 		this.setHeaderText("");
@@ -37,13 +41,15 @@ public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 		ButtonType close = ButtonType.FINISH; // --> Rückkehr zum Startbildschirm?!?!?
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
+		bt1.setPrefSize(120, 60);
 		
+//		KundenGUI_main startScreen = new KundenGUI_main();
+//		Optional<ButtonType> back = startScreen.showAndWait();
 		
-		
-//		bt1.setOnAction(gd -> {
-//			System.out.println("Präferenzen gewählt");
-//			new KundenGUI_main().showAndWait(Stage);
-//		});
+		bt1.setOnAction(gd -> {
+			System.out.println("Zurück zum Start");
+			new KundenGUI_main().start(primaryStage);
+		});
 		
 		
 	}

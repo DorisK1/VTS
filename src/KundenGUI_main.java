@@ -1,8 +1,14 @@
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Paths;
+import java.util.Optional;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -111,9 +117,16 @@ public class KundenGUI_main extends Application  {
 		launch(args);
 	}
 
-//	public void showAndWait(Stage primaryStage) {
+
+
+//	public void showAndWait(ActionEvent event) throws IOException {
 //		//new KundenGUI_main().setVisible(true);
-//		new KundenGUI_main().start(primaryStage);
+//		//new KundenGUI_main().start(primaryStage);
+//		
+//		KundenGUI_main loader = new KundenGUI_main();  
+//	    Stage stage = new Stage();
+//	 //   stage.setScene(new Scene((Parent) loader.load()));
+//	    stage.show();
 //		
 //		
 //	}

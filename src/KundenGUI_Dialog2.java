@@ -48,6 +48,7 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		//ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(cancel);
+		bt1.setPrefSize(120, 60);
 		
 		bt1.setOnAction(gd -> {
 			System.out.println("Präferenzen gewählt");
