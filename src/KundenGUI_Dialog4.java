@@ -10,30 +10,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
+public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 	
 	HBox hb1 = new HBox();
 	GridPane gridPane = new GridPane();
-	Label lb1 = new Label("Gemäß Ihren Angaben können wir Ihnen folgende Produkte zur Auswahl anbieten: ");
-	Button bt1 = new Button("OK");
-	RadioButton rb1 = new RadioButton("");
-	RadioButton rb2 = new RadioButton("");
-	RadioButton rb3 = new RadioButton("");
-	ToggleGroup group = new ToggleGroup();
+	Label lb1 = new Label("Ihre Abholnummer lautet: ");
+	Button bt1 = new Button("FERTIG");
 		
-	public KundenGUI_Dialog2 () {
+	public KundenGUI_Dialog4 () {
 		super();
-		this.setTitle("Auswahlliste");
-		this.setHeaderText("abc");
-		
-		rb1.setToggleGroup(group);
-		rb2.setToggleGroup(group);
-		rb3.setToggleGroup(group);
-		
-		hb1.getChildren().addAll(rb1, rb2, rb3);
-		
-		
+		this.setTitle("");
+		this.setHeaderText("");
+			
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
@@ -41,18 +31,21 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		borderPane.setTop(lb1);
 		borderPane.setCenter(hb1);
 		borderPane.setBottom(bt1);
-		
+				
 		//borderPane.getChildren().addAll(lb1);
-		
 		this.getDialogPane().setContent(borderPane);
-		//ButtonType close = ButtonType.OK;
+		ButtonType close = ButtonType.FINISH; // --> Rückkehr zum Startbildschirm?!?!?
 		ButtonType cancel = ButtonType.CANCEL;
-		this.getDialogPane().getButtonTypes().addAll(cancel);
+		this.getDialogPane().getButtonTypes().addAll(close, cancel);
 		
-		bt1.setOnAction(gd -> {
-			System.out.println("Präferenzen gewählt");
-			new KundenGUI_Dialog3().showAndWait();
-		});
+		
+		
+//		bt1.setOnAction(gd -> {
+//			System.out.println("Präferenzen gewählt");
+//			new KundenGUI_main().showAndWait(Stage);
+//		});
+		
+		
 	}
 
 }
