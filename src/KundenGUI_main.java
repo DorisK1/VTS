@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 
 public class KundenGUI_main extends Application  {
 
-	//private static final Stage primaryStage = null;
+	static final Stage primaryStage = null;
 
 	@Override
 	public void start(Stage primaryStage) {

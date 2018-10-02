@@ -21,12 +21,12 @@ public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 	GridPane gridPane = new GridPane();
 	Label lb1 = new Label("Ihre Abholnummer lautet: ");
 	Button bt1 = new Button("FERTIG");
-	private Stage primaryStage;
+	//private Stage primaryStage;
 		
 	public KundenGUI_Dialog4 () throws IOException {
 		super();
-		this.setTitle("");
-		this.setHeaderText("");
+		this.setTitle("DIALOG 4");
+		this.setHeaderText("Abholnummer");
 			
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
@@ -38,7 +38,7 @@ public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 				
 		//borderPane.getChildren().addAll(lb1);
 		this.getDialogPane().setContent(borderPane);
-		ButtonType close = ButtonType.FINISH; // --> Rückkehr zum Startbildschirm?!?!?
+		ButtonType close = ButtonType.OK; // --> Rückkehr zum Startbildschirm?!?!?
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
 		bt1.setPrefSize(120, 60);
@@ -48,7 +48,11 @@ public class KundenGUI_Dialog4 extends Dialog<ButtonType> {
 		
 		bt1.setOnAction(gd -> {
 			System.out.println("Zurück zum Start");
-			new KundenGUI_main().start(primaryStage);
+//			KundenGUI_main startScreen = new KundenGUI_main();
+//			startScreen.start(KundenGUI_main.primaryStage.show());
+			//KundenGUI_main.primaryStage.show();
+			//KundenGUI_main.start(primaryStage);
+			
 		});
 		
 		

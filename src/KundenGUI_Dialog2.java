@@ -24,8 +24,8 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		
 	public KundenGUI_Dialog2 () {
 		super();
-		this.setTitle("Auswahlliste");
-		this.setHeaderText("abc");
+		this.setTitle("DIALOG 2");
+		this.setHeaderText("Auswahlliste");
 		
 		rb1.setToggleGroup(group);
 		rb2.setToggleGroup(group);

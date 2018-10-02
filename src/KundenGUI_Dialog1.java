@@ -30,7 +30,7 @@ public class KundenGUI_Dialog1 extends Dialog<ButtonType> {
 	
 	public KundenGUI_Dialog1 () {
 		super();
-		this.setTitle("Präferenzen");
+		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
 		
 		

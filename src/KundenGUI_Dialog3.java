@@ -48,8 +48,8 @@ public class KundenGUI_Dialog3 extends Dialog<ButtonType> {
 	
 	public KundenGUI_Dialog3 () {
 		super();
-		this.setTitle("Präferenzen");
-		this.setHeaderText("Details zu ");
+		this.setTitle("DIALOG 3");
+		this.setHeaderText("Kundendaten ");
 		
 		
 		// GRIDPANE
@@ -104,7 +104,14 @@ public class KundenGUI_Dialog3 extends Dialog<ButtonType> {
 		bt1.setOnAction(gd -> {
 			System.out.println("Präferenzen gewählt");
 			try {
-				new KundenGUI_Dialog4().showAndWait();
+				Optional<ButtonType> back = new KundenGUI_Dialog4().showAndWait();
+				if(back.isPresent()) {
+					if(back.get() == ButtonType.OK) {
+						this.close();
+						
+					}
+				}
+					
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
