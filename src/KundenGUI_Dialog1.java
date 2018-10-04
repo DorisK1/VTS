@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.util.Optional;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -35,12 +33,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf3tp1 = new TextField();
 	TextField tf4tp1 = new TextField();
 	TextField tf5tp1 = new TextField();
+	TextField tf6tp1 = new TextField();
+	TextField tf7tp1 = new TextField();
+	
 	Label lb1tp1 = new Label("Vielen Dank. Sie haben Ski gewählt. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp1 = new Label("Geburtsdatum");
 	Label lb3tp1 = new Label("Gewicht");
 	Label lb4tp1 = new Label("Schuhgröße");
 	Label lb5tp1 = new Label("Technisches Können");
 	Label lb6tp1 = new Label("Pistenpräferenz");
+	Label lb7tp1 = new Label("Beinstellung"); //nur für Snowboard!!!
+	Label lb8tp1 = new Label("Schuhart"); //nur für Snowboard!!!
+	
 
 	// TP2
 	HBox hb1tp2 = new HBox();
@@ -95,31 +99,31 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		displayTp2();
 		displayTp3();
 
-		//accordion.getPanes().addAll(tp1, tp2, tp3);
+		// accordion.getPanes().addAll(tp1, tp2, tp3);
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(600);
-		accordion.setExpandedPane(tp1); //erstes tp geöffnet
-		
+		accordion.setExpandedPane(tp1); // erstes tp geöffnet
+
 		this.getDialogPane().setContent(accordion);
-		
 
 		ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
-		this.setResultConverter(new Callback<ButtonType, Integer>(){
+		this.setResultConverter(new Callback<ButtonType, Integer>() {
 
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close) {
 					try {
-						new KundenGUI_Dialog2().showAndWait(); 
+						new KundenGUI_Dialog2().showAndWait();
 					} catch (IOException e) {
-						
+
 						e.printStackTrace();
 					}
 				}
 				return null;
-			}});
+			}
+		});
 	}
 
 	private void displayTp3() {
@@ -195,11 +199,16 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb4tp1, 0, 2);
 		gridPanetp1.add(lb5tp1, 0, 3);
 		gridPanetp1.add(lb6tp1, 0, 4);
+		gridPanetp1.add(lb7tp1, 0, 5);
+		gridPanetp1.add(lb8tp1, 0, 6);
+		
 		gridPanetp1.add(tf1tp1, 1, 0);
 		gridPanetp1.add(tf2tp1, 1, 1);
 		gridPanetp1.add(tf3tp1, 1, 2);
 		gridPanetp1.add(tf4tp1, 1, 3);
 		gridPanetp1.add(tf5tp1, 1, 4);
+		gridPanetp1.add(tf6tp1, 1, 5);
+		gridPanetp1.add(tf7tp1, 1, 6);
 
 		// BORDERPANE
 		BorderPane borderPanetp1 = new BorderPane();

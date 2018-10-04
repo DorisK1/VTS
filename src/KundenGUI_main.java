@@ -1,28 +1,15 @@
 
-import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Paths;
-import java.util.Optional;
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -35,9 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class KundenGUI_main extends Application  {
-
-	static final Stage primaryStage = null;
+public class KundenGUI_main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -84,10 +69,13 @@ public class KundenGUI_main extends Application  {
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		HBox hb2 = new HBox();
 		hb2.getChildren().addAll(bt1, bt2);
+		
+		
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
 			new KundenGUI_Dialog1().showAndWait();
 		});
+		
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
 			new KundenGUI_Dialog1().showAndWait();
@@ -107,7 +95,7 @@ public class KundenGUI_main extends Application  {
 
 		// PRIMARYSTAGE
 		primaryStage.setScene(new Scene(borderPane));
-		primaryStage.setTitle("SKIVERLEIH");
+		primaryStage.setTitle("SKI- und SNOWBOARDVERLEIH");
 		primaryStage.setResizable(true);
 		primaryStage.show();
 
@@ -117,19 +105,4 @@ public class KundenGUI_main extends Application  {
 		launch(args);
 	}
 
-
-
-//	public void showAndWait(ActionEvent event) throws IOException {
-//		//new KundenGUI_main().setVisible(true);
-//		//new KundenGUI_main().start(primaryStage);
-//		
-//		KundenGUI_main loader = new KundenGUI_main();  
-//	    Stage stage = new Stage();
-//	 //   stage.setScene(new Scene((Parent) loader.load()));
-//	    stage.show();
-//		
-//		
-//	}
-
-	
 }
