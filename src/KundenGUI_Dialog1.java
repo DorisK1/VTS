@@ -35,16 +35,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf5tp1 = new TextField();
 	TextField tf6tp1 = new TextField();
 	TextField tf7tp1 = new TextField();
-	
+
 	Label lb1tp1 = new Label("Vielen Dank. Sie haben Ski gewählt. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp1 = new Label("Geburtsdatum");
 	Label lb3tp1 = new Label("Gewicht");
 	Label lb4tp1 = new Label("Schuhgröße");
 	Label lb5tp1 = new Label("Technisches Können");
 	Label lb6tp1 = new Label("Pistenpräferenz");
-	Label lb7tp1 = new Label("Beinstellung"); //nur für Snowboard!!!
-	Label lb8tp1 = new Label("Schuhart"); //nur für Snowboard!!!
-	
+	Label lb7tp1 = new Label("Beinstellung"); // nur für Snowboard!!!
+	Label lb8tp1 = new Label("Schuhart"); // nur für Snowboard!!!
 
 	// TP2
 	HBox hb1tp2 = new HBox();
@@ -85,7 +84,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb12tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb13tp3 = new Label("Kreditkartengültigkeit");
 
-	public KundenGUI_Dialog1() {
+	public KundenGUI_Dialog1(String s) {
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -95,7 +94,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
 
-		displayTp1();
+		displayTp1(s);
 		displayTp2();
 		displayTp3();
 
@@ -189,8 +188,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp1() {
-		// GRIDPANE
+	private void displayTp1(String s) {
+		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp1.setVgap(5);
 		gridPanetp1.setHgap(5);
@@ -199,16 +198,25 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb4tp1, 0, 2);
 		gridPanetp1.add(lb5tp1, 0, 3);
 		gridPanetp1.add(lb6tp1, 0, 4);
-		gridPanetp1.add(lb7tp1, 0, 5);
-		gridPanetp1.add(lb8tp1, 0, 6);
-		
+
+		// nur für Snowboard
+		if (s.equals("Snowboard")) {
+			gridPanetp1.add(lb7tp1, 0, 5);
+			gridPanetp1.add(lb8tp1, 0, 6);
+		}
+
+		// GRIDPANE TEXTFELDER
 		gridPanetp1.add(tf1tp1, 1, 0);
 		gridPanetp1.add(tf2tp1, 1, 1);
 		gridPanetp1.add(tf3tp1, 1, 2);
 		gridPanetp1.add(tf4tp1, 1, 3);
 		gridPanetp1.add(tf5tp1, 1, 4);
-		gridPanetp1.add(tf6tp1, 1, 5);
-		gridPanetp1.add(tf7tp1, 1, 6);
+
+		// nur für Snowboard
+		if (s.equals("Snowboard")) {
+			gridPanetp1.add(tf6tp1, 1, 5);
+			gridPanetp1.add(tf7tp1, 1, 6);
+		}
 
 		// BORDERPANE
 		BorderPane borderPanetp1 = new BorderPane();

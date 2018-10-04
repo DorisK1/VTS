@@ -73,12 +73,12 @@ public class KundenGUI_main extends Application {
 		
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
-			new KundenGUI_Dialog1().showAndWait();
+			new KundenGUI_Dialog1("Ski").showAndWait();
 		});
 		
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
-			new KundenGUI_Dialog1().showAndWait();
+			new KundenGUI_Dialog1("Snowboard").showAndWait();
 		});
 
 		// VBOXES
