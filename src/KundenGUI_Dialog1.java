@@ -17,8 +17,7 @@ import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
-	// BESSER: Dialoge 1-3 als Akkordion! Dialog 4 extra, Optional buttontype
-	// bleibt!
+	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
 	TitledPane tp2 = new TitledPane();

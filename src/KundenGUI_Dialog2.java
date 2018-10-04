@@ -1,34 +1,53 @@
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
-	
-	HBox hb1 = new HBox();
+
+	VBox vb1 = new VBox();
 	GridPane gridPane = new GridPane();
 	Label lb1 = new Label("Ihre Abholnummer lautet: ");
-		
-	public KundenGUI_Dialog2 () throws IOException {
+	Label lb2 = new Label("Rückgabe am: ");
+	Label lb3 = new Label("Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt");
+
+	public KundenGUI_Dialog2() throws IOException {
 		super();
 		this.setTitle("DIALOG 2");
 		this.setHeaderText("Abholnummer");
-			
+
+		// VBOX
+		vb1.getChildren().add(lb2);
+
+		// BILD
+		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\002.jpg").toUri();
+		ImageView imageView = new ImageView(uri.toString());
+		imageView.setFitHeight(400);
+		imageView.setFitWidth(700);
+		Label labelBild = new Label();
+		labelBild.setGraphic(imageView);
+		
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
 		borderPane.setPrefSize(700, 580);
 		borderPane.setTop(lb1);
-		borderPane.setCenter(hb1);
-		
+		borderPane.setCenter(vb1);
+		borderPane.setLeft(labelBild);
+		borderPane.setBottom(lb3);
+
 		this.getDialogPane().setContent(borderPane);
-		ButtonType close = ButtonType.OK; 
+		ButtonType close = ButtonType.OK;
 		this.getDialogPane().getButtonTypes().addAll(close);
-		
+
 	}
 
 }
