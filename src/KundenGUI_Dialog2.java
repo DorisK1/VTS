@@ -25,22 +25,22 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		this.setHeaderText("Abholnummer");
 
 		// VBOX
-		vb1.getChildren().add(lb2);
+		vb1.getChildren().addAll(lb1, lb2);
 
 		// BILD
 		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\002.jpg").toUri();
 		ImageView imageView = new ImageView(uri.toString());
-		imageView.setFitHeight(400);
-		imageView.setFitWidth(700);
+		imageView.setFitHeight(200);
+		imageView.setFitWidth(300);
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
 		
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
-		borderPane.setPrefSize(700, 580);
-		borderPane.setTop(lb1);
-		borderPane.setCenter(vb1);
+		borderPane.setPrefSize(700, 400);
+		borderPane.setTop(vb1);
+		//borderPane.setCenter();
 		borderPane.setLeft(labelBild);
 		borderPane.setBottom(lb3);
 

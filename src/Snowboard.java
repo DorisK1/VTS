@@ -9,6 +9,6 @@ public class Snowboard {
 	private double tagespreis;
 	private String farbe; //enum??
 	private boolean beinstellung;
-	private String bindungstyp;
+	private boolean bindungstyp;
 
 }
