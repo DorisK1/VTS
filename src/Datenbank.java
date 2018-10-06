@@ -8,7 +8,7 @@ public class Datenbank {
 	public static final String DBlocation = "C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Datenbank\\DB1";
 	public static final String connString = "jdbc:derby:" + DBlocation + ";create=true";
 
-	public static void createTables() { //Kunde k --> object übergeben nötig?
+	public static void createTables() { //Kunde k --> object übergeben hier nötig?
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -21,15 +21,16 @@ public class Datenbank {
 			stmt = conn.createStatement();
 			try {
 				stmt.executeUpdate("DROP TABLE kunden");
-				//alle weiteren tables...?
-				System.out.println("Table dropped");
+				stmt.executeUpdate("DROP TABLE kreditkarten");
+				//alle weiteren tables...
+				System.out.println("Tables dropped");
 			} catch (Exception e) {
 			}
 			
-			// TABLE KUNDEN
+			// TABLE KUNDEN ANLEGEN
 			String s1 = "CREATE TABLE kunden (" 
 					+ "kundenNr       		integer NOT NULL," //automatisch??
-					+ "kreditkartenNr		VARCHAR(200),"
+					+ "kreditkartenNr		VARCHAR(200)," // foreign key aus table kreditkarten
 					+ "anrede	  			integer,"
 					+ "vorname  			VARCHAR(200),"
 					+ "nachname  			VARCHAR(200),"
@@ -38,21 +39,37 @@ public class Datenbank {
 					+ "hausNr   			VARCHAR(200),"
 					+ "plz		   			VARCHAR(200),"
 					+ "land		   			VARCHAR(200),"
-					+ "kundenalter	  			integer,"
+					+ "kundenalter	  		integer," //alter geht nicht - Achtung: diskrepanz zu kundenklassen
 					+ "pistenPraef 			VARCHAR(200),"
 					+ "gewicht				integer," 
 					+ "schuhgroesse			double,"
 					+ "technik				integer,"
 					+ "beinstellung			BOOLEAN," 
 					+ "bindungstyp			BOOLEAN," 
-					//+ CONSTRAINT kreditkarten_kreditkartenNr_ref FOREIGN KEY (kreditkartenNr) REFERENCES kreditkarten(kreditkartenNr)
-					+ "PRIMARY KEY(kundenNr))";
+					+ "PRIMARY KEY(kundenNr))"; //FK anlegen für kreditkartenNr geht erst später!
 
 			stmt.executeUpdate(s1);
-			System.out.println("Table kunden created");
+			System.out.println("Table 'kunden' created");
 			
-			// TABLE KREDITKARTEN
+			// TABLE KREDITKARTEN ANLEGEN
+			String s2 = "CREATE TABLE kreditkarten (" 
+					+ "kreditkartenNr       	VARCHAR(200)," 
+					+ "kundenNr					integer," // foreign key aus table kreditkarten
+					+ "kreditkartenname			VARCHAR(200),"
+					+ "inhabername 				VARCHAR(200),"
+					+ "kreditkartenpruefzahl   	integer," 
+					+ "kreditkartengueltigkeit	VARCHAR(5)," 
+					+ "CONSTRAINT kundenNr_fk FOREIGN KEY (kundenNr) REFERENCES kunden(kundenNr),"
+					+ "PRIMARY KEY(kreditkartenNr))";
+
+			stmt.executeUpdate(s2);
+			System.out.println("Table 'kreditkarten' created");
 			
+			// FK in kunden anlegen
+			String s3 = "ALTER TABLE kunden ADD CONSTRAINT kreditkartenNr_fk FOREIGN KEY (kreditkartenNr) REFERENCES kreditkarten(kreditkartenNr)";
+
+			stmt.executeUpdate(s3);
+			System.out.println("In Table 'kunden' foreign key added");
 			
 			
 			// insert statements in methoden?
