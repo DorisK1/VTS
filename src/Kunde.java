@@ -4,7 +4,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	
 	private int kundenNr;
 	private String kreditkartenNr;
-	private String anrede;
+	private int anrede;
 	private String vorname;
 	private String nachname;
 	private String telefonNr;
@@ -20,7 +20,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	private boolean beinstellung;
 	private boolean bindungstyp;
 	
-	public Kunde(int kundenNr, String kreditkartenNr, String anrede, String vorname, String nachname, String telefonNr,
+	public Kunde(int kundenNr, String kreditkartenNr, int anrede, String vorname, String nachname, String telefonNr,
 			String strasse, String hausNr, String plz, String land, int alter, String pistenPraef, int gewicht,
 			double schuhgroesse, int technik, boolean beinstellung, boolean bindungstyp) {
 		super();
@@ -51,7 +51,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		return kreditkartenNr;
 	}
 
-	public String getAnrede() {
+	public int getAnrede() {
 		return anrede;
 	}
 
@@ -119,7 +119,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		this.kreditkartenNr = kreditkartenNr;
 	}
 
-	public void setAnrede(String anrede) {
+	public void setAnrede(int anrede) {
 		this.anrede = anrede;
 	}
 

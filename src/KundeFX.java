@@ -8,7 +8,7 @@ public class KundeFX {
 	private Kunde kundefx;
 	private SimpleIntegerProperty kundenNr;
 	private SimpleStringProperty kreditkartenNr;
-	private SimpleStringProperty anrede;
+	private SimpleIntegerProperty anrede;
 	private SimpleStringProperty vorname;
 	private SimpleStringProperty nachname;
 	private SimpleStringProperty telefonNr;
@@ -28,7 +28,7 @@ public class KundeFX {
 		kundefx = k;
 		kundenNr = new SimpleIntegerProperty(kundefx.getKundenNr());
 		kreditkartenNr = new SimpleStringProperty(kundefx.getKreditkartenNr());
-		anrede = new SimpleStringProperty(kundefx.getAnrede());
+		anrede = new SimpleIntegerProperty(kundefx.getAnrede());
 		vorname = new SimpleStringProperty(kundefx.getVorname());
 		nachname = new SimpleStringProperty(kundefx.getNachname());
 		telefonNr = new SimpleStringProperty(kundefx.getTelefonNr());
@@ -72,16 +72,16 @@ public class KundeFX {
 		return kreditkartenNr;
 	}
 	
-	public String getAnrede() {
+	public int getAnrede() {
 		return anrede.get();
 	}
 
-	public void setAnrede(String s) {
-		anrede.set(s);
-		kundefx.setAnrede(s);
+	public void setAnrede(int i) {
+		anrede.set(i);
+		kundefx.setAnrede(i);
 	}
 
-	public SimpleStringProperty AnredeProperty() {
+	public SimpleIntegerProperty AnredeProperty() {
 		return anrede;
 	}
 	

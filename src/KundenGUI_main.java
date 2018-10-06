@@ -1,6 +1,7 @@
 
 import java.net.URI;
 import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -23,10 +24,14 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class KundenGUI_main extends Application {
+	
+	static { // analog VinothekJerseyResoure: statischer Initialisierer --> DB wird nur 1x erstellt?!
+		Datenbank.createTables();
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
-
+		
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
