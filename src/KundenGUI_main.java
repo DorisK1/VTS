@@ -25,13 +25,14 @@ import javafx.stage.Stage;
 
 public class KundenGUI_main extends Application {
 	
-	static { // analog VinothekJerseyResoure: statischer Initialisierer --> DB wird nur 1x erstellt?!
+	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x erstellt
+	static {
 		Datenbank.createTables();
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
@@ -74,13 +75,12 @@ public class KundenGUI_main extends Application {
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		HBox hb2 = new HBox();
 		hb2.getChildren().addAll(bt1, bt2);
-		
-		
+
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
 			new KundenGUI_Dialog1("Ski").showAndWait();
 		});
-		
+
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
 			new KundenGUI_Dialog1("Snowboard").showAndWait();

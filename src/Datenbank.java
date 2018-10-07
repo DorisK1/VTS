@@ -29,7 +29,7 @@ public class Datenbank {
 			
 			// TABLE KUNDEN ANLEGEN
 			String s1 = "CREATE TABLE kunden (" 
-					+ "kundenNr       		integer NOT NULL," //automatisch??
+					+ "kundenNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
 					+ "kreditkartenNr		VARCHAR(200)," // foreign key aus table kreditkarten
 					+ "anrede	  			integer,"
 					+ "vorname  			VARCHAR(200),"
@@ -65,11 +65,30 @@ public class Datenbank {
 			stmt.executeUpdate(s2);
 			System.out.println("Table 'kreditkarten' created");
 			
-			// FK in kunden anlegen
-			String s3 = "ALTER TABLE kunden ADD CONSTRAINT kreditkartenNr_fk FOREIGN KEY (kreditkartenNr) REFERENCES kreditkarten(kreditkartenNr)";
+			// FK kreditkartennr in table kunden anlegen (nur im Nachhinein möglich)
+			String s3 = "ALTER TABLE kunden ADD CONSTRAINT kreditkartenNr_fk FOREIGN KEY (kreditkartenNr) "
+					+ "REFERENCES kreditkarten(kreditkartenNr)";
 
 			stmt.executeUpdate(s3);
 			System.out.println("In Table 'kunden' foreign key added");
+			
+			// TABLE AUSLEIHEN ANLEGEN
+			String s4 = "CREATE TABLE ausleihen (" 
+					+ "abholNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
+					+ "kundenNr				integer,"
+					+ "skiNr				integer,"
+					+ "snowboardNr			integer,"
+					+ "leihstart			TIMESTAMP," //??
+					+ "leihende				TIMESTAMP," //??
+					+ "mietpreis			double,"
+					+ "kaution 				double,"
+					+ "nachzahlung   		double," 
+					+ "gesamtpreis			double," 
+					//+ "CONSTRAINT kundenNr_fk FOREIGN KEY (kundenNr) REFERENCES kunden(kundenNr),"
+					+ "PRIMARY KEY(abholNr))";
+
+			stmt.executeUpdate(s4);
+			System.out.println("Table 'ausleihen' created");
 			
 			
 			// insert statements in methoden?
