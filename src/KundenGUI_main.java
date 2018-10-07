@@ -51,12 +51,39 @@ public class KundenGUI_main extends Application {
 		Label lbl2 = new Label("\nBitte geben Sie die gewünschte Ausleihdauer an:\n");
 		Label lbl3 = new Label("von: ");
 		Label lbl4 = new Label("bis: ");
+		
 		TextField tf1 = new TextField();
 		TextField tf2 = new TextField();
-		tf1.setPromptText("dd.mm.jjjj"); // erscheint nicht wenn Cursor im ersten TF ist?!?!
-		tf2.setPromptText("dd.mm.jjjj");
+		TextField tf3 = new TextField();
+		TextField tf4 = new TextField();
+		TextField tf5 = new TextField();
+		TextField tf6 = new TextField();
+		TextField tf7 = new TextField();
+		TextField tf8 = new TextField();
+		TextField tf9 = new TextField();
+		TextField tf10 = new TextField();
+		tf1.setPromptText("dd"); // erscheint nicht wenn Cursor im ersten TF ist?!?!
+		tf2.setPromptText("mm");
+		tf3.setPromptText("jjjj");
+		tf4.setPromptText("hh");
+		tf5.setPromptText("min");
+		tf6.setPromptText("dd");
+		tf7.setPromptText("mm");
+		tf8.setPromptText("jjjj");
+		tf9.setPromptText("hr");
+		tf10.setPromptText("min");
+		tf1.setMaxWidth(40);
+		tf2.setMaxWidth(40);
+		tf3.setMaxWidth(40);
+		tf4.setMaxWidth(40);
+		tf5.setMaxWidth(40);
+		tf6.setMaxWidth(40);
+		tf7.setMaxWidth(40);
+		tf8.setMaxWidth(40);
+		tf9.setMaxWidth(40);
+		tf10.setMaxWidth(40);
 		HBox hb1 = new HBox();
-		hb1.getChildren().addAll(lbl3, tf1, lbl4, tf2);
+		hb1.getChildren().addAll(lbl3, tf1, tf2, tf3, tf4, tf5, lbl4, tf6, tf7, tf8, tf9, tf10);
 
 		// BUTTONS
 		Button bt1 = new Button("SKI");
