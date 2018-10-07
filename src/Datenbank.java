@@ -20,17 +20,22 @@ public class Datenbank {
 			System.out.println("Connection established");
 			stmt = conn.createStatement();
 			try {
-				stmt.executeUpdate("DROP TABLE kunden");
+				stmt.executeUpdate("DROP TABLE kunden"); 
 				stmt.executeUpdate("DROP TABLE kreditkarten");
-				//alle weiteren tables...
-				System.out.println("Tables dropped");
+				stmt.executeUpdate("DROP TABLE skikategorien");
+				stmt.executeUpdate("DROP TABLE snowboardkategorien");
+				stmt.executeUpdate("DROP TABLE ski");
+				stmt.executeUpdate("DROP TABLE snowboard");
+				stmt.executeUpdate("DROP TABLE ausleihen");
+				System.out.println("Tables dropped"); //wird nicht mehr ausgegeben?
+				//Putting ‘drop table’ in front of it ensure you don't get an error if the table already exist (and get stuck with the old table).
 			} catch (Exception e) {
 			}
 			
 			// TABLE KUNDEN ANLEGEN
 			String s1 = "CREATE TABLE kunden (" 
 					+ "kundenNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
-					+ "kreditkartenNr		VARCHAR(200)," // foreign key aus table kreditkarten
+					+ "kreditkartenNr		VARCHAR(200)," // FK aus table kreditkarten
 					+ "anrede	  			integer,"
 					+ "vorname  			VARCHAR(200),"
 					+ "nachname  			VARCHAR(200),"
@@ -48,13 +53,13 @@ public class Datenbank {
 					+ "bindungstyp			BOOLEAN," 
 					+ "PRIMARY KEY(kundenNr))"; //FK anlegen für kreditkartenNr geht erst später!
 
-			stmt.executeUpdate(s1);
+			stmt.executeUpdate(s1); //könnte man alle strings zusammenfassen in einem update?
 			System.out.println("Table 'kunden' created");
 			
 			// TABLE KREDITKARTEN ANLEGEN
 			String s2 = "CREATE TABLE kreditkarten (" 
 					+ "kreditkartenNr       	VARCHAR(200)," 
-					+ "kundenNr					integer," // foreign key aus table kreditkarten
+					+ "kundenNr					integer," // FK aus table kunden
 					+ "kreditkartenname			VARCHAR(200),"
 					+ "inhabername 				VARCHAR(200),"
 					+ "kreditkartenpruefzahl   	integer," 
@@ -72,22 +77,74 @@ public class Datenbank {
 			stmt.executeUpdate(s3);
 			System.out.println("In Table 'kunden' foreign key added");
 			
+			// TABLE SKIKATEGORIE ANLEGEN
+			String s4 = "CREATE TABLE skikategorien (" 
+					+ "skiKategorieNr			integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," 
+					+ "skiKategorieName			VARCHAR(200)," 
+					+ "PRIMARY KEY(skiKategorieNr))";
+
+			stmt.executeUpdate(s4);
+			System.out.println("Table 'skikategorien' created");
+			
+			// TABLE SNOWBOARDKATEGORIE ANLEGEN
+			String s5 = "CREATE TABLE snowboardkategorien (" 
+					+ "snowboardKategorieNr			integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," 
+					+ "snowboardKategorieName		VARCHAR(200)," 
+					+ "PRIMARY KEY(snowboardKategorieNr))";
+			
+			stmt.executeUpdate(s5);
+			System.out.println("Table 'snowboardkategorien' created");
+			
+			// TABLE SKI ANLEGEN
+			String s6 = "CREATE TABLE ski (" 
+					+ "skiNr       			integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
+					+ "skiKategorieNr		integer,"
+					+ "skiProduktname		VARCHAR(200),"
+					+ "skiTyp		 		VARCHAR(200)," 
+					+ "regalNr				VARCHAR(200)," 
+					+ "tagespreis			double,"
+					+ "farbe				VARCHAR(200),"
+					+ "CONSTRAINT skiKategorieNr_fk FOREIGN KEY (skiKategorieNr) REFERENCES skikategorien (skiKategorieNr),"
+					+ "PRIMARY KEY(skiNr))";
+
+			stmt.executeUpdate(s6);
+			System.out.println("Table 'ski' created");
+			
+			// TABLE SNOWBOARD ANLEGEN
+			String s7 = "CREATE TABLE snowboard (" 
+					+ "snowboardNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
+					+ "snowboardKategorieNr		integer,"
+					+ "snowboardProduktname		VARCHAR(200),"
+					+ "snowboardTyp		 		VARCHAR(200)," 
+					+ "regalNr					VARCHAR(200)," 
+					+ "tagespreis				double,"
+					+ "farbe					VARCHAR(200),"
+					+ "beinstellung				BOOLEAN," //gemeinsames Merkmal mit kunde...?
+					+ "bindungstyp				BOOLEAN," //gemeinsames Merkmal mit kunde...?
+					+ "CONSTRAINT snowboardKategorieNr_fk FOREIGN KEY (snowboardKategorieNr) REFERENCES snowboardkategorien (snowboardKategorieNr),"
+					+ "PRIMARY KEY(snowboardNr))";
+
+			stmt.executeUpdate(s7);
+			System.out.println("Table 'snowboard' created");
+			
 			// TABLE AUSLEIHEN ANLEGEN
-			String s4 = "CREATE TABLE ausleihen (" 
+			String s8 = "CREATE TABLE ausleihen (" 
 					+ "abholNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," //automatisch
-					+ "kundenNr				integer,"
-					+ "skiNr				integer,"
-					+ "snowboardNr			integer,"
-					+ "leihstart			TIMESTAMP," //??
-					+ "leihende				TIMESTAMP," //??
+					+ "kundenNr				integer," //FK
+					+ "skiNr				integer," //FK
+					+ "snowboardNr			integer," //FK
+					+ "leihstart			TIMESTAMP," // korrekter Datentyp?
+					+ "leihende				TIMESTAMP," // korrekter Datentyp?
 					+ "mietpreis			double,"
 					+ "kaution 				double,"
 					+ "nachzahlung   		double," 
 					+ "gesamtpreis			double," 
-					//+ "CONSTRAINT kundenNr_fk FOREIGN KEY (kundenNr) REFERENCES kunden(kundenNr),"
+					+ "CONSTRAINT kundenNr_fk2 FOREIGN KEY (kundenNr) REFERENCES kunden(kundenNr),"
+					+ "CONSTRAINT skiNr_fk FOREIGN KEY (skiNr) REFERENCES ski(skiNr),"
+					+ "CONSTRAINT snowboardNr_fk FOREIGN KEY (snowboardNr) REFERENCES snowboard(snowboardNr),"
 					+ "PRIMARY KEY(abholNr))";
-
-			stmt.executeUpdate(s4);
+			
+			stmt.executeUpdate(s8);
 			System.out.println("Table 'ausleihen' created");
 			
 			
