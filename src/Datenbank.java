@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -7,13 +8,12 @@ public class Datenbank {
 
 	public static final String DBlocation = "C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Datenbank\\DB1";
 	public static final String connString = "jdbc:derby:" + DBlocation + ";create=true";
+	public static Statement stmt = null;
+	public static Connection conn = null;
+	public static PreparedStatement pstmt = null;
+	//ResultSet rs = null; 
 
 	public static void createTables() { //Kunde k --> object übergeben hier nötig?
-
-		Connection conn = null;
-		Statement stmt = null;
-		//PreparedStatement pstmt = null;
-		//ResultSet rs = null; 
 
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -177,5 +177,7 @@ public class Datenbank {
 		}
 
 	}
+	
+	//db methoden
 
 }
