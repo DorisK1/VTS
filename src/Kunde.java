@@ -43,6 +43,10 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		this.bindungstyp = bindungstyp;
 	}
 	
+	public Kunde() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getKundenNr() {
 		return kundenNr;
 	}

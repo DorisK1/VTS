@@ -17,6 +17,8 @@ import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
+	KundeFX k = new KundeFX();
+	
 	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
@@ -122,9 +124,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				return null;
 			}
 		});
+		
+		// TF INPUT abfragen
+		k.setVorname(tf2tp3.getText());
 	}
 
 	private void displayTp3() {
+		
 		// GRIDPANE
 		gridPanetp3.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp3.setVgap(5);
@@ -188,6 +194,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	}
 
 	private void displayTp1(String s) {
+				
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp1.setVgap(5);

@@ -46,13 +46,17 @@ public class KundeFX {
 
 	}
 
+	public KundeFX() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getKundenNr() {
 		return kundenNr.get();
 	}
 
 	public void setKundenNr(int i) {
 		kundenNr.set(i);
-		kundefx.setKundenNr(i);
+		kundefx.setKundenNr(i); //klasse kunde!
 	}
 
 	public SimpleIntegerProperty kundenNrProperty() {
