@@ -1,6 +1,7 @@
 
 import java.net.URI;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -26,9 +27,19 @@ import javafx.stage.Stage;
 public class KundenGUI_main extends Application {
 	
 	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x erstellt
+	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann nicht mehr aufgerufen werden!
+	// ODER: DB Ordner löschen!!!
 	static {
-		Datenbank.createTables();
+		try {
+			Datenbank.createTables();
+			Datenbank.insertRows();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	
 
 	@Override
 	public void start(Stage primaryStage) {
