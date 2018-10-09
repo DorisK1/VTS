@@ -27,7 +27,7 @@ public class Datenbank {
 				stmt.executeUpdate("DROP TABLE ski");
 				stmt.executeUpdate("DROP TABLE snowboard");
 				stmt.executeUpdate("DROP TABLE ausleihen");
-				System.out.println("Tables dropped"); //wird nicht mehr ausgegeben?
+				System.out.println("Tables dropped"); //wird nicht mehr ausgegeben:
 				//Putting ‘drop table’ in front of it ensure you don't get an error if the table already exist (and get stuck with the old table).
 			} catch (Exception e) {
 			}
@@ -70,12 +70,6 @@ public class Datenbank {
 			stmt.executeUpdate(s2);
 			System.out.println("Table 'kreditkarten' created");
 			
-			// FK kreditkartennr in table kunden anlegen (nur im Nachhinein möglich)
-			String s3 = "ALTER TABLE kunden ADD CONSTRAINT kreditkartenNr_fk FOREIGN KEY (kreditkartenNr) "
-					+ "REFERENCES kreditkarten(kreditkartenNr)";
-
-			stmt.executeUpdate(s3);
-			System.out.println("In Table 'kunden' foreign key added");
 			
 			// TABLE SKIKATEGORIE ANLEGEN
 			String s4 = "CREATE TABLE skikategorien (" 

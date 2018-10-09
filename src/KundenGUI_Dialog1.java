@@ -126,7 +126,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		});
 		
 		// TF INPUT abfragen
-		k.setVorname(tf2tp3.getText());
+		//k.setVorname(tf2tp3.getText());
 	}
 
 	private void displayTp3() {

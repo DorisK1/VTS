@@ -8,6 +8,7 @@ public class AusleiheFX {
 	private SimpleIntegerProperty abholNr;
 	private SimpleIntegerProperty kundenNr;
 	private Kunde kunde; //??
+	//evtl noch kundenname anzeigen
 	private SimpleIntegerProperty skiNr;
 	private Ski ski; //??
 	private SimpleIntegerProperty snowboardNr;
