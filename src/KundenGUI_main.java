@@ -1,15 +1,13 @@
 
 import java.net.URI;
 import java.nio.file.Paths;
-import java.util.Scanner;
-
+import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -60,6 +58,9 @@ public class KundenGUI_main extends Application {
 		// DATEPICKER
 		DatePicker datePicker1 = new DatePicker();
 		DatePicker datePicker2 = new DatePicker();
+		datePicker1.setValue(LocalDate.now());
+		datePicker2.setValue(LocalDate.now());
+		
 		
 //		ausleihe.setLeihStart(tf1.getText());
 
@@ -86,12 +87,12 @@ public class KundenGUI_main extends Application {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
-			new KundenGUI_Dialog1("Ski").showAndWait();
+			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
 		});
 
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
-			new KundenGUI_Dialog1("Snowboard").showAndWait();
+			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
 		});
 
 		// VBOXES

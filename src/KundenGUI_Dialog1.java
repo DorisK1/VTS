@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -85,7 +86,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb12tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb13tp3 = new Label("Kreditkartengültigkeit");
 
-	public KundenGUI_Dialog1(String s) {
+	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate) {
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -96,7 +97,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp3.setText("SCHRITT 3: Dateneingabe");
 
 		displayTp1(s);
-		displayTp2();
+		displayTp2(selpickupDate, selreturnDate);
 		displayTp3();
 
 		// accordion.getPanes().addAll(tp1, tp2, tp3);
@@ -173,12 +174,20 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp2() {
-		rb1tp2.setToggleGroup(grouptp2);
+	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate) {
+		
+		
+		rb1tp2.setToggleGroup(grouptp2); // damit nur 1 radiobutton ausgewählt werden kann!
 		rb2tp2.setToggleGroup(grouptp2);
 		rb3tp2.setToggleGroup(grouptp2);
+		Label lb2tp2 = new Label();
+		Label lb3tp2 = new Label();
+		Label lb4tp2 = new Label("von: ");
+		Label lb5tp2 = new Label(" bis: ");
+		lb2tp2.setText(selpickupDate.toString());
+		lb3tp2.setText(selreturnDate.toString());
 
-		hb1tp2.getChildren().addAll(rb1tp2, rb2tp2, rb3tp2);
+		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2, rb1tp2, rb2tp2, rb3tp2);
 
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
