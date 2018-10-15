@@ -338,7 +338,7 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + " anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
 						+ rs.getString("nachname") + " telefonNr = " + rs.getString("telefonNr") + " strasse = " + rs.getString("strasse")
 						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
 						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));

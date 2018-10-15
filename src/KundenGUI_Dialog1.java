@@ -21,8 +21,8 @@ import javafx.util.Callback;
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	Kunde k = new Kunde(); //wieso nicht kundeFX???
-	//Datenbank db = new Datenbank();
-	Button bt1 = new Button("Eingaben speichern");
+	Kreditkarte kk = new Kreditkarte();
+	//Button bt1 = new Button("Eingaben speichern");
 
 	// ACCORDION
 	Accordion accordion = new Accordion();
@@ -74,8 +74,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf9tp3 = new TextField(); //land
 	TextField tf10tp3 = new TextField(); //krediknr
  	TextField tf11tp3 = new TextField(); //kkname
-	TextField tf12tp3 = new TextField(); //kkprüf
-	TextField tf13tp3 = new TextField(); //kkgült
+ 	TextField tf12tp3 = new TextField(); //kkinhabername
+	TextField tf13tp3 = new TextField(); //kkprüf
+	TextField tf14tp3 = new TextField(); //kkgült
 	
 	Label lb1tp3 = new Label("Vielen Dank für Ihre Auswahl. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp3 = new Label("Anrede");
@@ -89,8 +90,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb10tp3 = new Label("Land");
 	Label lb11tp3 = new Label("Kreditkartennummer");
 	Label lb12tp3 = new Label("Kreditkartenname");
-	Label lb13tp3 = new Label("Kreditkartenprüfnummer");
-	Label lb14tp3 = new Label("Kreditkartengültigkeit");
+	Label lb13tp3 = new Label("Kreditkarteninhabername");
+	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
+	Label lb15tp3 = new Label("Kreditkartengültigkeit");
 
 	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate) {
 		super();
@@ -131,15 +133,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 //			label.setText(null);
 //		});
 		
-		bt1.setOnAction(e -> {
-			if (!tf5tp1.getText().isEmpty()) {
-				System.out.printf("Text field: %b%n", tf5tp1);
-				k.setPistenPraef(tf5tp1.getText());
-				System.out.println(k.getPistenPraef());
-			} else {
-				
-			}
-		});
+//		bt1.setOnAction(e -> {
+//			if (!tf5tp1.getText().isEmpty()) {
+//				System.out.printf("Text field: %b%n", tf5tp1);
+//				k.setPistenPraef(tf5tp1.getText());
+//				System.out.println(k.getPistenPraef());
+//			} else {
+//				
+//			}
+//		});
 		
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
 
@@ -168,6 +170,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 						k.setWohnort(tf7tp3.getText());
 						k.setPlz(tf8tp3.getText());
 						k.setLand(tf9tp3.getText());
+						
+						kk.setKreditkartenNr(tf10tp3.getText());
+						kk.setKreditkartenName(tf11tp3.getText());
+						kk.setInhaberName(tf12tp3.getText());
+						kk.setPruefzahl(tf13tp3.getText());
+						kk.setGueltigkeit(tf14tp3.getText());
 						
 						//in DB speichern
 						Datenbank.postKunde(k);
@@ -210,6 +218,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(lb12tp3, 0, 10);
 		gridPanetp3.add(lb13tp3, 0, 11);
 		gridPanetp3.add(lb14tp3, 0, 12);
+		gridPanetp3.add(lb15tp3, 0, 13);
 
 		gridPanetp3.add(tf1tp3, 1, 0);
 		gridPanetp3.add(tf2tp3, 1, 1);
@@ -224,6 +233,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf11tp3, 1, 10);
 		gridPanetp3.add(tf12tp3, 1, 11);
 		gridPanetp3.add(tf13tp3, 1, 12);
+		gridPanetp3.add(tf14tp3, 1, 13);
 
 		// BORDERPANE
 		BorderPane borderPanetp3 = new BorderPane();
@@ -301,7 +311,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		borderPanetp1.setPrefSize(700, 580);
 		borderPanetp1.setTop(lb1tp1);
 		borderPanetp1.setCenter(gridPanetp1);
-		borderPanetp1.setBottom(bt1); //eingaben speichern button
+		//borderPanetp1.setBottom(bt1); //eingaben speichern button
 
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);

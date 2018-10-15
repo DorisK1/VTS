@@ -30,6 +30,8 @@ public class KundenGUI_main extends Application {
 	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann nicht mehr aufgerufen werden!
 	// ODER: DB Ordner löschen!!!
 	
+	//Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
+	
 //	static {
 //		try {
 //			Datenbank.createTables();
