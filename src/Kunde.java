@@ -20,7 +20,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	private boolean beinstellung;
 	private boolean bindungstyp;
 	
-	public Kunde(int kundenNr, String kreditkartenNr, int anrede, String vorname, String nachname, String telefonNr,
+	public Kunde(int kundenNr, int anrede, String vorname, String nachname, String telefonNr,
 			String strasse, String hausNr, String wohnort, String plz, String land, int alter, String pistenPraef, int gewicht,
 			double schuhgroesse, int technik, boolean beinstellung, boolean bindungstyp) {
 		super();

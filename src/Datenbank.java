@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,9 +12,11 @@ public class Datenbank {
 	public static Statement stmt = null;
 	public static Connection conn = null;
 	public static PreparedStatement pstmt = null;
+	Kunde k = new Kunde();
+	
 	// ResultSet rs = null;
 
-	public static void createTables() { // Kunde k --> object übergeben hier nötig?
+	public static void createTables() { 
 
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -219,6 +222,102 @@ public class Datenbank {
 
 	}
 
-	// db methoden
+	public static Boolean postKunde(Kunde k) { 
 
+		System.out.println("neuen Kunden anlegen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			pstmt = conn.prepareStatement("INSERT INTO kunden(anrede, vorname, nachname, telefonNr, strasse, hausNr, "
+					+ "wohnort, plz, land, kundenalter, pistenPraef, gewicht, schuhgroesse, "
+					+ "technik, beinstellung, bindungstyp) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+			pstmt.setInt(1, k.getAnrede());
+			pstmt.setString(2, k.getVorname());
+			pstmt.setString(3, k.getNachname());
+			pstmt.setString(4, k.getTelefonNr());
+			pstmt.setString(5, k.getStrasse());
+			pstmt.setString(6, k.getHausNr());
+			pstmt.setString(7, k.getWohnort());
+			pstmt.setString(8, k.getPlz());
+			pstmt.setString(9, k.getLand());
+			pstmt.setInt(10, k.getAlter());
+			pstmt.setString(11, k.getPistenPraef());
+			pstmt.setInt(12, k.getGewicht());
+			pstmt.setDouble(13, k.getSchuhgroesse());
+			pstmt.setInt(14, k.getTechnik());
+			pstmt.setBoolean(15, k.isBeinstellung());
+			pstmt.setBoolean(16, k.isBindungstyp());
+			
+			pstmt.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+
+	}
+
+	public static Kunde getKunde(int kundenNr) {
+		Connection conn = null;
+
+		ResultSet rs = null;
+		Kunde k = new Kunde();
+		System.out.println("Query ALLE KUNDEN");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM kunden WHERE kundenNr =" + kundenNr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
+						+ rs.getString("nachname") + " telefonNr = " + rs.getString("telefonNr") + " strasse = " + rs.getString("strasse")
+						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
+						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));
+				
+/*(anrede, vorname, nachname, telefonNr, strasse, hausNr, "
+					+ "wohnort, plz, land, kundenalter, pistenPraef, gewicht, schuhgroesse, "
+					+ "technik, beinstellung, bindungstyp)*/
+				k.setId(rs.getInt("ID"));
+				k.setName(rs.getString("NAME"));
+				k.setDesc(rs.getString("DESCR"));
+				k.setPreis(rs.getDouble("PREIS"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return k;
+	}
 }

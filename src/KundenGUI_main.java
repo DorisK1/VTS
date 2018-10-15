@@ -30,16 +30,16 @@ public class KundenGUI_main extends Application {
 	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann nicht mehr aufgerufen werden!
 	// ODER: DB Ordner löschen!!!
 	
-	static {
-		try {
-			Datenbank.createTables();
-			Datenbank.insertRows();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+//	static {
+//		try {
+//			Datenbank.createTables();
+//			Datenbank.insertRows();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
 	
 
 	@Override
@@ -73,9 +73,6 @@ public class KundenGUI_main extends Application {
 		datePicker1.setValue(LocalDate.now());
 		datePicker2.setValue(LocalDate.now());
 		
-		
-//		ausleihe.setLeihStart(tf1.getText());
-
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(lbl3, datePicker1, lbl4, datePicker2);
 
