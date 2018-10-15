@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Datenbank {
 
@@ -272,6 +273,7 @@ public class Datenbank {
 	}
 
 	public static Kunde getKunde(int kundenNr) {
+
 		Connection conn = null;
 
 		ResultSet rs = null;
@@ -287,18 +289,16 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
 						+ rs.getString("nachname") + " telefonNr = " + rs.getString("telefonNr") + " strasse = " + rs.getString("strasse")
 						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
 						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));
 				
-/*(anrede, vorname, nachname, telefonNr, strasse, hausNr, "
-					+ "wohnort, plz, land, kundenalter, pistenPraef, gewicht, schuhgroesse, "
-					+ "technik, beinstellung, bindungstyp)*/
-				k.setId(rs.getInt("ID"));
-				k.setName(rs.getString("NAME"));
-				k.setDesc(rs.getString("DESCR"));
-				k.setPreis(rs.getDouble("PREIS"));
+
+//				k.setId(rs.getInt("ID"));
+//				k.setName(rs.getString("NAME"));
+//				k.setDesc(rs.getString("DESCR"));
+//				k.setPreis(rs.getDouble("PREIS"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -320,4 +320,53 @@ public class Datenbank {
 		}
 		return k;
 	}
+
+	public static ArrayList<Kunde> getKunden() {
+		Connection conn = null;
+
+		ResultSet rs = null;
+		ArrayList<Kunde> kl = new ArrayList<Kunde>();
+
+		System.out.println("Query ALLE KUNDEN");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM kunden  ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
+						+ rs.getString("nachname") + " telefonNr = " + rs.getString("telefonNr") + " strasse = " + rs.getString("strasse")
+						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
+						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));
+
+				kl.add(new Kunde(rs.getInt("kundenNr"), rs.getInt("anrede"), rs.getString("vorname"), rs.getString("nachname"),
+						rs.getString("telefonNr"), rs.getString("strasse"), rs.getString("hausNr"), rs.getString("wohnort"),
+						rs.getString("plz"), rs.getString("land"), rs.getInt("kundenalter"), rs.getString("pistenPraef"), rs.getInt("gewicht"), 
+						rs.getDouble("schuhgroesse"), rs.getInt("technik"), 
+						rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return kl;
+	}
+
 }

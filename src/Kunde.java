@@ -183,6 +183,12 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		this.bindungstyp = bindungstyp;
 	}
 
+	@Override
+	public String toString() {
+		return "Kunde [kundenNr=" + kundenNr + ", anrede=" + anrede + ", vorname=" + vorname + ", nachname=" + nachname
+				+ "]";
+	}
+
 	
 
 }

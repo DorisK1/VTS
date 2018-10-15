@@ -171,6 +171,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 						
 						//in DB speichern
 						Datenbank.postKunde(k);
+						Datenbank.getKunden();
 						
 						new KundenGUI_Dialog2().showAndWait();
 					} catch (IOException e) {
