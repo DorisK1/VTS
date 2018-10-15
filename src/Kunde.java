@@ -3,13 +3,13 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	//projekt restfuljersey weindetails class und wein class
 	
 	private int kundenNr;
-	private String kreditkartenNr;
 	private int anrede;
 	private String vorname;
 	private String nachname;
 	private String telefonNr;
 	private String strasse;
 	private String hausNr;
+	private String wohnort;
 	private String plz;
 	private String land;
 	private int alter;
@@ -21,17 +21,17 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	private boolean bindungstyp;
 	
 	public Kunde(int kundenNr, String kreditkartenNr, int anrede, String vorname, String nachname, String telefonNr,
-			String strasse, String hausNr, String plz, String land, int alter, String pistenPraef, int gewicht,
+			String strasse, String hausNr, String wohnort, String plz, String land, int alter, String pistenPraef, int gewicht,
 			double schuhgroesse, int technik, boolean beinstellung, boolean bindungstyp) {
 		super();
 		this.kundenNr = kundenNr;
-		this.kreditkartenNr = kreditkartenNr;
 		this.anrede = anrede;
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.telefonNr = telefonNr;
 		this.strasse = strasse;
 		this.hausNr = hausNr;
+		this.wohnort = wohnort;
 		this.plz = plz;
 		this.land = land;
 		this.alter = alter;
@@ -49,10 +49,6 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 
 	public int getKundenNr() {
 		return kundenNr;
-	}
-
-	public String getKreditkartenNr() {
-		return kreditkartenNr;
 	}
 
 	public int getAnrede() {
@@ -77,6 +73,10 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 
 	public String getHausNr() {
 		return hausNr;
+	}
+	
+	public String getWohnort() {
+		return wohnort;
 	}
 
 	public String getPlz() {
@@ -119,10 +119,6 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		this.kundenNr = kundenNr;
 	}
 
-	public void setKreditkartenNr(String kreditkartenNr) {
-		this.kreditkartenNr = kreditkartenNr;
-	}
-
 	public void setAnrede(int anrede) {
 		this.anrede = anrede;
 	}
@@ -145,6 +141,10 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 
 	public void setHausNr(String hausNr) {
 		this.hausNr = hausNr;
+	}
+	
+	public void setWohnort(String wohnort) {
+		this.wohnort = wohnort;
 	}
 
 	public void setPlz(String plz) {

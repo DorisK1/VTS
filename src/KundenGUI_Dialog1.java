@@ -116,7 +116,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close) {
 					try {
-						// TF INPUT abfragen
+						// TP1 TF INPUT abfragen
 						k.setAlter(Integer.parseInt(tf1tp1.getText()));
 						k.setGewicht(Integer.parseInt(tf2tp1.getText()));
 						k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
@@ -124,8 +124,21 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 						k.setPistenPraef(tf5tp1.getText());
 						k.setBeinstellung(Boolean.parseBoolean(tf6tp1.getText()));
 						k.setBindungstyp(Boolean.parseBoolean(tf7tp1.getText()));
+
+						// TP2 Auswahl abfragen
+
+						// TP3 TF Input abfragen
+						k.setAnrede(Integer.parseInt(tf1tp3.getText()));
+						k.setVorname(tf2tp3.getText());
+						k.setNachname(tf3tp3.getText());
+						k.setTelefonNr(tf4tp3.getText());
+						k.setStrasse(tf5tp3.getText());
+						k.setHausNr(tf6tp3.getText());
+						k.setWohnort(tf7tp3.getText());
+						k.setPlz(tf8tp3.getText());
+						k.setLand(tf9tp3.getText());
 						
-						
+
 						new KundenGUI_Dialog2().showAndWait();
 					} catch (IOException e) {
 

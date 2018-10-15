@@ -7,13 +7,13 @@ public class KundeFX {
 
 	private Kunde kundefx;
 	private SimpleIntegerProperty kundenNr;
-	private SimpleStringProperty kreditkartenNr;
 	private SimpleIntegerProperty anrede;
 	private SimpleStringProperty vorname;
 	private SimpleStringProperty nachname;
 	private SimpleStringProperty telefonNr;
 	private SimpleStringProperty strasse;
 	private SimpleStringProperty hausNr;
+	private SimpleStringProperty wohnort;
 	private SimpleStringProperty plz;
 	private SimpleStringProperty land;
 	private SimpleIntegerProperty alter;
@@ -27,13 +27,13 @@ public class KundeFX {
 	public KundeFX(Kunde k) {
 		kundefx = k;
 		kundenNr = new SimpleIntegerProperty(kundefx.getKundenNr());
-		kreditkartenNr = new SimpleStringProperty(kundefx.getKreditkartenNr());
 		anrede = new SimpleIntegerProperty(kundefx.getAnrede());
 		vorname = new SimpleStringProperty(kundefx.getVorname());
 		nachname = new SimpleStringProperty(kundefx.getNachname());
 		telefonNr = new SimpleStringProperty(kundefx.getTelefonNr());
 		strasse = new SimpleStringProperty(kundefx.getStrasse());
 		hausNr = new SimpleStringProperty(kundefx.getHausNr());
+		wohnort = new SimpleStringProperty(kundefx.getWohnort());
 		plz = new SimpleStringProperty(kundefx.getPlz());
 		land = new SimpleStringProperty(kundefx.getLand());
 		alter = new SimpleIntegerProperty(kundefx.getAlter());
@@ -63,19 +63,6 @@ public class KundeFX {
 		return kundenNr;
 	}
 
-	public String getKreditkartenNr() {
-		return kreditkartenNr.get();
-	}
-
-	public void setKreditkartenNr(String s) {
-		kreditkartenNr.set(s);
-		kundefx.setKreditkartenNr(s);
-	}
-
-	public SimpleStringProperty KreditkartenNrProperty() {
-		return kreditkartenNr;
-	}
-	
 	public int getAnrede() {
 		return anrede.get();
 	}
@@ -152,6 +139,19 @@ public class KundeFX {
 
 	public SimpleStringProperty HausNrProperty() {
 		return hausNr;
+	}
+	
+	public String getWohnort() {
+		return wohnort.get();
+	}
+
+	public void setWohnort(String s) {
+		wohnort.set(s);
+		kundefx.setWohnort(s);
+	}
+
+	public SimpleStringProperty WohnortProperty() {
+		return wohnort;
 	}
 	
 	public String getPlz() {

@@ -44,6 +44,7 @@ public class Datenbank {
 					+ "anrede	  			integer," + "vorname  			VARCHAR(200),"
 					+ "nachname  			VARCHAR(200)," + "telefonNr   			VARCHAR(200),"
 					+ "strasse     			VARCHAR(200)," + "hausNr   			VARCHAR(200),"
+					+ "wohnort				VARCHAR(200),"	
 					+ "plz		   			VARCHAR(200)," + "land		   			VARCHAR(200),"
 					+ "kundenalter	  		integer," // alter geht nicht - Achtung: diskrepanz zu kundenklassen
 					+ "pistenPraef 			VARCHAR(200)," + "gewicht				integer,"
