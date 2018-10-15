@@ -20,9 +20,9 @@ import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
-	Kunde k = new Kunde(); //wieso nicht kundeFX???
+	Kunde k = new Kunde(); // wieso nicht kundeFX???
 	Kreditkarte kk = new Kreditkarte();
-	//Button bt1 = new Button("Eingaben speichern");
+	// Button bt1 = new Button("Eingaben speichern");
 
 	// ACCORDION
 	Accordion accordion = new Accordion();
@@ -63,21 +63,21 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	// TP3
 	VBox vb1tp3 = new VBox();
 	GridPane gridPanetp3 = new GridPane();
-	TextField tf1tp3 = new TextField(); //Anrede
-	TextField tf2tp3 = new TextField(); //Vorn
-	TextField tf3tp3 = new TextField(); //Nachn
-	TextField tf4tp3 = new TextField(); //tel
-	TextField tf5tp3 = new TextField(); //str
-	TextField tf6tp3 = new TextField(); //hausnr
-	TextField tf7tp3 = new TextField(); //wohnort
-	TextField tf8tp3 = new TextField(); //plz
-	TextField tf9tp3 = new TextField(); //land
-	TextField tf10tp3 = new TextField(); //krediknr
- 	TextField tf11tp3 = new TextField(); //kkname
- 	TextField tf12tp3 = new TextField(); //kkinhabername
-	TextField tf13tp3 = new TextField(); //kkprüf
-	TextField tf14tp3 = new TextField(); //kkgült
-	
+	TextField tf1tp3 = new TextField(); // Anrede
+	TextField tf2tp3 = new TextField(); // Vorn
+	TextField tf3tp3 = new TextField(); // Nachn
+	TextField tf4tp3 = new TextField(); // tel
+	TextField tf5tp3 = new TextField(); // str
+	TextField tf6tp3 = new TextField(); // hausnr
+	TextField tf7tp3 = new TextField(); // wohnort
+	TextField tf8tp3 = new TextField(); // plz
+	TextField tf9tp3 = new TextField(); // land
+	TextField tf10tp3 = new TextField(); // krediknr
+	TextField tf11tp3 = new TextField(); // kkname
+	TextField tf12tp3 = new TextField(); // kkinhabername
+	TextField tf13tp3 = new TextField(); // kkprüf
+	TextField tf14tp3 = new TextField(); // kkgült
+
 	Label lb1tp3 = new Label("Vielen Dank für Ihre Auswahl. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp3 = new Label("Anrede");
 	Label lb3tp3 = new Label("Vorname");
@@ -99,94 +99,68 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
 
-		// TITLED PANES
+		// Anlage TITLED PANES
 		tp1.setText("SCHRITT 1: Präferenzen");
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
-
+		// TP Methoden
 		displayTp1(s);
 		displayTp2(selpickupDate, selreturnDate);
 		displayTp3();
-
-		// accordion.getPanes().addAll(tp1, tp2, tp3);
+		// accordion set up
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(600);
 		accordion.setExpandedPane(tp1); // erstes tp geöffnet
-
 		this.getDialogPane().setContent(accordion);
-		
-
+		// button types
 		ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
-		
-//		submit.setOnAction((ActionEvent e) -> {
-//			if ((comment.getText() != null && !comment.getText().isEmpty())) 
-//				label.setText(name.getText() + " " + lastName.getText() + ", " + "thank you for your comment!");
-//			else 
-//				label.setText("You have not left a comment.");
-//		});
-//		clear.setOnAction((ActionEvent e) -> {
-//			name.clear();
-//			lastName.clear();
-//			comment.clear();
-//			label.setText(null);
-//		});
-		
-//		bt1.setOnAction(e -> {
-//			if (!tf5tp1.getText().isEmpty()) {
-//				System.out.printf("Text field: %b%n", tf5tp1);
-//				k.setPistenPraef(tf5tp1.getText());
-//				System.out.println(k.getPistenPraef());
-//			} else {
-//				
-//			}
-//		});
-		
+		// OK Button function
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
-
 			@Override
 			public Integer call(ButtonType arg0) {
-				if (arg0 == close) 
-					if (!tf5tp1.getText().isEmpty()) {
-					try {
-						// TP1 TF INPUT abfragen
-						k.setAlter(Integer.parseInt(tf1tp1.getText()));
-						k.setGewicht(Integer.parseInt(tf2tp1.getText()));
-						k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
-						k.setTechnik(Integer.parseInt(tf4tp1.getText()));
-						k.setPistenPraef(tf5tp1.getText());
-						k.setBeinstellung(Boolean.parseBoolean(tf6tp1.getText()));
-						k.setBindungstyp(Boolean.parseBoolean(tf7tp1.getText()));
-						// TP2 Auswahl abfragen
+				if (arg0 == close)
+					if (!tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()) { //alle TF??
+						try {
+							// TP1 TF INPUT abfragen
+							k.setAlter(Integer.parseInt(tf1tp1.getText()));
+							k.setGewicht(Integer.parseInt(tf2tp1.getText()));
+							k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
+							k.setTechnik(Integer.parseInt(tf4tp1.getText()));
+							k.setPistenPraef(tf5tp1.getText());
+							k.setBeinstellung(Boolean.parseBoolean(tf6tp1.getText()));
+							k.setBindungstyp(Boolean.parseBoolean(tf7tp1.getText()));
+							// TP2 Auswahl abfragen
 
-						// TP3 TF Input abfragen
-						k.setAnrede(Integer.parseInt(tf1tp3.getText()));
-						k.setVorname(tf2tp3.getText());
-						k.setNachname(tf3tp3.getText());
-						k.setTelefonNr(tf4tp3.getText());
-						k.setStrasse(tf5tp3.getText());
-						k.setHausNr(tf6tp3.getText());
-						k.setWohnort(tf7tp3.getText());
-						k.setPlz(tf8tp3.getText());
-						k.setLand(tf9tp3.getText());
-						
-						kk.setKreditkartenNr(tf10tp3.getText());
-						kk.setKreditkartenName(tf11tp3.getText());
-						kk.setInhaberName(tf12tp3.getText());
-						kk.setPruefzahl(tf13tp3.getText());
-						kk.setGueltigkeit(tf14tp3.getText());
-						
-						//in DB speichern
-						Datenbank.postKunde(k);
-						Datenbank.getKunden();
-						
-						new KundenGUI_Dialog2().showAndWait();
-					} catch (IOException e) {
+							// TP3 TF Input abfragen
+							k.setAnrede(Integer.parseInt(tf1tp3.getText()));
+							k.setVorname(tf2tp3.getText());
+							k.setNachname(tf3tp3.getText());
+							k.setTelefonNr(tf4tp3.getText());
+							k.setStrasse(tf5tp3.getText());
+							k.setHausNr(tf6tp3.getText());
+							k.setWohnort(tf7tp3.getText());
+							k.setPlz(tf8tp3.getText());
+							k.setLand(tf9tp3.getText());
+							kk.setKreditkartenNr(tf10tp3.getText());
+							kk.setKreditkartenName(tf11tp3.getText());
+							kk.setInhaberName(tf12tp3.getText());
+							kk.setPruefzahl(tf13tp3.getText());
+							kk.setGueltigkeit(tf14tp3.getText());
 
-						e.printStackTrace();
-					}
-				} else
+							// in DB speichern
+							Datenbank.postKunde(k);
+							// Ausgabe Kunden in Konsole
+							Datenbank.getKunden();
+							// Ausleihe: Abholnummer mit Kdnr speichern
+
+							new KundenGUI_Dialog2().showAndWait();
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+					} else
 						try {
 							new KundenGUI_Dialog2().showAndWait();
 						} catch (IOException e) {
@@ -311,7 +285,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		borderPanetp1.setPrefSize(700, 580);
 		borderPanetp1.setTop(lb1tp1);
 		borderPanetp1.setCenter(gridPanetp1);
-		//borderPanetp1.setBottom(bt1); //eingaben speichern button
+		// borderPanetp1.setBottom(bt1); //eingaben speichern button
 
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);
