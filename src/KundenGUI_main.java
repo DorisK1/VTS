@@ -29,6 +29,7 @@ public class KundenGUI_main extends Application {
 	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x erstellt
 	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann nicht mehr aufgerufen werden!
 	// ODER: DB Ordner löschen!!!
+	
 	static {
 		try {
 			Datenbank.createTables();

@@ -19,7 +19,7 @@ import javafx.util.Callback;
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	KundeFX k = new KundeFX();
-	
+
 	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
@@ -30,16 +30,16 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	// TP1
 	VBox vb1tp1 = new VBox();
 	GridPane gridPanetp1 = new GridPane();
-	TextField tf1tp1 = new TextField();
-	TextField tf2tp1 = new TextField();
-	TextField tf3tp1 = new TextField();
-	TextField tf4tp1 = new TextField();
-	TextField tf5tp1 = new TextField();
-	TextField tf6tp1 = new TextField();
-	TextField tf7tp1 = new TextField();
+	TextField tf1tp1 = new TextField(); // Alter
+	TextField tf2tp1 = new TextField(); // Gewicht
+	TextField tf3tp1 = new TextField(); // SChuhgrösse
+	TextField tf4tp1 = new TextField(); // Techn.
+	TextField tf5tp1 = new TextField(); // Pisten
+	TextField tf6tp1 = new TextField(); // BEinst.
+	TextField tf7tp1 = new TextField(); // schuh
 
 	Label lb1tp1 = new Label("Vielen Dank. Sie haben Ski gewählt. Bitte vervollständigen Sie untenstehende Angaben: ");
-	Label lb2tp1 = new Label("Geburtsdatum");
+	Label lb2tp1 = new Label("Alter");
 	Label lb3tp1 = new Label("Gewicht");
 	Label lb4tp1 = new Label("Schuhgröße");
 	Label lb5tp1 = new Label("Technisches Können");
@@ -116,6 +116,16 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close) {
 					try {
+						// TF INPUT abfragen
+						k.setAlter(Integer.parseInt(tf1tp1.getText()));
+						k.setGewicht(Integer.parseInt(tf2tp1.getText()));
+						k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
+						k.setTechnik(Integer.parseInt(tf4tp1.getText()));
+						k.setPistenPraef(tf5tp1.getText());
+						k.setBeinstellung(Boolean.parseBoolean(tf6tp1.getText()));
+						k.setBindungstyp(Boolean.parseBoolean(tf7tp1.getText()));
+						
+						
 						new KundenGUI_Dialog2().showAndWait();
 					} catch (IOException e) {
 
@@ -125,13 +135,11 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				return null;
 			}
 		});
-		
-		// TF INPUT abfragen
-		//k.setVorname(tf2tp3.getText());
+
 	}
 
 	private void displayTp3() {
-		
+
 		// GRIDPANE
 		gridPanetp3.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp3.setVgap(5);
@@ -175,8 +183,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	}
 
 	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate) {
-		
-		
+
 		rb1tp2.setToggleGroup(grouptp2); // damit nur 1 radiobutton ausgewählt werden kann!
 		rb2tp2.setToggleGroup(grouptp2);
 		rb3tp2.setToggleGroup(grouptp2);
@@ -203,7 +210,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	}
 
 	private void displayTp1(String s) {
-				
+
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp1.setVgap(5);
