@@ -295,7 +295,7 @@ public class Datenbank {
 						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
 						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));
 				
-
+//				KUNDEN OBJ ANLEGEN
 //				k.setId(rs.getInt("ID"));
 //				k.setName(rs.getString("NAME"));
 //				k.setDesc(rs.getString("DESCR"));
