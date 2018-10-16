@@ -20,7 +20,10 @@ import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
-	Kunde k = new Kunde(); // wieso nicht kundeFX???
+	Kunde k = new Kunde(); 
+	Ausleihe a = new Ausleihe();
+	Ski sk = new Ski();
+	Snowboard sb = new Snowboard();
 	Kreditkarte kk = new Kreditkarte();
 	// Button bt1 = new Button("Eingaben speichern");
 
@@ -154,6 +157,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							// Ausgabe Kunden in Konsole
 							Datenbank.getKunden();
 							// Ausleihe: Abholnummer mit Kdnr speichern
+							Datenbank.postAusleihe(k, a, sk, sb);
 
 							new KundenGUI_Dialog2().showAndWait();
 						} catch (IOException e) {

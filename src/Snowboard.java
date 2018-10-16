@@ -25,6 +25,10 @@ public class Snowboard {
 		this.bindungstyp = bindungstyp;
 	}
 
+	public Snowboard() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setSnowboardNr(int snowboardNr) {
 		this.snowboardNr = snowboardNr;
 	}

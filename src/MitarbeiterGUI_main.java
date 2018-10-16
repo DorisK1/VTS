@@ -92,6 +92,9 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp3.setPadding(new Insets(5));
 		borderPanetp3.setBottom(lb1tp3);
 		
+		TableColumn<Kunde, Integer> customerIdCol = new TableColumn<>("kundenNr");
+		customerIdCol.setCellValueFactory(new PropertyValueFactory<>("kundenNr"));
+		customerIdCol.setMinWidth(100);
 		TableColumn<Kunde, String> firstNameCol = new TableColumn<>("Vorname");
 		firstNameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));
 		firstNameCol.setMinWidth(100);
@@ -110,12 +113,12 @@ public class MitarbeiterGUI_main extends Application {
 		@SuppressWarnings("unused")
 		ObservableList<Kunde> data =
 				FXCollections.observableArrayList(
-						new Kunde(k.getAnrede(), k.getGewicht(), k.getHausNr(), "Smith", "jacob.smith@example.com", 
+						new Kunde(k.getKundenNr(), k.getGewicht(), k.getHausNr(), "Smith", "jacob.smith@example.com", 
 								null, null, null, null, null, 1999, null, 0, 0, 0, true, false)
 						
 						);
 		table.setItems(data);
-		table.getColumns().addAll(firstNameCol, lastNameCol, ageCol, weightCol);
+		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ageCol, weightCol);
 		
 		borderPanetp3.setCenter(table);
 		tp3.setContent(borderPanetp3);

@@ -21,6 +21,10 @@ public class Ski {
 		this.farbe = farbe;
 	}
 
+	public Ski() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setSkiNr(int skiNr) {
 		this.skiNr = skiNr;
 	}
