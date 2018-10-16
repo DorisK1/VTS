@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.time.LocalDate;
-
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -20,30 +20,28 @@ import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
-	Kunde k = new Kunde(); 
+	// OBJEKTE
+	Kunde k = new Kunde();
 	Ausleihe a = new Ausleihe();
 	Ski sk = new Ski();
 	Snowboard sb = new Snowboard();
 	Kreditkarte kk = new Kreditkarte();
-	// Button bt1 = new Button("Eingaben speichern");
-
 	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
-
 	// TP1
+	Button bt1tp1 = new Button("Weiter");
 	VBox vb1tp1 = new VBox();
 	GridPane gridPanetp1 = new GridPane();
 	TextField tf1tp1 = new TextField(); // Alter
 	TextField tf2tp1 = new TextField(); // Gewicht
 	TextField tf3tp1 = new TextField(); // SChuhgrösse
-	TextField tf4tp1 = new TextField(); // Techn.
-	TextField tf5tp1 = new TextField(); // Pisten
-	TextField tf6tp1 = new TextField(); // BEinst.
-	TextField tf7tp1 = new TextField(); // schuh
-
+	ComboBox<String> cob1tp1 = new ComboBox<>(); // Techn.
+	ComboBox<String> cob2tp1 = new ComboBox<>(); // Pisten
+	ComboBox<String> cob3tp1 = new ComboBox<>(); // BEinst.
+	ComboBox<String> cob4tp1 = new ComboBox<>(); // schuh
 	Label lb1tp1 = new Label("Vielen Dank. Sie haben Ski gewählt. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp1 = new Label("Alter");
 	Label lb3tp1 = new Label("Gewicht");
@@ -52,17 +50,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb6tp1 = new Label("Pistenpräferenz");
 	Label lb7tp1 = new Label("Beinstellung"); // nur für Snowboard!!!
 	Label lb8tp1 = new Label("Schuhart"); // nur für Snowboard!!!
-
 	// TP2
 	HBox hb1tp2 = new HBox();
 	GridPane gridPanetp2 = new GridPane();
 	Label lb1tp2 = new Label("Gemäß Ihren Angaben können wir Ihnen folgende Produkte zur Auswahl anbieten: ");
-	Button bt1tp2 = new Button("OK");
+	Button bt1tp2 = new Button("Weiter");
 	RadioButton rb1tp2 = new RadioButton("");
 	RadioButton rb2tp2 = new RadioButton("");
 	RadioButton rb3tp2 = new RadioButton("");
 	ToggleGroup grouptp2 = new ToggleGroup();
-
 	// TP3
 	VBox vb1tp3 = new VBox();
 	GridPane gridPanetp3 = new GridPane();
@@ -80,7 +76,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf12tp3 = new TextField(); // kkinhabername
 	TextField tf13tp3 = new TextField(); // kkprüf
 	TextField tf14tp3 = new TextField(); // kkgült
-
 	Label lb1tp3 = new Label("Vielen Dank für Ihre Auswahl. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp3 = new Label("Anrede");
 	Label lb3tp3 = new Label("Vorname");
@@ -124,16 +119,16 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					if (!tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()) { //alle TF??
+					if (!tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()) { // alle TF??
 						try {
 							// TP1 TF INPUT abfragen
 							k.setAlter(Integer.parseInt(tf1tp1.getText()));
 							k.setGewicht(Integer.parseInt(tf2tp1.getText()));
 							k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
-							k.setTechnik(Integer.parseInt(tf4tp1.getText()));
-							k.setPistenPraef(tf5tp1.getText());
-							k.setBeinstellung(Boolean.parseBoolean(tf6tp1.getText()));
-							k.setBindungstyp(Boolean.parseBoolean(tf7tp1.getText()));
+							k.setTechnik(cob1tp1.getSelectionModel().getSelectedItem());
+							k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
+							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
+							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
 							// TP2 Auswahl abfragen
 
 							// TP3 TF Input abfragen
@@ -157,7 +152,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							// Ausgabe Kunden in Konsole
 							Datenbank.getKunden();
 							// Ausleihe: Abholnummer mit Kdnr speichern
-							Datenbank.postAusleihe(k, a, sk, sb);
+							// Datenbank.postAusleihe(k, a, sk, sb);
 
 							new KundenGUI_Dialog2().showAndWait();
 						} catch (IOException e) {
@@ -263,36 +258,48 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb4tp1, 0, 2);
 		gridPanetp1.add(lb5tp1, 0, 3);
 		gridPanetp1.add(lb6tp1, 0, 4);
-
 		// nur für Snowboard
 		if (s.equals("Snowboard")) {
 			gridPanetp1.add(lb7tp1, 0, 5);
 			gridPanetp1.add(lb8tp1, 0, 6);
 		}
-
 		// GRIDPANE TEXTFELDER
 		gridPanetp1.add(tf1tp1, 1, 0);
 		gridPanetp1.add(tf2tp1, 1, 1);
 		gridPanetp1.add(tf3tp1, 1, 2);
-		gridPanetp1.add(tf4tp1, 1, 3);
-		gridPanetp1.add(tf5tp1, 1, 4);
-
+		gridPanetp1.add(cob1tp1, 1, 3);
+		gridPanetp1.add(cob2tp1, 1, 4);
 		// nur für Snowboard
 		if (s.equals("Snowboard")) {
-			gridPanetp1.add(tf6tp1, 1, 5);
-			gridPanetp1.add(tf7tp1, 1, 6);
+			gridPanetp1.add(cob3tp1, 1, 5);
+			gridPanetp1.add(cob4tp1, 1, 6);
 		}
-
+		// combo boxes
+		cob1tp1.setItems(FXCollections.observableArrayList("sehr gut", "mittel", "schlecht"));
+		if (s.equals("Ski")) {
+			cob2tp1.setItems(FXCollections.observableArrayList("blau", "rot", "schwarz"));
+		} else {
+			cob2tp1.setItems(FXCollections.observableArrayList("blau", "rot", "schwarz", "Halfpipe"));
+		}
+		cob3tp1.setItems(FXCollections.observableArrayList("regular", "goofy"));
+		cob4tp1.setItems(FXCollections.observableArrayList("soft", "hart"));
 		// BORDERPANE
 		BorderPane borderPanetp1 = new BorderPane();
 		borderPanetp1.setPadding(new Insets(5));
 		borderPanetp1.setPrefSize(700, 580);
 		borderPanetp1.setTop(lb1tp1);
 		borderPanetp1.setCenter(gridPanetp1);
-		// borderPanetp1.setBottom(bt1); //eingaben speichern button
-
+		borderPanetp1.setBottom(bt1tp1);
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);
+		// KATEGORIE-BERECHNUNG
+		 bt1tp1.setOnAction(bp -> {
+		 if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")) {
+			 
+		 }
+		
+		 System.out.println("Kategorie " + s + " gewählt");
+		 });
 
 	}
 

@@ -16,13 +16,13 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 	private String pistenPraef;
 	private int gewicht;
 	private double schuhgroesse;
-	private int technik; //enum???
+	private String technik; 
 	private boolean beinstellung;
 	private boolean bindungstyp;
 	
 	public Kunde(int kundenNr, int anrede, String vorname, String nachname, String telefonNr,
 			String strasse, String hausNr, String wohnort, String plz, String land, int alter, String pistenPraef, int gewicht,
-			double schuhgroesse, int technik, boolean beinstellung, boolean bindungstyp) {
+			double schuhgroesse, String technik, boolean beinstellung, boolean bindungstyp) {
 		super();
 		this.kundenNr = kundenNr;
 		this.anrede = anrede;
@@ -103,7 +103,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		return schuhgroesse;
 	}
 
-	public int getTechnik() {
+	public String getTechnik() {
 		return technik;
 	}
 
@@ -171,7 +171,7 @@ public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse
 		this.schuhgroesse = schuhgroesse;
 	}
 
-	public void setTechnik(int technik) {
+	public void setTechnik(String technik) {
 		this.technik = technik;
 	}
 

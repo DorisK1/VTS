@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Datenbank {
@@ -55,7 +54,7 @@ public class Datenbank {
 					+ "plz		   			VARCHAR(200)," + "land		   			VARCHAR(200),"
 					+ "kundenalter	  		integer," // alter geht nicht - Achtung: diskrepanz zu kundenklassen
 					+ "pistenPraef 			VARCHAR(200)," + "gewicht				integer,"
-					+ "schuhgroesse			double," + "technik				integer,"
+					+ "schuhgroesse			double," + "technik				VARCHAR(200),"
 					+ "beinstellung			BOOLEAN," + "bindungstyp			BOOLEAN," + "PRIMARY KEY(kundenNr))";
 
 			stmt.executeUpdate(s1); // könnte man alle strings zusammenfassen in einem update?
@@ -317,7 +316,7 @@ public class Datenbank {
 		pstmt.setDouble(5, 15.50); // tagesPreis, double
 		pstmt.setString(6, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
-		System.out.println("Racer A in KAT 1 angelegt");
+		System.out.println("Freestyle A in KAT 1 angelegt");
 		//kat1 Snowboard 2
 		String s16a = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s16a);
@@ -328,7 +327,7 @@ public class Datenbank {
 		pstmt.setDouble(5, 16.50); // tagesPreis, double
 		pstmt.setString(6, "BUNT"); // farbe, String
 		pstmt.executeUpdate();
-		System.out.println("Racer B in KAT 1 angelegt");
+		System.out.println("Freestyle B in KAT 1 angelegt");
 		//kat1 Snowboard 3
 		String s16b = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s16b);
@@ -432,7 +431,7 @@ public class Datenbank {
 			pstmt.setString(11, k.getPistenPraef());
 			pstmt.setInt(12, k.getGewicht());
 			pstmt.setDouble(13, k.getSchuhgroesse());
-			pstmt.setInt(14, k.getTechnik());
+			pstmt.setString(14, k.getTechnik());
 			pstmt.setBoolean(15, k.isBeinstellung());
 			pstmt.setBoolean(16, k.isBindungstyp());
 			pstmt.executeUpdate();
@@ -532,15 +531,14 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("kundenNr = " + rs.getInt("kundenNr") + " anrede = " + rs.getInt("anrede") + " vorname = " + rs.getString("vorname") + " nachname = "
-						+ rs.getString("nachname") + " telefonNr = " + rs.getString("telefonNr") + " strasse = " + rs.getString("strasse")
-						+ " hausNr = " + rs.getString("hausNr") + " wohnort = " + rs.getString("wohnort") + " plz = " + rs.getString("plz")
-						+ " land = " + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter"));
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + " vorname = " + rs.getString("vorname") + " nachname = "
+						+ rs.getString("nachname") + rs.getString("land") + " kundenalter = " + rs.getInt("kundenalter")
+						+ " technik = " + rs.getString("technik"));
 
 				kl.add(new Kunde(rs.getInt("kundenNr"), rs.getInt("anrede"), rs.getString("vorname"), rs.getString("nachname"),
 						rs.getString("telefonNr"), rs.getString("strasse"), rs.getString("hausNr"), rs.getString("wohnort"),
 						rs.getString("plz"), rs.getString("land"), rs.getInt("kundenalter"), rs.getString("pistenPraef"), rs.getInt("gewicht"), 
-						rs.getDouble("schuhgroesse"), rs.getInt("technik"), 
+						rs.getDouble("schuhgroesse"), rs.getString("technik"), 
 						rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
 			}
 		} catch (SQLException e) {

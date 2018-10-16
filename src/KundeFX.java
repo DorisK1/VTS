@@ -20,7 +20,7 @@ public class KundeFX {
 	private SimpleStringProperty pistenPraef;
 	private SimpleIntegerProperty gewicht;
 	private SimpleDoubleProperty schuhgroesse;
-	private SimpleIntegerProperty technik; // enum???
+	private SimpleStringProperty technik; // enum???
 	private SimpleBooleanProperty beinstellung;
 	private SimpleBooleanProperty bindungstyp;
 
@@ -40,7 +40,7 @@ public class KundeFX {
 		pistenPraef = new SimpleStringProperty(kundefx.getPistenPraef());
 		gewicht = new SimpleIntegerProperty(kundefx.getGewicht());
 		schuhgroesse = new SimpleDoubleProperty(kundefx.getSchuhgroesse());
-		technik = new SimpleIntegerProperty(kundefx.getTechnik());
+		technik = new SimpleStringProperty(kundefx.getTechnik());
 		beinstellung = new SimpleBooleanProperty(kundefx.isBeinstellung());
 		bindungstyp = new SimpleBooleanProperty(kundefx.isBindungstyp());
 
@@ -232,16 +232,16 @@ public class KundeFX {
 		return schuhgroesse;
 	}
 	
-	public int getTechnik() {
+	public String getTechnik() {
 		return technik.get();
 	}
 
-	public void setTechnik(int i) {
-		technik.set(i);
-		kundefx.setTechnik(i);
+	public void setTechnik(String s) {
+		technik.set(s);
+		kundefx.setTechnik(s);
 	}
 
-	public SimpleIntegerProperty TechnikProperty() {
+	public SimpleStringProperty TechnikProperty() {
 		return technik;
 	}
 	

@@ -25,31 +25,30 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class KundenGUI_main extends Application {
-	
-	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x erstellt
-	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann nicht mehr aufgerufen werden!
+
+	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x
+	// erstellt
+	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann
+	// nicht mehr aufgerufen werden!
 	// ODER: DB Ordner löschen!!!
-	
-	//Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
-	
-//	static {
-//		try {
-//			Datenbank.createTables();
-//			Datenbank.insertRows();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-//	
-	
+	// Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
+
+	static {
+		try {
+			Datenbank.createTables();
+			Datenbank.insertRows();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		// Ausleihe Objekt zur Verspeicherung des Datums
-		//AusleiheFX ausleihe = new AusleiheFX();
-		
+		// AusleiheFX ausleihe = new AusleiheFX();
+
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
@@ -68,13 +67,13 @@ public class KundenGUI_main extends Application {
 		Label lbl2 = new Label("\nBitte geben Sie die gewünschte Ausleihdauer an:\n");
 		Label lbl3 = new Label("von: ");
 		Label lbl4 = new Label("bis: ");
-		
+
 		// DATEPICKER
 		DatePicker datePicker1 = new DatePicker();
 		DatePicker datePicker2 = new DatePicker();
 		datePicker1.setValue(LocalDate.now());
 		datePicker2.setValue(LocalDate.now());
-		
+
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(lbl3, datePicker1, lbl4, datePicker2);
 
