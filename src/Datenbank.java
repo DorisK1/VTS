@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Datenbank {
@@ -14,7 +15,7 @@ public class Datenbank {
 	public static Connection conn = null;
 	public static PreparedStatement pstmt = null;
 	Kunde k = new Kunde();
-	
+	Ausleihe a = new Ausleihe();
 	// ResultSet rs = null;
 
 	public static void createTables() { 
@@ -369,5 +370,45 @@ public class Datenbank {
 		return kl;
 	}
 
-	//postAusleihe
+	public static Boolean postAusleihe(Kunde k, Ausleihe a) { 
+
+		System.out.println("neue Ausleihe anlegen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			pstmt = conn.prepareStatement("INSERT INTO ausleihen(kundenNr, skiNr, snowboardNr, leihstart, leihende, mietpreis, "
+					+ "kaution, nachzahlung, gesamtpreis) VALUES(?,?,?,?,?,?,?,?,?) ");
+			
+			pstmt.setInt(1, k.getKundenNr());
+//			pstmt.setString(2, );
+//			pstmt.setString(3, );
+			pstmt.setDate(4, a.getLeihStart());
+			pstmt.setDate(5, a.getLeihEnde());
+			pstmt.setDouble(6, a.getMietpreis());
+			pstmt.setDouble(7, a.getKaution());
+			pstmt.setDouble(8, a.getNachzahlung());
+			pstmt.setDouble(9, a.getGesamtpreis());
+			pstmt.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+
+	}
+
 }

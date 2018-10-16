@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Ausleihe {
 	
@@ -9,15 +9,15 @@ public class Ausleihe {
 	private Ski ski;
 	private int snowboardNr;
 	private Snowboard snowboard;
-	private LocalDateTime leihStart;
-	private LocalDateTime leihEnde;
+	private Date leihStart;
+	private Date leihEnde;
 	private double mietpreis;
 	private double kaution;
 	private double nachzahlung;
 	private double gesamtpreis;
 	
 	public Ausleihe(int abholNr, int kundenNr, Kunde kunde, int skiNr, Ski ski, int snowboardNr, Snowboard snowboard,
-			LocalDateTime leihStart, LocalDateTime leihEnde, double mietpreis, double kaution, double nachzahlung,
+			Date leihStart, Date leihEnde, double mietpreis, double kaution, double nachzahlung,
 			double gesamtpreis) {
 		super();
 		this.abholNr = abholNr;
@@ -67,11 +67,11 @@ public class Ausleihe {
 		this.snowboard = snowboard;
 	}
 
-	public void setLeihStart(LocalDateTime leihStart) {
+	public void setLeihStart(Date leihStart) {
 		this.leihStart = leihStart;
 	}
 
-	public void setLeihEnde(LocalDateTime leihEnde) {
+	public void setLeihEnde(Date leihEnde) {
 		this.leihEnde = leihEnde;
 	}
 
@@ -119,11 +119,11 @@ public class Ausleihe {
 		return snowboard;
 	}
 
-	public LocalDateTime getLeihStart() {
+	public Date getLeihStart() {
 		return leihStart;
 	}
 
-	public LocalDateTime getLeihEnde() {
+	public Date getLeihEnde() {
 		return leihEnde;
 	}
 
