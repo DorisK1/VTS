@@ -227,7 +227,12 @@ public class Datenbank {
 		pstmt.setString(6, "GRÜN"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Carver C in KAT 1 angelegt");		
-
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr3 = rs.getInt("1");
+		sk.setSkiNr(skiNr3);	
+		System.out.println("SkiNr: " + skiNr3);
+		rs = null;
 		// in KAT 2
 		//kat2 ski 1
 		String s13 = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
@@ -240,6 +245,12 @@ public class Datenbank {
 		pstmt.setString(6, "BLAU"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Alpin A in KAT 2 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr4 = rs.getInt("1");
+		sk.setSkiNr(skiNr4);	
+		System.out.println("SkiNr: " + skiNr4);
+		rs = null;
 		//kat2 ski 2
 		String s13a = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s13a);
@@ -251,6 +262,12 @@ public class Datenbank {
 		pstmt.setString(6, "ROT"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Alpin B in KAT 2 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr5 = rs.getInt("1");
+		sk.setSkiNr(skiNr5);	
+		System.out.println("SkiNr: " + skiNr5);
+		rs = null;
 		//kat2 ski 3
 		String s13b = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s13b);
@@ -262,7 +279,12 @@ public class Datenbank {
 		pstmt.setString(6, "GELB"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Alpin C in KAT 2 angelegt");
-		
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr6 = rs.getInt("1");
+		sk.setSkiNr(skiNr6);	
+		System.out.println("SkiNr: " + skiNr6);
+		rs = null;
 		// in KAT 3
 		//kat3 ski 1
 		String s14 = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
@@ -275,6 +297,12 @@ public class Datenbank {
 		pstmt.setString(6, "GRAU"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Racer A in KAT 3 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr7 = rs.getInt("1");
+		sk.setSkiNr(skiNr7);	
+		System.out.println("SkiNr: " + skiNr7);
+		rs = null;
 		//kat3 ski 2
 		String s14a = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s14a);
@@ -286,6 +314,12 @@ public class Datenbank {
 		pstmt.setString(6, "GRÜN"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Racer B in KAT 3 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr8 = rs.getInt("1");
+		sk.setSkiNr(skiNr8);	
+		System.out.println("SkiNr: " + skiNr8);
+		rs = null;
 		//kat3 ski 3
 		String s14b = "INSERT INTO ski (skiKategorieNr, skiProduktname, skiTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s14b);
@@ -297,7 +331,12 @@ public class Datenbank {
 		pstmt.setString(6, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Racer C in KAT 3 angelegt");
-		
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int skiNr9 = rs.getInt("1");
+		sk.setSkiNr(skiNr9);	
+		System.out.println("SkiNr: " + skiNr9);
+		rs = null;
 		// SNOWBOARDKategorien anlegen
 		// KAT 1
 		String s15 = "INSERT INTO snowboardkategorien (snowboardKategorieNr, snowboardKategorieName) VALUES (?,?)";
@@ -306,6 +345,7 @@ public class Datenbank {
 		pstmt.setString(2, "Kat1 - Freestyle"); // skiKategorieName, String
 		pstmt.executeUpdate();
 		System.out.println("Snowboardkategorie 1 angelegt");
+		
 		// KAT 2
 		String s15a = "INSERT INTO snowboardkategorien (snowboardKategorieNr, snowboardKategorieName) VALUES (?,?)";
 		pstmt = conn.prepareStatement(s15a);
@@ -333,6 +373,12 @@ public class Datenbank {
 		pstmt.setString(6, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freestyle A in KAT 1 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr1 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr1);	
+		System.out.println("SnowboardNr: " + snowboardNr1);
+		rs = null;
 		//kat1 Snowboard 2
 		String s16a = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s16a);
@@ -344,6 +390,12 @@ public class Datenbank {
 		pstmt.setString(6, "BUNT"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freestyle B in KAT 1 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr2 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr2);	
+		System.out.println("SnowboardNr: " + snowboardNr2);
+		rs = null;
 		//kat1 Snowboard 3
 		String s16b = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s16b);
@@ -355,6 +407,12 @@ public class Datenbank {
 		pstmt.setString(6, "ROT"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freestyle C in KAT 1 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr3 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr3);	
+		System.out.println("SnowboardNr: " + snowboardNr3);
+		rs = null;
 		// in KAT 2 FREERIDE
 		//kat2 Snowboard 1
 		String s17 = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
@@ -367,6 +425,12 @@ public class Datenbank {
 		pstmt.setString(6, "WEISS"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freeride A in KAT 2 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr4 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr4);	
+		System.out.println("SnowboardNr: " + snowboardNr4);
+		rs = null;
 		//kat2 Snowboard 2
 		String s17a = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s17a);
@@ -378,6 +442,12 @@ public class Datenbank {
 		pstmt.setString(6, "BRAUN"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freeride B in KAT 2 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr5 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr5);	
+		System.out.println("SnowboardNr: " + snowboardNr5);
+		rs = null;
 		//kat2 Snowboard 3
 		String s17b = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s17b);
@@ -389,6 +459,12 @@ public class Datenbank {
 		pstmt.setString(6, "BRAUN"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freeride C in KAT 2 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr6 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr6);	
+		System.out.println("SnowboardNr: " + snowboardNr6);
+		rs = null;
 		// in KAT 3 All Mountain
 		//kat3 Snowboard 1
 		String s18 = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
@@ -401,6 +477,12 @@ public class Datenbank {
 		pstmt.setString(6, "BEIGE"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("All Mountain A in KAT 3 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr7 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr7);	
+		System.out.println("SnowboardNr: " + snowboardNr7);
+		rs = null;
 		//kat3 Snowboard 2
 		String s18a = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s18a);
@@ -412,6 +494,12 @@ public class Datenbank {
 		pstmt.setString(6, "GELB"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("All Mountain B in KAT 3 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr8 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr8);	
+		System.out.println("SnowboardNr: " + snowboardNr8);
+		rs = null;
 		//kat3 Snowboard 3
 		String s18b = "INSERT INTO snowboard (snowboardKategorieNr, snowboardProduktname, snowboardTyp, regalNr, tagesPreis, farbe) VALUES (?,?,?,?,?,?)";
 		pstmt = conn.prepareStatement(s18b);
@@ -423,6 +511,12 @@ public class Datenbank {
 		pstmt.setString(6, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("All Mountain C in KAT 3 angelegt");
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int snowboardNr9 = rs.getInt("1");
+		sb.setSnowboardNr(snowboardNr9);	
+		System.out.println("SnowboardNr: " + snowboardNr9);
+		rs = null;
 	}
 
 	public static Boolean postKunde(Kunde k) { 
