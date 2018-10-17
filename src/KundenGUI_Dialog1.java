@@ -52,8 +52,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb8tp1 = new Label("Schuhart"); // nur für Snowboard!!!
 	// TP2
 	HBox hb1tp2 = new HBox();
+	HBox hb2tp2 = new HBox();
+	HBox hb3tp2 = new HBox();
+	VBox vb1tp2 = new VBox();
 	GridPane gridPanetp2 = new GridPane();
 	Label lb1tp2 = new Label("Gemäß Ihren Angaben können wir Ihnen folgende Produkte zur Auswahl anbieten: ");
+	Label lb2tp2 = new Label();
+	Label lb3tp2 = new Label();
+	Label lb4tp2 = new Label("von: ");
+	Label lb5tp2 = new Label(" bis: ");
+	Label lb6tp2 = new Label("pic");
+	Label lb7tp2 = new Label("pic");
+	Label lb8tp2 = new Label("pic");
 	Button bt1tp2 = new Button("Weiter");
 	RadioButton rb1tp2 = new RadioButton("");
 	RadioButton rb2tp2 = new RadioButton("");
@@ -102,7 +112,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
 		// TP Methoden
-		displayTp1(s);
+		displayTp1(s, sk, sb);
 		displayTp2(selpickupDate, selreturnDate);
 		displayTp3();
 		// accordion set up
@@ -225,21 +235,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		rb1tp2.setToggleGroup(grouptp2); // damit nur 1 radiobutton ausgewählt werden kann!
 		rb2tp2.setToggleGroup(grouptp2);
 		rb3tp2.setToggleGroup(grouptp2);
-		Label lb2tp2 = new Label();
-		Label lb3tp2 = new Label();
-		Label lb4tp2 = new Label("von: ");
-		Label lb5tp2 = new Label(" bis: ");
 		lb2tp2.setText(selpickupDate.toString());
 		lb3tp2.setText(selreturnDate.toString());
-
-		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2, rb1tp2, rb2tp2, rb3tp2);
-
+		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2);
+		hb2tp2.getChildren().addAll(rb1tp2, rb2tp2, rb3tp2);
+		hb3tp2.getChildren().addAll(lb6tp2, lb7tp2, lb8tp2);
+		vb1tp2.getChildren().addAll(hb1tp2, hb2tp2, hb3tp2);
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
 		borderPanetp2.setPadding(new Insets(5));
 		borderPanetp2.setPrefSize(700, 580);
-		borderPanetp2.setTop(lb1tp2);
-		borderPanetp2.setCenter(hb1tp2);
+	//	borderPanetp2.setTop(lb1tp2);
+		borderPanetp2.setCenter(vb1tp2);
 		borderPanetp2.setBottom(bt1tp2);
 
 		tp2.setContent(borderPanetp2);
@@ -247,7 +254,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp1(String s) {
+	private void displayTp1(String s, Ski sk, Snowboard sb) {
 
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
@@ -293,33 +300,39 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);
 
-		// KATEGORIE-BERECHNUNG für TP2
+		// KATEGORIE-BERECHNUNG für TP2 mit Weiter Button
 		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 2xif
 			if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+				System.out.println("Skikategorie 1 gewählt");
+				//rb1tp2.setText(sk.getSkiTyp()); //???
+				rb1tp2.setText(" test ");
+				rb2tp2.setText(" test ");
+				rb3tp2.setText(" test ");
 				
-
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
-
+				System.out.println("Skikategorie 1 gewählt");
 				// --> Ski KAT2
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
-
+				System.out.println("Skikategorie 2 gewählt");
+				
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
+				System.out.println("Skikategorie 2 gewählt");
 
 				// --> Ski KAT3
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+				System.out.println("Skikategorie 3 gewählt");
 
 			}
-
-			System.out.println("Kategorie " + s + " gewählt");
+			accordion.setExpandedPane(tp2);
 		});
 
 	}

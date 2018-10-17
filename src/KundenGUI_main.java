@@ -33,15 +33,15 @@ public class KundenGUI_main extends Application {
 	// ODER: DB Ordner löschen!!!
 	// Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
 
-	static {
-		try {
-			Datenbank.createTables();
-			Datenbank.insertRows();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			Datenbank.createTables();
+//			Datenbank.insertRows();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public void start(Stage primaryStage) {
