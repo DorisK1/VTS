@@ -98,7 +98,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		this.setHeaderText("Details zu ");
 
 		// Anlage TITLED PANES
-		tp1.setText("SCHRITT 1: Präferenzen");
+		tp1.setText("SCHRITT 1: Basisangaben");
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
 		// TP Methoden
@@ -274,7 +274,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			gridPanetp1.add(cob3tp1, 1, 5);
 			gridPanetp1.add(cob4tp1, 1, 6);
 		}
-		// combo boxes
+		// COMBO-BOXEN
 		cob1tp1.setItems(FXCollections.observableArrayList("sehr gut", "mittel", "schlecht"));
 		if (s.equals("Ski")) {
 			cob2tp1.setItems(FXCollections.observableArrayList("blau", "rot", "schwarz"));
@@ -292,14 +292,35 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		borderPanetp1.setBottom(bt1tp1);
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);
-		// KATEGORIE-BERECHNUNG
-		 bt1tp1.setOnAction(bp -> {
-		 if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")) {
-			 
-		 }
-		
-		 System.out.println("Kategorie " + s + " gewählt");
-		 });
+
+		// KATEGORIE-BERECHNUNG für TP2
+		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 2xif
+			if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+				
+
+			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
+
+				// --> Ski KAT2
+			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+
+			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
+
+				// --> Ski KAT3
+			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+
+			}
+
+			System.out.println("Kategorie " + s + " gewählt");
+		});
 
 	}
 

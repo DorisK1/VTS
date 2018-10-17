@@ -113,9 +113,9 @@ public class MitarbeiterGUI_main extends Application {
 		@SuppressWarnings("unused")
 		ObservableList<Kunde> data =
 				FXCollections.observableArrayList(
-						new Kunde(k.getKundenNr(), k.getGewicht(), k.getHausNr(), "Smith", "jacob.smith@example.com", 
-								null, null, null, null, null, 1999, null, 0, 0, 0, true, false)
-						
+//						new Kunde(k.getKundenNr(), k.getGewicht(), k.getHausNr(), "Smith", "jacob.smith@example.com", 
+//								null, null, null, null, null, 1999, null, 0, 0, 0, true, false)
+//						
 						);
 		table.setItems(data);
 		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ageCol, weightCol);
