@@ -308,7 +308,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 1 gewählt");
 				//rb1tp2.setText(sk.getSkiTyp()); //???
-				rb1tp2.setText(" test ");
+				rb1tp2.setText(" test "); //zb CARVER 1
 				rb2tp2.setText(" test ");
 				rb3tp2.setText(" test ");
 				
