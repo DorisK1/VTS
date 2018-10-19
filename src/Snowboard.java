@@ -5,6 +5,7 @@ public class Snowboard {
 	private int snowboardKategorieNr;
 	private String snowboardProduktname;
 	private String snowboardTyp;
+	private String snowboardBildpfad;
 	private String regalNr;
 	private double tagespreis;
 	private String farbe; //enum??
@@ -12,12 +13,13 @@ public class Snowboard {
 	private boolean bindungstyp;
 	
 	public Snowboard(int snowboardNr, int snowboardKategorieNr, String snowboardProduktname, String snowboardTyp,
-			String regalNr, double tagespreis, String farbe, boolean beinstellung, boolean bindungstyp) {
+			String snowboardBildpfad, String regalNr, double tagespreis, String farbe, boolean beinstellung, boolean bindungstyp) {
 		super();
 		this.snowboardNr = snowboardNr;
 		this.snowboardKategorieNr = snowboardKategorieNr;
 		this.snowboardProduktname = snowboardProduktname;
 		this.snowboardTyp = snowboardTyp;
+		this.snowboardBildpfad = snowboardBildpfad;
 		this.regalNr = regalNr;
 		this.tagespreis = tagespreis;
 		this.farbe = farbe;
@@ -99,6 +101,14 @@ public class Snowboard {
 
 	public boolean isBindungstyp() {
 		return bindungstyp;
+	}
+
+	public String getSnowboardBildpfad() {
+		return snowboardBildpfad;
+	}
+
+	public void setSnowboardBildpfad(String snowboardBildpfad) {
+		this.snowboardBildpfad = snowboardBildpfad;
 	}
 	
 	

@@ -5,17 +5,19 @@ public class Ski {
 	private int skiKategorieNr;
 	private String skiProduktname;
 	private String skiTyp;
+	private String skiBildpfad;
 	private String regalNr;
 	private double tagespreis;
 	private String farbe; //enum??
 	
-	public Ski(int skiNr, int skiKategorieNr, String skiProduktname, String skiTyp, String regalNr, double tagespreis,
+	public Ski(int skiNr, int skiKategorieNr, String skiProduktname, String skiTyp, String skiBildpfad, String regalNr, double tagespreis,
 			String farbe) {
 		super();
 		this.skiNr = skiNr;
 		this.skiKategorieNr = skiKategorieNr;
 		this.skiProduktname = skiProduktname;
 		this.skiTyp = skiTyp;
+		this.skiBildpfad = skiBildpfad;
 		this.regalNr = regalNr;
 		this.tagespreis = tagespreis;
 		this.farbe = farbe;
@@ -39,6 +41,10 @@ public class Ski {
 
 	public void setSkiTyp(String skiTyp) {
 		this.skiTyp = skiTyp;
+	}
+
+	public void setSkiBildpfad(String skiBildpfad) {
+		this.skiBildpfad = skiBildpfad;
 	}
 
 	public void setRegalNr(String regalNr) {
@@ -67,6 +73,10 @@ public class Ski {
 
 	public String getSkiTyp() {
 		return skiTyp;
+	}
+
+	public String getSkiBildpfad() {
+		return skiBildpfad;
 	}
 
 	public String getRegalNr() {
