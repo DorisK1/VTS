@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -9,9 +12,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +31,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Kunde k = new Kunde();
 	Ausleihe a = new Ausleihe();
 	Ski sk = new Ski();
+	SkiFX skfx = new SkiFX();
 	Snowboard sb = new Snowboard();
 	Kreditkarte kk = new Kreditkarte();
 	// ACCORDION
@@ -112,7 +120,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
 		// TP Methoden
-		displayTp1(s, sk, sb);
+		displayTp1(s, skfx, sb);
 		displayTp2(selpickupDate, selreturnDate);
 		displayTp3();
 		// accordion set up
@@ -254,7 +262,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp1(String s, Ski sk, Snowboard sb) {
+	private void displayTp1(String s, SkiFX skfx, Snowboard sb) {
 
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
@@ -307,31 +315,93 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 1 gewählt");
-				//rb1tp2.setText(sk.getSkiTyp()); //???
-				rb1tp2.setText(" test "); //zb CARVER 1
+				Datenbank.getSki(1);
+				
+				//ArrayList<Ski> skiIds = Datenbank.getSki(1);
+				@SuppressWarnings("unchecked")
+				ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
+				ArrayList<Ski> skiIDs = Datenbank.getSki(1);
+				String r = "";
+				for (Ski sk : skiIDs) {
+					r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
+					Ski w = new Ski(0, 0, r, r, r, r, 0, r);
+					skiListe.add(new SkiFX(w));
+				rb1tp2.setText(r.substring(0, r.length() - 2));
+				}
+				
+				
+				//rb1tp2.setText(items1.toString()); //???
+				
+				//Image image = new Image(getClass().getResourceAsStream(sk.getSkiBildpfad()));
+				//rb1tp2.setGraphic(new ImageView(image));
+				//rb1tp2.setText(sk.getSkiProduktname()); //zb CARVER 1
 				rb2tp2.setText(" test ");
 				rb3tp2.setText(" test ");
 				
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 1 gewählt");
+				Datenbank.getSki(1);
+				
 				// --> Ski KAT2
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 2 gewählt");
+				Datenbank.getSki(2);
 				
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 2 gewählt");
+				Datenbank.getSki(2);
 
 				// --> Ski KAT3
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 3 gewählt");
+				Datenbank.getSki(3);
 
+			//SNOWBOARD KAT1
+			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+				System.out.println("Snowboardkategorie 1 gewählt");
+				Datenbank.getSnowboard(1);
+				rb1tp2.setText(" test "); 
+				rb2tp2.setText(" test ");
+				rb3tp2.setText(" test ");
+
+			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
+				System.out.println("Snowboardkategorie 1 gewählt");
+				Datenbank.getSnowboard(1);
+				
+				// --> Sb KAT2
+			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+				System.out.println("Snowboardkategorie 2 gewählt");
+				Datenbank.getSnowboard(2);
+				
+			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
+				System.out.println("Snowboardkategorie 2 gewählt");
+				Datenbank.getSnowboard(2);
+
+				// --> Sb KAT3
+			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
+					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+				System.out.println("Snowboardkategorie 3 gewählt");
+				Datenbank.getSnowboard(3);
+			
 			}
+			
 			accordion.setExpandedPane(tp2);
 		});
 

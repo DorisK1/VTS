@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Datenbank {
 
@@ -677,8 +679,8 @@ public class Datenbank {
 		try {
 			while (rs.next()) {
 				System.out.println("kundenNr = " + rs.getInt("kundenNr") + " vorname = " + rs.getString("vorname")
-						+ " nachname = " + rs.getString("nachname") + rs.getString("land") + " kundenalter = "
-						+ rs.getInt("kundenalter") + " technik = " + rs.getString("technik"));
+						+ " nachname = " + rs.getString("nachname") + " land = " + rs.getString("land") 
+						+ " kundenalter = "	+ rs.getInt("kundenalter") + " technik = " + rs.getString("technik"));
 
 				kl.add(new Kunde(rs.getInt("kundenNr"), rs.getInt("anrede"), rs.getString("vorname"),
 						rs.getString("nachname"), rs.getString("telefonNr"), rs.getString("strasse"),
@@ -754,6 +756,93 @@ public class Datenbank {
 
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Ski> getSki(int skiKategorieNr) {
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Ski> sl = new ArrayList<Ski>();
+
+		System.out.println("Query ALLE SKI in Kategorie: " + skiKategorieNr);
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiKategorieNr =" + skiKategorieNr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
+						+ " skiProduktname = " + rs.getString("skiProduktname"));
+
+				sl.add(new Ski(rs.getInt("skiNr"), rs.getInt("skiKategorieNr"), rs.getString("skiProduktname"),
+						rs.getString("skiTyp"), rs.getString("skiBildpfad"), rs.getString("regalNr"),
+						rs.getDouble("tagespreis"), rs.getString("farbe")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return sl;
+	}
+
+	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) {
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Snowboard> sl = new ArrayList<Snowboard>();
+
+		System.out.println("Query ALLE Snowboards in Kategorie: " + snowboardKategorieNr);
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM snowboard WHERE snowboardKategorieNr =" + snowboardKategorieNr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = " + rs.getInt("snowboardKategorieNr")
+						+ " snowboardProduktname = " + rs.getString("snowboardProduktname"));
+
+				sl.add(new Snowboard(rs.getInt("snowboardNr"), rs.getInt("snowboardKategorieNr"), rs.getString("snowboardProduktname"),
+						rs.getString("snowboardTyp"), rs.getString("snowboardBildpfad"), rs.getString("regalNr"),
+						rs.getDouble("tagespreis"), rs.getString("farbe"), rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return sl;
 	}
 
 }
