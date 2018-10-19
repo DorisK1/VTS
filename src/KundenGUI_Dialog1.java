@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -318,25 +320,27 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				Datenbank.getSki(1);
 				
 				//ArrayList<Ski> skiIds = Datenbank.getSki(1);
-				@SuppressWarnings("unchecked")
-				ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
-				ArrayList<Ski> skiIDs = Datenbank.getSki(1);
-				String r = "";
-				for (Ski sk : skiIDs) {
-					r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
-					Ski w = new Ski(0, 0, r, r, r, r, 0, r);
-					skiListe.add(new SkiFX(w));
-				rb1tp2.setText(r.substring(0, r.length() - 2));
-				}
+//				ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
+//				ArrayList<Ski> skiIDs = Datenbank.getSki(1);
+//				for (Ski sk : skiIDs) {
+//					r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
+//					Ski w = new Ski(0, 0, r, r, r, r, 0, r);
+//					skiListe.add(new SkiFX(w));
+//				rb1tp2.setText(r.substring(0, r.length() - 2));
+//				}
+				String r1 = Datenbank.getSki(1).get(0).getSkiProduktname();
+				rb1tp2.setText(r1);
+				String r2 = Datenbank.getSki(1).get(1).getSkiProduktname();
+				rb2tp2.setText(r2);
+				String r3 = Datenbank.getSki(1).get(2).getSkiProduktname();
+				rb3tp2.setText(r3);
 				
+				URI uri = Paths.get(Datenbank.getSki(1).get(0).getSkiBildpfad()).toUri();
+				ImageView imageView = new ImageView(uri.toString());
+				imageView.setFitHeight(100);
+				imageView.setFitWidth(100);
+				rb1tp2.setGraphic(imageView);
 				
-				//rb1tp2.setText(items1.toString()); //???
-				
-				//Image image = new Image(getClass().getResourceAsStream(sk.getSkiBildpfad()));
-				//rb1tp2.setGraphic(new ImageView(image));
-				//rb1tp2.setText(sk.getSkiProduktname()); //zb CARVER 1
-				rb2tp2.setText(" test ");
-				rb3tp2.setText(" test ");
 				
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
