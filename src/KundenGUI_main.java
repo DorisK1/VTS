@@ -3,6 +3,8 @@ import java.net.URI;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Date;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -33,23 +35,23 @@ public class KundenGUI_main extends Application {
 	// ODER: DB Ordner löschen!!!
 	// Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
 	
-//	static {
-//		try {
-//			Ski sk = new Ski();
-//			Snowboard sb = new Snowboard();
-//			Datenbank.createTables();
-//			Datenbank.insertRows(sk, sb);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	static {
+		try {
+			Ski sk = new Ski();
+			Snowboard sb = new Snowboard();
+			Datenbank.createTables();
+			Datenbank.insertRows(sk, sb);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
 
 		// Ausleihe Objekt zur Verspeicherung des Datums
-		// AusleiheFX ausleihe = new AusleiheFX();
+		Ausleihe a = new Ausleihe();
 
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
@@ -99,11 +101,17 @@ public class KundenGUI_main extends Application {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
+			a.setLeihStart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
+			//java.sql.Date.valueOf(dateToConvert)
+			//a.setLeihStart(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
 			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
 		});
 
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
+			a.setLeihStart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
 			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
 		});
 

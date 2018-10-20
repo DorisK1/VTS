@@ -19,7 +19,6 @@ public class Datenbank {
 	Ausleihe a = new Ausleihe();
 	Ski sk = new Ski();
 	Snowboard sb = new Snowboard();
-	// ResultSet rs = null;
 
 	public static void createTables() {
 
@@ -376,7 +375,7 @@ public class Datenbank {
 		pstmt.setString(2, "Kat3 - All Mountain"); // skiKategorieName, String
 		pstmt.executeUpdate();
 		System.out.println("Snowboardkategorie 3 angelegt");
-		
+
 		// SNOWBOARDS ANLEGEN
 		// in KAT 1 FREESTYLE
 		// kat1 Snowboard 1
@@ -614,7 +613,6 @@ public class Datenbank {
 	public static Kunde getKunde(int kundenNr) {
 
 		Connection conn = null;
-
 		ResultSet rs = null;
 		Kunde k = new Kunde();
 		System.out.println("Query ALLE KUNDEN");
@@ -636,10 +634,24 @@ public class Datenbank {
 						+ rs.getInt("kundenalter"));
 
 				// KUNDEN OBJ ANLEGEN
-				// k.setId(rs.getInt("ID"));
-				// k.setName(rs.getString("NAME"));
-				// k.setDesc(rs.getString("DESCR"));
-				// k.setPreis(rs.getDouble("PREIS"));
+				k.setKundenNr(rs.getInt("kundenNr"));
+				k.setAnrede(rs.getInt("anrede"));
+				k.setVorname(rs.getString("vorname"));
+				k.setNachname(rs.getString("nachname"));
+				k.setTelefonNr(rs.getString("telefonNr"));
+				k.setStrasse(rs.getString("strasse"));
+				k.setHausNr(rs.getString("hausNr"));
+				k.setWohnort(rs.getString("wohnort"));
+				k.setPlz(rs.getString("plz"));
+				k.setLand(rs.getString("land"));
+				k.setAlter(rs.getInt("kundenalter"));
+				k.setPistenPraef(rs.getString("pistenPraef"));
+				k.setGewicht(rs.getInt("gewicht"));
+				k.setSchuhgroesse(rs.getDouble("schuhgroesse"));
+				k.setTechnik(rs.getString("technik"));
+				k.setBeinstellung(rs.getBoolean("beinstellung"));
+				k.setBindungstyp(rs.getBoolean("bindungstyp"));
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -679,8 +691,8 @@ public class Datenbank {
 		try {
 			while (rs.next()) {
 				System.out.println("kundenNr = " + rs.getInt("kundenNr") + " vorname = " + rs.getString("vorname")
-						+ " nachname = " + rs.getString("nachname") + " land = " + rs.getString("land") 
-						+ " kundenalter = "	+ rs.getInt("kundenalter") + " technik = " + rs.getString("technik"));
+						+ " nachname = " + rs.getString("nachname") + " land = " + rs.getString("land")
+						+ " kundenalter = " + rs.getInt("kundenalter") + " technik = " + rs.getString("technik"));
 
 				kl.add(new Kunde(rs.getInt("kundenNr"), rs.getInt("anrede"), rs.getString("vorname"),
 						rs.getString("nachname"), rs.getString("telefonNr"), rs.getString("strasse"),
@@ -758,7 +770,49 @@ public class Datenbank {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	public static Ausleihe getAusleihe(int kundenNr) {
+
+		Connection conn = null;
+		ResultSet rs = null;
+		Ausleihe a = new Ausleihe();
+		System.out.println("Query Ausleihen Suche nach KundenNr");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE kundenNr =" + kundenNr);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "abholNr = " + rs.getInt("abholNr"));
+
+				// AUSLEIHE OBJ ANLEGEN
+				a.setAbholNr(rs.getInt("abholNr"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return a;
+
+	}
+
 	public static ArrayList<Ski> getSki(int skiKategorieNr) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -802,6 +856,47 @@ public class Datenbank {
 		return sl;
 	}
 
+	public static int getSki(String skiProduktname) { //eine skinr zurückgeben
+
+		Connection conn = null;
+		ResultSet rs = null;
+		int s = 0;
+
+		System.out.println("Query SKI mit Namen: " + skiProduktname);
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiProduktname =" + "'" + skiProduktname + "'"); //Phrase weil 2 wörter?
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
+						+ " skiProduktname = " + rs.getString("skiProduktname"));
+
+				s = rs.getInt("skiNr");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return s;
+	}
+	
 	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -818,12 +913,14 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = " + rs.getInt("snowboardKategorieNr")
-						+ " snowboardProduktname = " + rs.getString("snowboardProduktname"));
+				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = "
+						+ rs.getInt("snowboardKategorieNr") + " snowboardProduktname = "
+						+ rs.getString("snowboardProduktname"));
 
-				sl.add(new Snowboard(rs.getInt("snowboardNr"), rs.getInt("snowboardKategorieNr"), rs.getString("snowboardProduktname"),
-						rs.getString("snowboardTyp"), rs.getString("snowboardBildpfad"), rs.getString("regalNr"),
-						rs.getDouble("tagespreis"), rs.getString("farbe"), rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
+				sl.add(new Snowboard(rs.getInt("snowboardNr"), rs.getInt("snowboardKategorieNr"),
+						rs.getString("snowboardProduktname"), rs.getString("snowboardTyp"),
+						rs.getString("snowboardBildpfad"), rs.getString("regalNr"), rs.getDouble("tagespreis"),
+						rs.getString("farbe"), rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -844,5 +941,7 @@ public class Datenbank {
 		}
 		return sl;
 	}
+
+	
 
 }

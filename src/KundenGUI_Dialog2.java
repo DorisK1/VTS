@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 
 	Ausleihe a = new Ausleihe();
+	Kunde k = new Kunde();
 	VBox vb1 = new VBox();
 	GridPane gridPane = new GridPane();
 	Label lb1 = new Label("Ihre Abholnummer lautet: ");
@@ -21,11 +22,11 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 	Label lb2 = new Label("Rückgabe am: ");
 	Label lb3 = new Label("Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt");
 
-	public KundenGUI_Dialog2() throws IOException {
+	public KundenGUI_Dialog2(int kundenNr) throws IOException {
 		super();
 		this.setTitle("DIALOG 2");
 		this.setHeaderText("Abholnummer");
-		lb1a.setText(Integer.toString(a.getAbholNr()));
+		lb1a.setText(Integer.toString(Datenbank.getAusleihe(kundenNr).getAbholNr()));
 
 		// VBOX
 		vb1.getChildren().addAll(lb1, lb1a, lb2);

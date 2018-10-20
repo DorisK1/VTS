@@ -2,15 +2,15 @@ import java.sql.Date;
 
 public class Ausleihe {
 	
-	private int abholNr;
+	private int abholNr; //autogen.
 	private int kundenNr;
 	private Kunde kunde;
 	private int skiNr;
 	private Ski ski;
 	private int snowboardNr;
 	private Snowboard snowboard;
-	private Date leihStart;
-	private Date leihEnde;
+	private Date leihStart; //setzt Mitarbeiter
+	private Date leihEnde; //setzt Mitarbeiter
 	private double mietpreis;
 	private double kaution;
 	private double nachzahlung;

@@ -3,6 +3,9 @@ import java.net.URI;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -18,6 +21,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -174,14 +178,14 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							// Ausleihe: Abholnummer mit Kdnr speichern
 							// Datenbank.postAusleihe(k, a, sk, sb);
 
-							new KundenGUI_Dialog2().showAndWait();
+							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
 						} catch (IOException e) {
 
 							e.printStackTrace();
 						}
 					} else
 						try {
-							new KundenGUI_Dialog2().showAndWait();
+							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -255,12 +259,34 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		BorderPane borderPanetp2 = new BorderPane();
 		borderPanetp2.setPadding(new Insets(5));
 		borderPanetp2.setPrefSize(700, 580);
-	//	borderPanetp2.setTop(lb1tp2);
+		// borderPanetp2.setTop(lb1tp2);
 		borderPanetp2.setCenter(vb1tp2);
 		borderPanetp2.setBottom(bt1tp2);
 
 		tp2.setContent(borderPanetp2);
 		accordion.getPanes().add(tp2);
+
+		grouptp2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldToggle, Toggle newToggle) {
+				if (rb1tp2.isSelected()) {
+					a.setSkiNr(Datenbank.getSki(rb1tp2.getText()));
+					System.out.println(rb1tp2.getText() + " gewählt");
+				} else if (rb2tp2.isSelected()) {
+					a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
+					System.out.println(rb2tp2.getText() + " gewählt");
+				} else if (rb3tp2.isSelected()) {
+					a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
+					System.out.println(rb3tp2.getText() + " gewählt");
+				}
+			}
+
+		});
+
+		bt1tp2.setOnAction(bp -> {
+			accordion.setExpandedPane(tp3);
+		});
 
 	}
 
@@ -318,42 +344,41 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 1 gewählt");
 				Datenbank.getSki(1);
-				
-				//ArrayList<Ski> skiIds = Datenbank.getSki(1);
-//				ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
-//				ArrayList<Ski> skiIDs = Datenbank.getSki(1);
-//				for (Ski sk : skiIDs) {
-//					r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
-//					Ski w = new Ski(0, 0, r, r, r, r, 0, r);
-//					skiListe.add(new SkiFX(w));
-//				rb1tp2.setText(r.substring(0, r.length() - 2));
-//				}
+
+				// ArrayList<Ski> skiIds = Datenbank.getSki(1);
+				// ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
+				// ArrayList<Ski> skiIDs = Datenbank.getSki(1);
+				// for (Ski sk : skiIDs) {
+				// r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
+				// Ski w = new Ski(0, 0, r, r, r, r, 0, r);
+				// skiListe.add(new SkiFX(w));
+				// rb1tp2.setText(r.substring(0, r.length() - 2));
+				// }
 				String r1 = Datenbank.getSki(1).get(0).getSkiProduktname();
 				rb1tp2.setText(r1);
 				String r2 = Datenbank.getSki(1).get(1).getSkiProduktname();
 				rb2tp2.setText(r2);
 				String r3 = Datenbank.getSki(1).get(2).getSkiProduktname();
 				rb3tp2.setText(r3);
-				
+
 				URI uri = Paths.get(Datenbank.getSki(1).get(0).getSkiBildpfad()).toUri();
 				ImageView imageView = new ImageView(uri.toString());
 				imageView.setFitHeight(100);
 				imageView.setFitWidth(100);
 				rb1tp2.setGraphic(imageView);
-				
-				
+
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 1 gewählt");
 				Datenbank.getSki(1);
-				
+
 				// --> Ski KAT2
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
 				System.out.println("Skikategorie 2 gewählt");
 				Datenbank.getSki(2);
-				
+
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 2 gewählt");
@@ -366,7 +391,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				System.out.println("Skikategorie 3 gewählt");
 				Datenbank.getSki(3);
 
-			//SNOWBOARD KAT1
+				// SNOWBOARD KAT1
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
@@ -374,7 +399,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
 				System.out.println("Snowboardkategorie 1 gewählt");
 				Datenbank.getSnowboard(1);
-				rb1tp2.setText(" test "); 
+				rb1tp2.setText(" test ");
 				rb2tp2.setText(" test ");
 				rb3tp2.setText(" test ");
 
@@ -382,7 +407,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Snowboardkategorie 1 gewählt");
 				Datenbank.getSnowboard(1);
-				
+
 				// --> Sb KAT2
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
@@ -390,7 +415,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
 				System.out.println("Snowboardkategorie 2 gewählt");
 				Datenbank.getSnowboard(2);
-				
+
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Snowboardkategorie 2 gewählt");
@@ -403,9 +428,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
 				System.out.println("Snowboardkategorie 3 gewählt");
 				Datenbank.getSnowboard(3);
-			
+
 			}
-			
+
 			accordion.setExpandedPane(tp2);
 		});
 
