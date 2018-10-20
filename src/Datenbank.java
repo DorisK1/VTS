@@ -828,6 +828,7 @@ public class Datenbank {
 			e.printStackTrace();
 		}
 		try {
+			
 			while (rs.next()) {
 				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
 						+ " skiProduktname = " + rs.getString("skiProduktname"));

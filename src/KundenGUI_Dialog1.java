@@ -339,64 +339,47 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		// KATEGORIE-BERECHNUNG für TP2 mit Weiter Button
 		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 2xif
 			if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 1 gewählt");
-				Datenbank.getSki(1);
-
-				// ArrayList<Ski> skiIds = Datenbank.getSki(1);
-				// ObservableList<SkiFX> skiListe = FXCollections.observableArrayList();;
-				// ArrayList<Ski> skiIDs = Datenbank.getSki(1);
-				// for (Ski sk : skiIDs) {
-				// r += sk.getSkiProduktname() + " " + sk.getFarbe() + ", ";
-				// Ski w = new Ski(0, 0, r, r, r, r, 0, r);
-				// skiListe.add(new SkiFX(w));
-				// rb1tp2.setText(r.substring(0, r.length() - 2));
-				// }
-				String r1 = Datenbank.getSki(1).get(0).getSkiProduktname();
-				rb1tp2.setText(r1);
-				String r2 = Datenbank.getSki(1).get(1).getSkiProduktname();
-				rb2tp2.setText(r2);
-				String r3 = Datenbank.getSki(1).get(2).getSkiProduktname();
-				rb3tp2.setText(r3);
-
-				URI uri = Paths.get(Datenbank.getSki(1).get(0).getSkiBildpfad()).toUri();
-				ImageView imageView = new ImageView(uri.toString());
-				imageView.setFitHeight(100);
-				imageView.setFitWidth(100);
-				rb1tp2.setGraphic(imageView);
+				int i = 1;
+				setRadioButtons(i);
 
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 1 gewählt");
-				Datenbank.getSki(1);
+				int i = 1;
+				setRadioButtons(i);
 
 				// --> Ski KAT2
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 2 gewählt");
-				Datenbank.getSki(2);
+				int i = 2;
+				setRadioButtons(i);
 
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")) {
 				System.out.println("Skikategorie 2 gewählt");
-				Datenbank.getSki(2);
+				int i = 2;
+				setRadioButtons(i);
 
 				// --> Ski KAT3
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")) {
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 3 gewählt");
-				Datenbank.getSki(3);
+				int i = 3;
+				setRadioButtons(i);
 
 				// SNOWBOARD KAT1
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 1 gewählt");
 				Datenbank.getSnowboard(1);
 				rb1tp2.setText(" test ");
@@ -410,9 +393,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 				// --> Sb KAT2
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 2 gewählt");
 				Datenbank.getSnowboard(2);
 
@@ -423,9 +406,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 				// --> Sb KAT3
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
-					&& cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
 					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe")) {
+					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 3 gewählt");
 				Datenbank.getSnowboard(3);
 
@@ -434,6 +417,34 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			accordion.setExpandedPane(tp2);
 		});
 
+	}
+
+	private void setRadioButtons(int i) {
+		Datenbank.getSki(i);
+		String r1 = Datenbank.getSki(i).get(0).getSkiProduktname();
+		rb1tp2.setText(r1);
+		String r2 = Datenbank.getSki(i).get(1).getSkiProduktname();
+		rb2tp2.setText(r2);
+		String r3 = Datenbank.getSki(i).get(2).getSkiProduktname();
+		rb3tp2.setText(r3);
+
+		URI uri1 = Paths.get(Datenbank.getSki(i).get(0).getSkiBildpfad()).toUri();
+		ImageView imageView1 = new ImageView(uri1.toString());
+		imageView1.setFitHeight(100);
+		imageView1.setFitWidth(100);
+		rb1tp2.setGraphic(imageView1);
+		
+		URI uri2 = Paths.get(Datenbank.getSki(i).get(1).getSkiBildpfad()).toUri();
+		ImageView imageView2 = new ImageView(uri2.toString());
+		imageView2.setFitHeight(100);
+		imageView2.setFitWidth(100);
+		rb2tp2.setGraphic(imageView2);
+		
+		URI uri3 = Paths.get(Datenbank.getSki(i).get(2).getSkiBildpfad()).toUri();
+		ImageView imageView3 = new ImageView(uri3.toString());
+		imageView3.setFitHeight(100);
+		imageView3.setFitWidth(100);
+		rb3tp2.setGraphic(imageView3);		
 	}
 
 }
