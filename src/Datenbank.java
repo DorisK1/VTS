@@ -789,7 +789,7 @@ public class Datenbank {
 
 				// AUSLEIHE OBJ ANLEGEN
 				a.setAbholNr(rs.getInt("abholNr"));
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -828,7 +828,7 @@ public class Datenbank {
 			e.printStackTrace();
 		}
 		try {
-			
+
 			while (rs.next()) {
 				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
 						+ " skiProduktname = " + rs.getString("skiProduktname"));
@@ -857,7 +857,50 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static int getSki(String skiProduktname) { //eine skinr zurückgeben
+	public static ArrayList<Ski> getSki() { //alle Ski
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Ski> sl = new ArrayList<Ski>();
+
+		System.out.println("Query ALLE SKI");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ski  ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
+						+ " skiProduktname = " + rs.getString("skiProduktname"));
+
+				sl.add(new Ski(rs.getInt("skiNr"), rs.getInt("skiKategorieNr"), rs.getString("skiProduktname"),
+						rs.getString("skiTyp"), rs.getString("skiBildpfad"), rs.getString("regalNr"),
+						rs.getDouble("tagespreis"), rs.getString("farbe")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return sl;
+	}
+
+	public static int getSki(String skiProduktname) { // eine skinr zurückgeben
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -867,7 +910,10 @@ public class Datenbank {
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiProduktname =" + "'" + skiProduktname + "'"); //Phrase weil 2 wörter?
+			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiProduktname =" + "'" + skiProduktname + "'"); // Phrase
+																												// weil
+																												// 2
+																												// wörter?
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -897,7 +943,7 @@ public class Datenbank {
 		}
 		return s;
 	}
-	
+
 	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -942,7 +988,5 @@ public class Datenbank {
 		}
 		return sl;
 	}
-
-	
 
 }
