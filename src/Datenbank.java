@@ -988,5 +988,50 @@ public class Datenbank {
 		}
 		return sl;
 	}
+	
+
+	public static ArrayList<Snowboard> getSnowboard() { //alle sb
+		
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Snowboard> sl = new ArrayList<Snowboard>();
+
+		System.out.println("Query ALLE Snowboards");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM snowboard  ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = " + rs.getInt("snowboardKategorieNr")
+						+ " snowboardProduktname = " + rs.getString("snowboardProduktname"));
+
+				sl.add(new Snowboard(rs.getInt("snowboardNr"), rs.getInt("snowboardKategorieNr"), rs.getString("snowboardProduktname"),
+						rs.getString("snowboardTyp"), rs.getString("snowboardBildpfad"), rs.getString("regalNr"),
+						rs.getDouble("tagespreis"), rs.getString("farbe"), rs.getBoolean("beinstellung"), rs.getBoolean("bindungstyp")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return sl;
+	}
 
 }
