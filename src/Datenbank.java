@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Datenbank {
 
@@ -586,7 +584,8 @@ public class Datenbank {
 			rs.next();
 			int kundenNr = rs.getInt("1");
 			k.setKundenNr(kundenNr);
-
+			System.out.println("Kundennummer: "+ kundenNr);
+			rs = null;
 			return true;
 
 		} catch (SQLException e) {
@@ -721,25 +720,28 @@ public class Datenbank {
 		return kl;
 	}
 
-	public static Boolean postAusleihe(Kunde k, Ausleihe a, Ski sk, Snowboard sb) {
+	public static Boolean postAusleihe(Ausleihe a) {
 
 		System.out.println("neue Ausleihe anlegen");
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			pstmt = conn.prepareStatement(
-					"INSERT INTO ausleihen(kundenNr, skiNr, snowboardNr, leihstart, leihende, mietpreis, "
-							+ "kaution, nachzahlung, gesamtpreis) VALUES(?,?,?,?,?,?,?,?,?) ");
+			Statement st = null;
 
-			pstmt.setInt(1, k.getKundenNr());
-			pstmt.setInt(2, sk.getSkiNr());
-			pstmt.setInt(3, sb.getSnowboardNr());
-			pstmt.setDate(4, a.getLeihStart());
-			pstmt.setDate(5, a.getLeihEnde());
-			pstmt.setDouble(6, a.getMietpreis());
-			pstmt.setDouble(7, a.getKaution());
-			pstmt.setDouble(8, a.getNachzahlung());
-			pstmt.setDouble(9, a.getGesamtpreis());
+			pstmt = conn.prepareStatement("INSERT INTO ausleihen(kundenNr,"+(a.getSkiNr()>0?" skiNr,":" snowboardNr,")+" leihstart, leihende, mietpreis, "
+					+ "kaution, nachzahlung, gesamtpreis) "
+					+ "VALUES(?,?,?,?,?,?,?,?)");
+					//st.RETURN_GENERATED_KEYS);
+			
+			pstmt.setInt(1, a.getKundenNr());
+			pstmt.setInt(2, a.getSkiNr()>0?a.getSkiNr():a.getSnowboardNr());
+			pstmt.setDate(3, a.getLeihStart());
+			pstmt.setDate(4, a.getLeihEnde());
+			pstmt.setDouble(5, a.getMietpreis()); //tagespreis*az der tage
+			pstmt.setDouble(6, a.getKaution());
+			pstmt.setDouble(7, a.getNachzahlung());
+			pstmt.setDouble(8, a.getGesamtpreis());
+			pstmt.executeUpdate();
 
 			// abholnummer abfragen
 			String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM ausleihen"; // spezieller derby sql befehl
@@ -747,6 +749,7 @@ public class Datenbank {
 			rs.next();
 			int abholNr = rs.getInt("1");
 			a.setAbholNr(abholNr);
+			rs = null;
 			return true;
 
 		} catch (SQLException e) {
@@ -787,9 +790,18 @@ public class Datenbank {
 			while (rs.next()) {
 				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "abholNr = " + rs.getInt("abholNr"));
 
-				// AUSLEIHE OBJ ANLEGEN
+				// AUSLEIHE OBJ ANLEGeN aus DB
 				a.setAbholNr(rs.getInt("abholNr"));
-
+				a.setKundenNr(rs.getInt("kundenNr"));
+				a.setSkiNr(rs.getInt("skiNr"));
+				a.setSnowboardNr(rs.getInt("snowboardNr"));
+				a.setLeihStart(rs.getDate("leihstart"));
+				a.setLeihEnde(rs.getDate("leihende"));
+				a.setMietpreis(rs.getDouble("mietpreis"));
+				a.setKaution(rs.getDouble("kaution"));
+				a.setNachzahlung(rs.getDouble("nachzahlung"));
+				a.setGesamtpreis(rs.getDouble("gesamtpreis"));
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -813,6 +825,46 @@ public class Datenbank {
 
 	}
 
+	public static ArrayList<Ausleihe> getAusleihen() {
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Ausleihe> kl = new ArrayList<Ausleihe>();
+
+		System.out.println("Query ALLE Ausleihen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ausleihen  ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("abholNr = " + rs.getInt("abholNr") + " kundenNr = " + rs.getInt("kundenNr"));
+
+				//kl.add(new Ausleihe()); //alle konstruktor attribute?
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return kl;
+	}
+	
 	public static ArrayList<Ski> getSki(int skiKategorieNr) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -989,7 +1041,6 @@ public class Datenbank {
 		return sl;
 	}
 	
-
 	public static ArrayList<Snowboard> getSnowboard() { //alle sb
 		
 		Connection conn = null;

@@ -35,7 +35,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	// OBJEKTE
 	Kunde k = new Kunde();
-	Ausleihe a = new Ausleihe();
 	Ski sk = new Ski();
 	SkiFX skfx = new SkiFX();
 	Snowboard sb = new Snowboard();
@@ -116,7 +115,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb15tp3 = new Label("Kreditkartengültigkeit");
 
-	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate) {
+	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) {
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -127,7 +126,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp3.setText("SCHRITT 3: Dateneingabe");
 		// TP Methoden
 		displayTp1(s, skfx, sb);
-		displayTp2(selpickupDate, selreturnDate);
+		displayTp2(selpickupDate, selreturnDate, a);
 		displayTp3();
 		// accordion set up
 		accordion.setPrefHeight(600);
@@ -154,7 +153,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
 							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
 							// TP2 Auswahl abfragen
-
 							// TP3 TF Input abfragen
 							k.setAnrede(Integer.parseInt(tf1tp3.getText()));
 							k.setVorname(tf2tp3.getText());
@@ -171,12 +169,26 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							kk.setPruefzahl(tf13tp3.getText());
 							kk.setGueltigkeit(tf14tp3.getText());
 
-							// in DB speichern
+							// Kunde in DB speichern
 							Datenbank.postKunde(k);
-							// Ausgabe Kunden in Konsole
+							
+							// Ausgabe aller Kunden in Konsole
 							Datenbank.getKunden();
-							// Ausleihe: Abholnummer mit Kdnr speichern
-							// Datenbank.postAusleihe(k, a, sk, sb);
+							
+							// Ausleihe Obj anlegen
+							a.setKundenNr(k.getKundenNr());
+							a.setMietpreis(33);
+							//a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate));
+							a.setKaution(200);
+							a.setNachzahlung(0);
+							a.setGesamtpreis(233);
+							//a.setGesamtpreis(a.getMietpreis()+a.getKaution()+a.getNachzahlung());
+						
+							
+							// Ausleihe in DB anlegen und holen
+							Datenbank.postAusleihe(a);
+							Datenbank.getAusleihe(33);
+							Datenbank.getAusleihen();
 
 							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
 						} catch (IOException e) {
@@ -191,6 +203,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							e.printStackTrace();
 						}
 				return null;
+			}
+
+			private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate) {
+				double miete = 0;
+				miete = sk.getTagespreis() * (selreturnDate.getDayOfMonth() - selpickupDate.getDayOfMonth() + 1);
+				return miete;
 			}
 		});
 
@@ -244,7 +262,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate) {
+	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) {
 
 		rb1tp2.setToggleGroup(grouptp2); // damit nur 1 radiobutton ausgewählt werden kann!
 		rb2tp2.setToggleGroup(grouptp2);
@@ -272,12 +290,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldToggle, Toggle newToggle) {
 				if (rb1tp2.isSelected()) {
 					a.setSkiNr(Datenbank.getSki(rb1tp2.getText()));
+					//a.setSkiNr(33);
+					a.setSnowboardNr(0);
 					System.out.println(rb1tp2.getText() + " gewählt");
 				} else if (rb2tp2.isSelected()) {
 					a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
+					//a.setSkiNr(33);
+					a.setSnowboardNr(0);
 					System.out.println(rb2tp2.getText() + " gewählt");
 				} else if (rb3tp2.isSelected()) {
-					a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
+					//a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
+					//a.setSkiNr(33);
+					//a.setSnowboardNr(0);
 					System.out.println(rb3tp2.getText() + " gewählt");
 				}
 			}
@@ -340,8 +364,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 2xif
 			if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 1 gewählt");
 				int i = 1;
 				setRadioButtons(i);
@@ -355,7 +379,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				// --> Ski KAT2
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 2 gewählt");
 				int i = 2;
 				setRadioButtons(i);
@@ -369,7 +393,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				// --> Ski KAT3
 			} else if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz"))) {
 				System.out.println("Skikategorie 3 gewählt");
 				int i = 3;
 				setRadioButtons(i);
@@ -377,9 +401,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				// SNOWBOARD KAT1
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 1 gewählt");
 				Datenbank.getSnowboard(1);
 				rb1tp2.setText(" test ");
@@ -394,8 +418,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				// --> Sb KAT2
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 2 gewählt");
 				Datenbank.getSnowboard(2);
 
@@ -407,8 +431,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				// --> Sb KAT3
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("sehr gut")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
-					|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("schwarz")
+							|| cob2tp1.getSelectionModel().getSelectedItem().equals("Halfpipe"))) {
 				System.out.println("Snowboardkategorie 3 gewählt");
 				Datenbank.getSnowboard(3);
 
@@ -433,18 +457,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		imageView1.setFitHeight(100);
 		imageView1.setFitWidth(100);
 		rb1tp2.setGraphic(imageView1);
-		
+
 		URI uri2 = Paths.get(Datenbank.getSki(i).get(1).getSkiBildpfad()).toUri();
 		ImageView imageView2 = new ImageView(uri2.toString());
 		imageView2.setFitHeight(100);
 		imageView2.setFitWidth(100);
 		rb2tp2.setGraphic(imageView2);
-		
+
 		URI uri3 = Paths.get(Datenbank.getSki(i).get(2).getSkiBildpfad()).toUri();
 		ImageView imageView3 = new ImageView(uri3.toString());
 		imageView3.setFitHeight(100);
 		imageView3.setFitWidth(100);
-		rb3tp2.setGraphic(imageView3);		
+		rb3tp2.setGraphic(imageView3);
 	}
 
 }

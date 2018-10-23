@@ -2,7 +2,7 @@ import java.sql.Date;
 
 public class Ausleihe {
 	
-	private int abholNr; //autogen.
+	private int abholNr; //autogen. postAusleihe
 	private int kundenNr;
 	private Kunde kunde;
 	private int skiNr;

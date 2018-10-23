@@ -105,14 +105,14 @@ public class KundenGUI_main extends Application {
 			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
 			//java.sql.Date.valueOf(dateToConvert)
 			//a.setLeihStart(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
-			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
+			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
 			a.setLeihStart(java.sql.Date.valueOf(datePicker1.getValue()));
 			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
-			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue()).showAndWait();
+			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 
 		// VBOXES
