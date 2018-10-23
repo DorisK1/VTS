@@ -731,12 +731,11 @@ public class Datenbank {
 			pstmt = conn.prepareStatement("INSERT INTO ausleihen(kundenNr,"+(a.getSkiNr()>0?" skiNr,":" snowboardNr,")+" leihstart, leihende, mietpreis, "
 					+ "kaution, nachzahlung, gesamtpreis) "
 					+ "VALUES(?,?,?,?,?,?,?,?)");
-					//st.RETURN_GENERATED_KEYS);
 			
 			pstmt.setInt(1, a.getKundenNr());
 			pstmt.setInt(2, a.getSkiNr()>0?a.getSkiNr():a.getSnowboardNr());
-			pstmt.setDate(3, a.getLeihStart());
-			pstmt.setDate(4, a.getLeihEnde());
+			pstmt.setDate(3, a.getLeihstart());
+			pstmt.setDate(4, a.getLeihende());
 			pstmt.setDouble(5, a.getMietpreis()); //tagespreis*az der tage
 			pstmt.setDouble(6, a.getKaution());
 			pstmt.setDouble(7, a.getNachzahlung());
@@ -749,6 +748,7 @@ public class Datenbank {
 			rs.next();
 			int abholNr = rs.getInt("1");
 			a.setAbholNr(abholNr);
+			System.out.println(a);
 			rs = null;
 			return true;
 
@@ -795,8 +795,8 @@ public class Datenbank {
 				a.setKundenNr(rs.getInt("kundenNr"));
 				a.setSkiNr(rs.getInt("skiNr"));
 				a.setSnowboardNr(rs.getInt("snowboardNr"));
-				a.setLeihStart(rs.getDate("leihstart"));
-				a.setLeihEnde(rs.getDate("leihende"));
+				a.setLeihstart(rs.getDate("leihstart"));
+				a.setLeihende(rs.getDate("leihende"));
 				a.setMietpreis(rs.getDouble("mietpreis"));
 				a.setKaution(rs.getDouble("kaution"));
 				a.setNachzahlung(rs.getDouble("nachzahlung"));
@@ -841,9 +841,15 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("abholNr = " + rs.getInt("abholNr") + " kundenNr = " + rs.getInt("kundenNr"));
+				System.out.println("abholNr = " + rs.getInt("abholNr") + " kundenNr = " + rs.getInt("kundenNr")
+				+ " leihstart = " + rs.getDate("leihstart") + " leihende = " + rs.getDate("leihende")
+				+ " gesamtpreis = " + rs.getDouble("gesamtpreis"));
+				
 
-				//kl.add(new Ausleihe()); //alle konstruktor attribute?
+				kl.add(new Ausleihe(rs.getInt("abholNr"), rs.getInt("kundenNr"), rs.getInt("skiNr"), 
+						rs.getInt("snowboardNr"), rs.getDate("leihstart"),
+						rs.getDate("leihende"), rs.getDouble("mietpreis"), rs.getDouble("kaution"), rs.getDouble("nachzahlung"), 
+						rs.getDouble("gesamtpreis"))); 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

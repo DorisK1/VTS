@@ -29,10 +29,8 @@ import javafx.stage.Stage;
 public class KundenGUI_main extends Application {
 
 	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x
-	// erstellt
-	// MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann
-	// nicht mehr aufgerufen werden!
-	// ODER: DB Ordner löschen!!!
+	// erstellt MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann
+	// nicht mehr aufgerufen werden! ODER: DB Ordner löschen!!!
 	// Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
 	
 	static {
@@ -101,8 +99,8 @@ public class KundenGUI_main extends Application {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
-			a.setLeihStart(java.sql.Date.valueOf(datePicker1.getValue()));
-			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
+			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihende(java.sql.Date.valueOf(datePicker2.getValue()));
 			//java.sql.Date.valueOf(dateToConvert)
 			//a.setLeihStart(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
 			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
@@ -110,8 +108,8 @@ public class KundenGUI_main extends Application {
 
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
-			a.setLeihStart(java.sql.Date.valueOf(datePicker1.getValue()));
-			a.setLeihEnde(java.sql.Date.valueOf(datePicker2.getValue()));
+			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihende(java.sql.Date.valueOf(datePicker2.getValue()));
 			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 

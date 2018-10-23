@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ public class MitarbeiterGUI_main extends Application {
 	Label lb1 = new Label("Bitte Abholnummer eingeben:");
 	TextField tf1 = new TextField();
 	Button bt1 = new Button("Suche");
-	
+
 	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
@@ -34,6 +35,7 @@ public class MitarbeiterGUI_main extends Application {
 	TitledPane tp3 = new TitledPane();
 	TitledPane tp4 = new TitledPane();
 	TitledPane tp5 = new TitledPane();
+	TitledPane tp6 = new TitledPane();
 
 	// TP1
 	VBox vb1tp1 = new VBox();
@@ -81,26 +83,32 @@ public class MitarbeiterGUI_main extends Application {
 	Button bt2tp5 = new Button("LÖSCHEN");
 	HBox h1tp5 = new HBox();
 
+	// TP6
+	BorderPane borderPanetp6 = new BorderPane();
+
 	@Override
 	public void start(Stage primaryStage) {
 
 		Kunde k = new Kunde();
+		Ausleihe a = new Ausleihe();
 		tf1.setMaxWidth(60);
 		tp1.setText("AUSGABE");
 		tp2.setText("RÜCKNAHME");
 		tp3.setText("KUNDEN");
 		tp4.setText("SKI");
 		tp5.setText("SNOWBOARD");
+		tp6.setText("AUSLEIHEN");
 
 		displayTp1();
 		displayTp2();
 		displayTp3(k);
 		displayTp4();
 		displayTp5();
+		displayTp6(a);
 
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(800);
-		accordion.getPanes().addAll(tp1, tp2, tp3, tp4, tp5);
+		accordion.getPanes().addAll(tp1, tp2, tp3, tp4, tp5, tp6);
 		vb1.getChildren().addAll(lb1, tf1, bt1, accordion);
 
 		// PRIMARY STAGE
@@ -108,12 +116,68 @@ public class MitarbeiterGUI_main extends Application {
 		primaryStage.setTitle("MITARBEITERANSICHT");
 		primaryStage.setResizable(true);
 		primaryStage.show();
-		
+
 		bt1.setOnAction(gd -> {
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
-			tf1tp1.setText(null); //getProduktNr über Abholnummer
+			tf1tp1.setText(null); // getProduktNr über Abholnummer
 
 		});
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private void displayTp6(Ausleihe a) {
+		// TABLE VIEW
+		borderPanetp6.setPadding(new Insets(5));
+		// borderPanetp6.setBottom(lb1tp3);
+
+		TableColumn<AusleiheFX, Integer> ausleiheIdCol = new TableColumn<>("abholNr");
+		ausleiheIdCol.setCellValueFactory(new PropertyValueFactory<>("abholNr"));
+		ausleiheIdCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Integer> customerIdCol = new TableColumn<>("kundenNr");
+		customerIdCol.setCellValueFactory(new PropertyValueFactory<>("kundenNr"));
+		customerIdCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Integer> skiNrCol = new TableColumn<>("skiNr");
+		skiNrCol.setCellValueFactory(new PropertyValueFactory<>("skiNr"));
+		skiNrCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Integer> snowboardNrCol = new TableColumn<>("snowboardNr");
+		snowboardNrCol.setCellValueFactory(new PropertyValueFactory<>("snowboardNr"));
+		snowboardNrCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Date> leihstartCol = new TableColumn<>("leihstart");
+		leihstartCol.setCellValueFactory(new PropertyValueFactory<>("leihstart"));
+		leihstartCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Date> leihendeCol = new TableColumn<>("leihende");
+		leihendeCol.setCellValueFactory(new PropertyValueFactory<>("leihende"));
+		leihendeCol.setMinWidth(100);
+		TableColumn<AusleiheFX, Double> gesamtpreisCol = new TableColumn<>("gesamtpreis");
+		gesamtpreisCol.setCellValueFactory(new PropertyValueFactory<>("gesamtpreis"));
+		gesamtpreisCol.setMinWidth(100);
+
+		TableView<AusleiheFX> table = new TableView<>();
+		ObservableList<AusleiheFX> ausleihenFXListe = FXCollections.observableArrayList();
+		ArrayList<Ausleihe> ausleihenNrs = Datenbank.getAusleihen();
+
+		for (Ausleihe au : ausleihenNrs) {
+			Ausleihe ausleihe = new Ausleihe(au.getAbholNr(), au.getKundenNr(), au.getSkiNr(), au.getSnowboardNr(),
+					au.getLeihstart(), au.getLeihende(), au.getMietpreis(), au.getKaution(), au.getNachzahlung(),
+					au.getGesamtpreis());
+			ausleihenFXListe.add(new AusleiheFX(ausleihe));
+		}
+
+		// for (Ausleihe au : ausleihenNrs) {
+		// Ausleihe ausleihe = new Ausleihe(au.getAbholNr(), au.getKundenNr(),
+		// au.getKunde(), au.getSkiNr(), au.getSki(),
+		// au.getSnowboardNr(), au.getSnowboard(), au.getLeihStart(), au.getLeihEnde(),
+		// au.getMietpreis(),
+		// au.getKaution(), au.getNachzahlung(), au.getGesamtpreis());
+		// ausleihenFXListe.add(new AusleiheFX(ausleihe));
+		// }
+
+		table.setItems(ausleihenFXListe);
+		table.getColumns().addAll(ausleiheIdCol, customerIdCol, skiNrCol, snowboardNrCol, leihstartCol, leihendeCol, gesamtpreisCol);
+
+		borderPanetp6.setCenter(table);
+		tp6.setContent(borderPanetp6);
 
 	}
 
@@ -239,14 +303,15 @@ public class MitarbeiterGUI_main extends Application {
 		TableView<KundeFX> table = new TableView<>();
 		ObservableList<KundeFX> kundenFXListe = FXCollections.observableArrayList();
 		ArrayList<Kunde> kundenNrs = Datenbank.getKunden();
-		
+
 		for (Kunde ku : kundenNrs) {
-			Kunde kunde = new Kunde(ku.getKundenNr(), ku.getAnrede(), ku.getVorname(), ku.getNachname(), ku.getTelefonNr(),
-					ku.getStrasse(), ku.getHausNr(), ku.getWohnort(), ku.getPlz(), ku.getLand(), ku.getAlter(), ku.getPistenPraef(), ku.getGewicht(),
-					ku.getSchuhgroesse(), ku.getTechnik(), ku.isBeinstellung(), ku.isBindungstyp());
+			Kunde kunde = new Kunde(ku.getKundenNr(), ku.getAnrede(), ku.getVorname(), ku.getNachname(),
+					ku.getTelefonNr(), ku.getStrasse(), ku.getHausNr(), ku.getWohnort(), ku.getPlz(), ku.getLand(),
+					ku.getAlter(), ku.getPistenPraef(), ku.getGewicht(), ku.getSchuhgroesse(), ku.getTechnik(),
+					ku.isBeinstellung(), ku.isBindungstyp());
 			kundenFXListe.add(new KundeFX(kunde));
 		}
-		
+
 		table.setItems(kundenFXListe);
 		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ageCol, weightCol);
 
@@ -266,7 +331,7 @@ public class MitarbeiterGUI_main extends Application {
 		gridPanetp2.add(lb4tp2, 0, 3);
 		gridPanetp2.add(lb5tp2, 0, 4);
 		gridPanetp2.add(lb6tp2, 0, 5);
-		
+
 		// GRIDPANE TEXTFELDER
 		gridPanetp2.add(tf1tp2, 1, 0);
 		gridPanetp2.add(tf2tp2, 1, 1);
@@ -274,7 +339,7 @@ public class MitarbeiterGUI_main extends Application {
 		gridPanetp2.add(tf4tp2, 1, 3);
 		gridPanetp2.add(tf5tp2, 1, 4);
 		gridPanetp2.add(tf6tp2, 1, 5);
-		
+
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
 		borderPanetp2.setPadding(new Insets(5));
@@ -301,7 +366,6 @@ public class MitarbeiterGUI_main extends Application {
 		gridPanetp1.add(tf2tp1, 1, 1);
 		gridPanetp1.add(tf3tp1, 1, 2);
 		gridPanetp1.add(tf4tp1, 1, 3);
-		
 
 		// BORDERPANE
 		BorderPane borderPanetp1 = new BorderPane();

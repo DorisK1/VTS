@@ -2,13 +2,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -17,13 +13,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -177,8 +170,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							
 							// Ausleihe Obj anlegen
 							a.setKundenNr(k.getKundenNr());
-							a.setMietpreis(33);
-							//a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate));
+							//a.setMietpreis(33);
+							a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate));
 							a.setKaution(200);
 							a.setNachzahlung(0);
 							a.setGesamtpreis(233);
