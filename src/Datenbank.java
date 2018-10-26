@@ -1275,4 +1275,32 @@ public class Datenbank {
 		
 	}
 
+	public static void deleteSki(int skiNr) {
+		System.out.println("Ski löschen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			pstmt = conn.prepareStatement("DELETE FROM ski WHERE skiNr = " + skiNr);
+			pstmt.executeUpdate();
+			System.out.println("Ski mit SkiNr: " + skiNr + " gelöscht");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		
+	}
+
 }

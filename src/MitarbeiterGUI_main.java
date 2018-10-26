@@ -1,15 +1,16 @@
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -264,6 +265,28 @@ public class MitarbeiterGUI_main extends Application {
 		TableColumn<SkiFX, String> farbeCol = new TableColumn<>("farbe");
 		farbeCol.setCellValueFactory(new PropertyValueFactory<>("farbe"));
 		farbeCol.setMinWidth(70);
+		
+//		ObservableList<BuchFX> data;
+//		try {
+//			data = FXCollections.observableArrayList(Datenbank.leseBuecher(null, null));
+//			TableView<BuchFX> table = new TableView<>();
+//			table.setItems(data);
+//			table.getColumns().addAll(col1, col2, col3, col4, col5, col6);
+//			table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+//
+//			table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<BuchFX>() {
+//				@Override
+//				public void onChanged(javafx.collections.ListChangeListener.Change<? extends BuchFX> c) {
+//					ObservableList<BuchFX> changesList = (ObservableList<BuchFX>) c.getList();
+//					String s = "";
+//					for (BuchFX p : changesList)
+//						s += p.getISBN() + " " + p.getTitel() + ", ";
+//					lbl.setText(s.substring(0, s.length() - 2));
+//
+//				}
+//			});
+//			borderPane.setCenter(table);
+		
 
 		ObservableList<SkiFX> skiFXListe = FXCollections.observableArrayList();
 		TableView<SkiFX> table = new TableView<>();
@@ -286,6 +309,13 @@ public class MitarbeiterGUI_main extends Application {
 			System.out.println("Neuen Ski anlegen");
 			String s = "Ski";
 			new MitarbeiterGUI_Dialog1(s).showAndWait();			
+		});
+		
+		bt2tp4.setOnAction(bt -> {
+		    SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
+		    Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
+		    table.getItems().remove(selectedItem);
+		    
 		});
 	}
 
