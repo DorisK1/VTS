@@ -1023,6 +1023,7 @@ public class Datenbank {
 						+ " skiProduktname = " + rs.getString("skiProduktname"));
 
 				sk.setTagespreis(rs.getDouble("tagespreis"));
+				sk.setSkiNr(rs.getInt("skiNr"));
 				//ff!
 			}
 		} catch (SQLException e) {
@@ -1131,6 +1132,52 @@ public class Datenbank {
 
 		}
 		return sl;
+	}
+	
+
+	public static Snowboard getNewSnowboard(String snowboardProduktname) {
+		
+		Connection conn = null;
+		ResultSet rs = null;
+		Snowboard sb = new Snowboard();
+		System.out.println("Query SNOWBOARD mit Namen: " + snowboardProduktname);
+		
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM snowboard WHERE snowboardProduktname =" + "'" + snowboardProduktname + "'"); // Phrase
+																												// weil
+																												// 2
+																												// wörter
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
+						+ " skiProduktname = " + rs.getString("skiProduktname"));
+
+				sb.setTagespreis(rs.getDouble("tagespreis"));
+				//ff!
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+		}
+
+		return sb;
 	}
 
 }
