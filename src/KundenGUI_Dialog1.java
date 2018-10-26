@@ -498,12 +498,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		
 		} else {
 			Datenbank.getSnowboard(i);
-			String r1 = Datenbank.getSnowboard(i).get(0).getSnowboardProduktname() + " für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis() + " pro Tag";
-			rb1tp2.setText(r1);
-			String r2 = Datenbank.getSnowboard(i).get(1).getSnowboardProduktname() + " für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis() + " pro Tag";
-			rb2tp2.setText(r2);
-			String r3 = Datenbank.getSnowboard(i).get(2).getSnowboardProduktname() + " für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis() + " pro Tag";
-			rb3tp2.setText(r3);
+			rb1tp2.setText(Datenbank.getSnowboard(i).get(0).getSnowboardProduktname());
+			lb6tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis() + " pro Tag");
+			rb2tp2.setText(Datenbank.getSnowboard(i).get(1).getSnowboardProduktname());
+			lb7tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis() + " pro Tag");
+			rb3tp2.setText(Datenbank.getSnowboard(i).get(2).getSnowboardProduktname());
+			lb8tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis() + " pro Tag");
 
 			URI uri1 = Paths.get(Datenbank.getSnowboard(i).get(0).getSnowboardBildpfad()).toUri();
 			ImageView imageView1 = new ImageView(uri1.toString());

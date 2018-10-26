@@ -1154,8 +1154,8 @@ public class Datenbank {
 		}
 		try {
 			while (rs.next()) {
-				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
-						+ " skiProduktname = " + rs.getString("skiProduktname"));
+				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = " + rs.getInt("snowboardKategorieNr")
+						+ " snowboardProduktname = " + rs.getString("snowboardProduktname"));
 
 				sb.setTagespreis(rs.getDouble("tagespreis"));
 				//ff!
