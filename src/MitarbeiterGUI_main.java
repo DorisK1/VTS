@@ -227,6 +227,12 @@ public class MitarbeiterGUI_main extends Application {
 
 		borderPanetp5.setCenter(table1);
 		tp5.setContent(borderPanetp5);
+		
+		bt1tp5.setOnAction(bt -> {
+			System.out.println("Neues Snowboard anlegen");
+			String s = "Snowboard";
+			new MitarbeiterGUI_Dialog1(s).showAndWait();			
+		});
 
 	}
 
@@ -275,6 +281,12 @@ public class MitarbeiterGUI_main extends Application {
 
 		borderPanetp4.setCenter(table);
 		tp4.setContent(borderPanetp4);
+		
+		bt1tp4.setOnAction(bt -> {
+			System.out.println("Neuen Ski anlegen");
+			String s = "Ski";
+			new MitarbeiterGUI_Dialog1(s).showAndWait();			
+		});
 	}
 
 	@SuppressWarnings("unchecked")

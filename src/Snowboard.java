@@ -8,7 +8,7 @@ public class Snowboard {
 	private String snowboardBildpfad;
 	private String regalNr;
 	private double tagespreis;
-	private String farbe; //enum??
+	private String farbe; 
 	private boolean beinstellung;
 	private boolean bindungstyp;
 	
