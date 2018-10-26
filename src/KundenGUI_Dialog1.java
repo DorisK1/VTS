@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.Period;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -67,9 +69,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb3tp2 = new Label();
 	Label lb4tp2 = new Label("von: ");
 	Label lb5tp2 = new Label(" bis: ");
-	Label lb6tp2 = new Label("pic");
-	Label lb7tp2 = new Label("pic");
-	Label lb8tp2 = new Label("pic");
+	Label lb6tp2 = new Label("preis");
+	Label lb7tp2 = new Label("preis");
+	Label lb8tp2 = new Label("preis");
 	Button bt1tp2 = new Button("Weiter");
 	RadioButton rb1tp2 = new RadioButton("");
 	RadioButton rb2tp2 = new RadioButton("");
@@ -78,7 +80,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	// TP3
 	VBox vb1tp3 = new VBox();
 	GridPane gridPanetp3 = new GridPane();
-	TextField tf1tp3 = new TextField(); // Anrede
+	ComboBox<String> cob1tp3 = new ComboBox<>(); // Anrede
 	TextField tf2tp3 = new TextField(); // Vorn
 	TextField tf3tp3 = new TextField(); // Nachn
 	TextField tf4tp3 = new TextField(); // tel
@@ -145,9 +147,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
 							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
 							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
-							// TP2 Auswahl abfragen
+
 							// TP3 TF Input abfragen
-							k.setAnrede(Integer.parseInt(tf1tp3.getText()));
+							if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {
+								k.setAnrede(1);
+							} else if (cob1tp3.getSelectionModel().getSelectedItem().equals("Mann")) {
+								k.setAnrede(2);
+							} else
+								k.setAnrede(3);
+
 							k.setVorname(tf2tp3.getText());
 							k.setNachname(tf3tp3.getText());
 							k.setTelefonNr(tf4tp3.getText());
@@ -164,20 +172,17 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 							// Kunde in DB speichern
 							Datenbank.postKunde(k);
-							
+
 							// Ausgabe aller Kunden in Konsole
 							Datenbank.getKunden();
-							
+
 							// Ausleihe Obj anlegen
 							a.setKundenNr(k.getKundenNr());
-							//a.setMietpreis(33);
-							a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate));
+							System.out.println("Mietpreis: " + a.getMietpreis());
 							a.setKaution(200);
 							a.setNachzahlung(0);
-							a.setGesamtpreis(233);
-							//a.setGesamtpreis(a.getMietpreis()+a.getKaution()+a.getNachzahlung());
-						
-							
+							a.setGesamtpreis(a.getMietpreis() + a.getKaution() + a.getNachzahlung());
+
 							// Ausleihe in DB anlegen und holen
 							Datenbank.postAusleihe(a);
 							Datenbank.getAusleihe(33);
@@ -198,13 +203,25 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				return null;
 			}
 
-			private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate) {
-				double miete = 0;
-				miete = sk.getTagespreis() * (selreturnDate.getDayOfMonth() - selpickupDate.getDayOfMonth() + 1);
-				return miete;
-			}
 		});
 
+	}
+
+	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String s) {
+		double miete = 0; // den richtigen Ski holen!!!
+		Period period = null;
+		int tage = 0;
+		if (selreturnDate.getDayOfMonth() >= selpickupDate.getDayOfMonth()) {
+			period = Period.between(selreturnDate, selpickupDate);
+			tage = period.getDays()+1;
+		} else {
+			period = Period.between(selreturnDate, selpickupDate);
+			tage = period.getDays()+1;
+		}
+		miete = Datenbank.getNewSki(s).getTagespreis() * tage;
+		System.out.println("Tage: " + tage);
+		System.out.println("Miete: " + miete);
+		return miete;
 	}
 
 	private void displayTp3() {
@@ -228,7 +245,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(lb14tp3, 0, 12);
 		gridPanetp3.add(lb15tp3, 0, 13);
 
-		gridPanetp3.add(tf1tp3, 1, 0);
+		gridPanetp3.add(cob1tp3, 1, 0);
 		gridPanetp3.add(tf2tp3, 1, 1);
 		gridPanetp3.add(tf3tp3, 1, 2);
 		gridPanetp3.add(tf4tp3, 1, 3);
@@ -242,7 +259,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf12tp3, 1, 11);
 		gridPanetp3.add(tf13tp3, 1, 12);
 		gridPanetp3.add(tf14tp3, 1, 13);
-
+		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
 		// BORDERPANE
 		BorderPane borderPanetp3 = new BorderPane();
 		borderPanetp3.setPadding(new Insets(5));
@@ -281,20 +298,25 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 			@Override
 			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldToggle, Toggle newToggle) {
+				String produktname = null;
+
 				if (rb1tp2.isSelected()) {
 					a.setSkiNr(Datenbank.getSki(rb1tp2.getText()));
-					//a.setSkiNr(33);
 					a.setSnowboardNr(0);
+					produktname = rb1tp2.getText();
+					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname));
 					System.out.println(rb1tp2.getText() + " gewählt");
 				} else if (rb2tp2.isSelected()) {
 					a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
-					//a.setSkiNr(33);
 					a.setSnowboardNr(0);
+					produktname = rb2tp2.getText();
+					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname));
 					System.out.println(rb2tp2.getText() + " gewählt");
 				} else if (rb3tp2.isSelected()) {
-					//a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
-					//a.setSkiNr(33);
-					//a.setSnowboardNr(0);
+					a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
+					a.setSnowboardNr(0);
+					produktname = rb3tp2.getText();
+					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname));
 					System.out.println(rb3tp2.getText() + " gewählt");
 				}
 			}

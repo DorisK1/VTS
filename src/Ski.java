@@ -8,7 +8,7 @@ public class Ski {
 	private String skiBildpfad;
 	private String regalNr;
 	private double tagespreis;
-	private String farbe; //enum??
+	private String farbe; 
 	
 	public Ski(int skiNr, int skiKategorieNr, String skiProduktname, String skiTyp, String skiBildpfad, String regalNr, double tagespreis,
 			String farbe) {
