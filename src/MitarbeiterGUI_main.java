@@ -234,6 +234,13 @@ public class MitarbeiterGUI_main extends Application {
 			String s = "Snowboard";
 			new MitarbeiterGUI_Dialog1(s).showAndWait();			
 		});
+		
+		bt2tp5.setOnAction(bt -> {
+		    SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
+		    Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr());
+		    table1.getItems().remove(selectedItem);
+		    
+		});
 
 	}
 

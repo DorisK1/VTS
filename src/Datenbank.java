@@ -1187,8 +1187,9 @@ public class Datenbank {
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			pstmt = conn.prepareStatement("INSERT INTO ski(skiKategorieNr, skiProduktname, skiTyp, skiBildpfad, regalNr, tagespreis, farbe) "
-					+ "VALUES(?,?,?,?,?,?,?) ");
+			pstmt = conn.prepareStatement(
+					"INSERT INTO ski(skiKategorieNr, skiProduktname, skiTyp, skiBildpfad, regalNr, tagespreis, farbe) "
+							+ "VALUES(?,?,?,?,?,?,?) ");
 			pstmt.setInt(1, sk.getSkiKategorieNr());
 			pstmt.setString(2, sk.getSkiProduktname());
 			pstmt.setString(3, sk.getSkiTyp());
@@ -1198,7 +1199,7 @@ public class Datenbank {
 			pstmt.setString(7, sk.getFarbe());
 			pstmt.executeUpdate();
 
-			String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM ski"; 
+			String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM ski";
 			ResultSet rs = stmt.executeQuery(autowert);
 			rs.next();
 			int skiNr = rs.getInt("1");
@@ -1233,9 +1234,9 @@ public class Datenbank {
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			pstmt = conn.prepareStatement("INSERT INTO snowboard(snowboardKategorieNr, snowboardProduktname, snowboardTyp, "
-					+ "snowboardBildpfad, regalNr, tagespreis, farbe) "
-					+ "VALUES(?,?,?,?,?,?,?) ");
+			pstmt = conn
+					.prepareStatement("INSERT INTO snowboard(snowboardKategorieNr, snowboardProduktname, snowboardTyp, "
+							+ "snowboardBildpfad, regalNr, tagespreis, farbe) " + "VALUES(?,?,?,?,?,?,?) ");
 			pstmt.setInt(1, sb.getSnowboardKategorieNr());
 			pstmt.setString(2, sb.getSnowboardProduktname());
 			pstmt.setString(3, sb.getSnowboardTyp());
@@ -1245,7 +1246,7 @@ public class Datenbank {
 			pstmt.setString(7, sb.getFarbe());
 			pstmt.executeUpdate();
 
-			String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM snowboard"; 
+			String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM snowboard";
 			ResultSet rs = stmt.executeQuery(autowert);
 			rs.next();
 			int snowboardNr = rs.getInt("1");
@@ -1272,7 +1273,7 @@ public class Datenbank {
 			}
 
 		}
-		
+
 	}
 
 	public static void deleteSki(int skiNr) {
@@ -1298,9 +1299,35 @@ public class Datenbank {
 				e.printStackTrace();
 
 			}
+		}
+	}
+
+	public static void deleteSnowboard(int snowboardNr) {
+		System.out.println("Snowboard löschen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			pstmt = conn.prepareStatement("DELETE FROM snowboard WHERE snowboardNr = " + snowboardNr);
+			pstmt.executeUpdate();
+			System.out.println("Snowboard mit SnowboardNr: " + snowboardNr + " gelöscht");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
 
 		}
-		
+
 	}
 
 }
