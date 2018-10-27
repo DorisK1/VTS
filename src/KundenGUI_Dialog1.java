@@ -76,7 +76,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	RadioButton rb2tp2 = new RadioButton("");
 	RadioButton rb3tp2 = new RadioButton("");
 	ToggleGroup grouptp2 = new ToggleGroup();
-	//set Radiobuttons
+	// set Radiobuttons
 	VBox vb3tp2 = new VBox();
 	Label lb6tp2 = new Label();
 	Label lb7tp2 = new Label();
@@ -209,7 +209,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	}
 
 	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) {
-		
+
 		Period period = Period.between(selpickupDate, selreturnDate);
 		int tage = period.getDays() + 1;
 		if (s.equals("Ski")) {
@@ -280,21 +280,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		rb3tp2.setToggleGroup(grouptp2);
 		lb2tp2.setText(selpickupDate.toString());
 		lb3tp2.setText(selreturnDate.toString());
-		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); //Datum 
-//		hb2tp2.getChildren().addAll(rb1tp2, lb6tp2); //RadioButton1
-//		hb3tp2.getChildren().addAll(rb2tp2, lb7tp2); //RadioButton2
-//		hb4tp2.getChildren().addAll(rb3tp2, lb8tp2); //RadioButton3
+		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); // Datum
 		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, rb2tp2, lb7tp2, rb3tp2, lb8tp2);
-		
-		
-//		vb2tp2.getChildren().addAll(rb1tp2, rb2tp2, rb3tp2); //Radiobuttons
-//		vb3tp2.getChildren().addAll(lb6tp2, lb7tp2, lb8tp2); //preise
-//		hb2tp2.getChildren().addAll(vb2tp2, vb3tp2);
+
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
 		borderPanetp2.setPadding(new Insets(5));
 		borderPanetp2.setPrefSize(700, 580);
-		// borderPanetp2.setTop(lb1tp2);
 		borderPanetp2.setCenter(vb1tp2);
 		borderPanetp2.setBottom(bt1tp2);
 
@@ -308,20 +300,30 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				String produktname = null;
 
 				if (rb1tp2.isSelected()) {
-					a.setSkiNr(Datenbank.getSki(rb1tp2.getText())); ///?
-					a.setSnowboardNr(0);
+					if (s.equals("Ski")) {
+						a.setSkiNr(Datenbank.getSki(rb1tp2.getText()));
+					} else {
+						a.setSnowboardNr(Datenbank.getNewSnowboard(rb1tp2.getText()).getSnowboardNr());
+					}
+
 					produktname = rb1tp2.getText();
 					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname, s));
 					System.out.println(rb1tp2.getText() + " gewählt");
 				} else if (rb2tp2.isSelected()) {
-					a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
-					a.setSnowboardNr(0);
+					if (s.equals("Ski")) {
+						a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
+					} else {
+						a.setSnowboardNr(Datenbank.getNewSnowboard(rb2tp2.getText()).getSnowboardNr());
+					}
 					produktname = rb2tp2.getText();
 					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname, s));
 					System.out.println(rb2tp2.getText() + " gewählt");
 				} else if (rb3tp2.isSelected()) {
+					if (s.equals("Ski")) {
 					a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
-					a.setSnowboardNr(0);
+					} else {
+						a.setSnowboardNr(Datenbank.getNewSnowboard(rb3tp2.getText()).getSnowboardNr());
+					}
 					produktname = rb3tp2.getText();
 					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname, s));
 					System.out.println(rb3tp2.getText() + " gewählt");
@@ -435,7 +437,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				System.out.println("Snowboardkategorie 1 gewählt");
 				int i = 1;
 				setRadioButtons(i, s);
-				
+
 				// --> Sb KAT2
 			} else if (s.equals("Snowboard") && cob1tp1.getSelectionModel().getSelectedItem().equals("mittel")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
@@ -468,34 +470,34 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	}
 
 	private void setRadioButtons(int i, String s) {
-		
+
 		if (s.equals("Ski")) {
-		Datenbank.getSki(i);
-		rb1tp2.setText(Datenbank.getSki(i).get(0).getSkiProduktname());
-		lb6tp2.setText(" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag");
-		rb2tp2.setText(Datenbank.getSki(i).get(1).getSkiProduktname());
-		lb7tp2.setText(" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag");
-		rb3tp2.setText(Datenbank.getSki(i).get(2).getSkiProduktname());
-		lb8tp2.setText(" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag");
+			Datenbank.getSki(i);
+			rb1tp2.setText(Datenbank.getSki(i).get(0).getSkiProduktname());
+			lb6tp2.setText(" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag");
+			rb2tp2.setText(Datenbank.getSki(i).get(1).getSkiProduktname());
+			lb7tp2.setText(" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag");
+			rb3tp2.setText(Datenbank.getSki(i).get(2).getSkiProduktname());
+			lb8tp2.setText(" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag");
 
-		URI uri1 = Paths.get(Datenbank.getSki(i).get(0).getSkiBildpfad()).toUri();
-		ImageView imageView1 = new ImageView(uri1.toString());
-		imageView1.setFitHeight(100);
-		imageView1.setFitWidth(100);
-		rb1tp2.setGraphic(imageView1);
+			URI uri1 = Paths.get(Datenbank.getSki(i).get(0).getSkiBildpfad()).toUri();
+			ImageView imageView1 = new ImageView(uri1.toString());
+			imageView1.setFitHeight(100);
+			imageView1.setFitWidth(100);
+			rb1tp2.setGraphic(imageView1);
 
-		URI uri2 = Paths.get(Datenbank.getSki(i).get(1).getSkiBildpfad()).toUri();
-		ImageView imageView2 = new ImageView(uri2.toString());
-		imageView2.setFitHeight(100);
-		imageView2.setFitWidth(100);
-		rb2tp2.setGraphic(imageView2);
+			URI uri2 = Paths.get(Datenbank.getSki(i).get(1).getSkiBildpfad()).toUri();
+			ImageView imageView2 = new ImageView(uri2.toString());
+			imageView2.setFitHeight(100);
+			imageView2.setFitWidth(100);
+			rb2tp2.setGraphic(imageView2);
 
-		URI uri3 = Paths.get(Datenbank.getSki(i).get(2).getSkiBildpfad()).toUri();
-		ImageView imageView3 = new ImageView(uri3.toString());
-		imageView3.setFitHeight(100);
-		imageView3.setFitWidth(100);
-		rb3tp2.setGraphic(imageView3);
-		
+			URI uri3 = Paths.get(Datenbank.getSki(i).get(2).getSkiBildpfad()).toUri();
+			ImageView imageView3 = new ImageView(uri3.toString());
+			imageView3.setFitHeight(100);
+			imageView3.setFitWidth(100);
+			rb3tp2.setGraphic(imageView3);
+
 		} else {
 			Datenbank.getSnowboard(i);
 			rb1tp2.setText(Datenbank.getSnowboard(i).get(0).getSnowboardProduktname());

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+
 public class Datenbank {
 
 	public static final String DBlocation = "C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Datenbank\\DB1";
@@ -771,7 +772,7 @@ public class Datenbank {
 
 	}
 
-	public static Ausleihe getAusleihe(int kundenNr) {
+	public static Ausleihe getAusleihe(int abholNr) {
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -780,7 +781,10 @@ public class Datenbank {
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE kundenNr =" + kundenNr);
+			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE abholNr =" + abholNr);
+			//"INSERT INTO ausleihen(kundenNr,"
+//			+ (a.getSkiNr() > 0 ? " skiNr," : " snowboardNr,") + " leihstart, leihende, mietpreis, "
+//			+ "kaution, nachzahlung, gesamtpreis) " + "VALUES(?,?,?,?,?,?,?,?)"
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -791,7 +795,8 @@ public class Datenbank {
 				// AUSLEIHE OBJ ANLEGeN aus DB
 				a.setAbholNr(rs.getInt("abholNr"));
 				a.setKundenNr(rs.getInt("kundenNr"));
-				a.setSkiNr(rs.getInt("skiNr"));
+				a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) : a.setSnowboardNr(rs.getInt("snowboardNr")));
+				//a.setSkiNr(rs.getInt("skiNr")); //pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() : a.getSnowboardNr());
 				a.setSnowboardNr(rs.getInt("snowboardNr"));
 				a.setLeihstart(rs.getDate("leihstart"));
 				a.setLeihende(rs.getDate("leihende"));
@@ -954,6 +959,47 @@ public class Datenbank {
 		}
 		return sl;
 	}
+	
+	public static ArrayList<SkiFX> getSkiFX() throws SQLException {
+		ArrayList<SkiFX> array2 = new ArrayList<SkiFX>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DriverManager.getConnection(connString);
+			System.out.println("Connection established");
+			stmt = conn.createStatement();
+
+			String s = "SELECT* from ski";
+
+			rs = stmt.executeQuery(s);
+			while (rs.next()) {
+
+				array2.add(new SkiFX(rs.getInt("skiNr"), rs.getInt("skiKategorieNr"), rs.getString("skiProduktname"),
+						rs.getString("skiTyp"), rs.getString("skiBildpfad"), rs.getString("regalNr"),
+						rs.getDouble("tagespreis"), rs.getString("farbe")));
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+
+		}
+
+		return array2;
+
+	}
 
 	public static int getSki(String skiProduktname) { // eine skinr zurückgeben
 
@@ -1023,6 +1069,49 @@ public class Datenbank {
 
 				sk.setTagespreis(rs.getDouble("tagespreis"));
 				sk.setSkiNr(rs.getInt("skiNr"));
+				// ff!
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+		}
+		return sk;
+	}
+	
+	public static Ski getNewSki(int skiNr) { // einen Ski zurückgeben
+
+		Connection conn = null;
+		ResultSet rs = null;
+		Ski sk = new Ski();
+		System.out.println("Query SKI mit Nr: " + skiNr);
+
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiNr =" + skiNr); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("skiNr = " + rs.getInt("skiNr") + " skiKategorieNr = " + rs.getInt("skiKategorieNr")
+						+ " skiProduktname = " + rs.getString("skiProduktname"));
+
+				sk.setTagespreis(rs.getDouble("tagespreis"));
+				sk.setSkiNr(rs.getInt("skiNr"));
+				sk.setRegalNr(rs.getString("regalNr"));
 				// ff!
 			}
 		} catch (SQLException e) {
@@ -1160,6 +1249,7 @@ public class Datenbank {
 						+ rs.getString("snowboardProduktname"));
 
 				sb.setTagespreis(rs.getDouble("tagespreis"));
+				sb.setSnowboardNr(rs.getInt("snowboardNr"));
 				// ff!
 			}
 		} catch (SQLException e) {
@@ -1328,6 +1418,37 @@ public class Datenbank {
 
 		}
 
+	}
+	
+
+	public static void updateAusleihe(int abholNr, double nachzahlung) {
+		
+		System.out.println("Ausleihe ändern");
+		
+		try {
+			conn = DriverManager.getConnection(connString);
+			pstmt = conn.prepareStatement("UPDATE ausleihen SET nachzahlung = " + nachzahlung + "WHERE abholNr = " + abholNr);
+			pstmt.executeUpdate();
+			System.out.println("Ausleihe mit AbholNr: " + abholNr + " aktualisiert");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		
 	}
 
 }

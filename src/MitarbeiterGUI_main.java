@@ -1,7 +1,11 @@
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,6 +20,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -48,7 +54,7 @@ public class MitarbeiterGUI_main extends Application {
 	Label lb1tp1 = new Label("Produktnummer");
 	Label lb2tp1 = new Label("Regalplatz");
 	Label lb3tp1 = new Label("Zeitpunkt der Ausleihe");
-	Label lb4tp1 = new Label("Kundendaten");
+	Label lb4tp1 = new Label("Kundennummer");
 
 	// TP2
 	VBox vb1tp2 = new VBox();
@@ -61,10 +67,10 @@ public class MitarbeiterGUI_main extends Application {
 	TextField tf6tp2 = new TextField();
 	Label lb1tp2 = new Label("Produktnummer");
 	Label lb2tp2 = new Label("Regalplatz");
-	Label lb3tp2 = new Label("Zeitpunkt der Rücknahme");
+	Label lb3tp2 = new Label("Miete endet am: ");
 	Label lb4tp2 = new Label("Entstandene Zusatzkosten");
 	Label lb5tp2 = new Label("Zu refundierende Kaution");
-	Label lb6tp2 = new Label("Kundendaten");
+	Label lb6tp2 = new Label("Kundennummer");
 
 	// TP3
 	BorderPane borderPanetp3 = new BorderPane();
@@ -72,7 +78,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	// TP4
 	BorderPane borderPanetp4 = new BorderPane();
-	Label lb1tp4 = new Label();
+	// Label lb1tp4 = new Label("test");
 	Button bt1tp4 = new Button("NEU");
 	Button bt2tp4 = new Button("LÖSCHEN");
 	HBox h1tp4 = new HBox();
@@ -120,11 +126,53 @@ public class MitarbeiterGUI_main extends Application {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
-			tf1tp1.setText(null); // getProduktNr über Abholnummer
+			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
+			// muss die Ausleihe befüllt werden
+			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart()
+					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+				tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+				tf2tp1.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+						.getRegalNr()); // regalNr
+				tf3tp1.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().toString()); // ausleihstart
+				tf4tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
+				tp1.setExpanded(true);
+
+			} else {
+				tf1tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+				tf2tp2.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+						.getRegalNr()); // regalNr
+				tf3tp2.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende().toString());
+				if(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende()
+					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+					tf4tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+				} else { //update nachzahlung in db 
+					Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()), calcNachzahlung(LocalDate.parse(tf3tp2.getText()), Integer.parseInt(tf1.getText())));//diff zw. rückgabedatum und localdate.now * tagespreis
+					tf4tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+					
+				}
+				tf5tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKaution()));
+				tf6tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr()));
+				tp2.setExpanded(true);
+//SNOWBOARD??
+				
+			}
 
 		});
 
 	}
+
+	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) {
+
+		Period period = Period.between(selreturnDate, LocalDate.now());
+		int tage = period.getDays();
+		
+			double nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
+			System.out.println("Tage: " + tage);
+			System.out.println("Nachzahlung: " + nachzahlung);
+			return nachzahlung;
+		
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	private void displayTp6(Ausleihe a) {
@@ -175,7 +223,8 @@ public class MitarbeiterGUI_main extends Application {
 		// }
 
 		table.setItems(ausleihenFXListe);
-		table.getColumns().addAll(ausleiheIdCol, customerIdCol, skiNrCol, snowboardNrCol, leihstartCol, leihendeCol, gesamtpreisCol);
+		table.getColumns().addAll(ausleiheIdCol, customerIdCol, skiNrCol, snowboardNrCol, leihstartCol, leihendeCol,
+				gesamtpreisCol);
 
 		borderPanetp6.setCenter(table);
 		tp6.setContent(borderPanetp6);
@@ -228,18 +277,18 @@ public class MitarbeiterGUI_main extends Application {
 
 		borderPanetp5.setCenter(table1);
 		tp5.setContent(borderPanetp5);
-		
+
 		bt1tp5.setOnAction(bt -> {
 			System.out.println("Neues Snowboard anlegen");
 			String s = "Snowboard";
-			new MitarbeiterGUI_Dialog1(s).showAndWait();			
+			new MitarbeiterGUI_Dialog1(s).showAndWait();
 		});
-		
+
 		bt2tp5.setOnAction(bt -> {
-		    SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
-		    Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr());
-		    table1.getItems().remove(selectedItem);
-		    
+			SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
+			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr());
+			table1.getItems().remove(selectedItem);
+
 		});
 
 	}
@@ -250,6 +299,7 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp4.setPadding(new Insets(5));
 		h1tp4.getChildren().addAll(bt1tp4, bt2tp4);
 		borderPanetp4.setBottom(h1tp4);
+		// borderPanetp4.setCenter(lb1tp4);
 
 		TableColumn<SkiFX, Integer> skiNrCol = new TableColumn<>("skiNr");
 		skiNrCol.setCellValueFactory(new PropertyValueFactory<>("skiNr"));
@@ -272,57 +322,54 @@ public class MitarbeiterGUI_main extends Application {
 		TableColumn<SkiFX, String> farbeCol = new TableColumn<>("farbe");
 		farbeCol.setCellValueFactory(new PropertyValueFactory<>("farbe"));
 		farbeCol.setMinWidth(70);
-		
-//		ObservableList<BuchFX> data;
-//		try {
-//			data = FXCollections.observableArrayList(Datenbank.leseBuecher(null, null));
-//			TableView<BuchFX> table = new TableView<>();
-//			table.setItems(data);
-//			table.getColumns().addAll(col1, col2, col3, col4, col5, col6);
-//			table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-//
-//			table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<BuchFX>() {
-//				@Override
-//				public void onChanged(javafx.collections.ListChangeListener.Change<? extends BuchFX> c) {
-//					ObservableList<BuchFX> changesList = (ObservableList<BuchFX>) c.getList();
-//					String s = "";
-//					for (BuchFX p : changesList)
-//						s += p.getISBN() + " " + p.getTitel() + ", ";
-//					lbl.setText(s.substring(0, s.length() - 2));
-//
-//				}
-//			});
-//			borderPane.setCenter(table);
-		
 
-		ObservableList<SkiFX> skiFXListe = FXCollections.observableArrayList();
 		TableView<SkiFX> table = new TableView<>();
+		ObservableList<SkiFX> skiFXListe = FXCollections.observableArrayList();
 		ArrayList<Ski> skiNrs = Datenbank.getSki();
 
 		for (Ski sk : skiNrs) {
 			Ski ski = new Ski(sk.getSkiNr(), sk.getSkiKategorieNr(), sk.getSkiProduktname(), sk.getSkiTyp(),
 					sk.getSkiBildpfad(), sk.getRegalNr(), sk.getTagespreis(), sk.getFarbe());
 			skiFXListe.add(new SkiFX(ski));
+			table.setItems(skiFXListe);
 		}
+		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<SkiFX>() {
+			@SuppressWarnings("unused")
+			public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX> c) {
+				ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<? extends SkiFX>) c).getList();
+				String s = "";
+				for (SkiFX sk : changesList) {
+					s += sk.getSkiNr() + sk.getSkiKategorieNr();
+					// lb1tp4.setText(s.substring(0, s.length() - 2));
+				}
+			}
 
-		table.setItems(skiFXListe);
+			@Override
+			public void onChanged(Change<? extends SkiFX> c) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
 		table.getColumns().addAll(skiNrCol, skiKategorieNrCol, skiProduktnameCol, skiTypCol, regalNrCol, tagespreisCol,
 				farbeCol); // Anzeige OHNE skiBildpfad!!!!
 
 		borderPanetp4.setCenter(table);
 		tp4.setContent(borderPanetp4);
-		
+
 		bt1tp4.setOnAction(bt -> {
 			System.out.println("Neuen Ski anlegen");
 			String s = "Ski";
-			new MitarbeiterGUI_Dialog1(s).showAndWait();			
+			new MitarbeiterGUI_Dialog1(s).showAndWait();
 		});
-		
+
 		bt2tp4.setOnAction(bt -> {
-		    SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
-		    Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
-		    table.getItems().remove(selectedItem);
-		    
+			SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
+			Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
+			table.getItems().remove(selectedItem);
+
 		});
 	}
 
@@ -368,6 +415,7 @@ public class MitarbeiterGUI_main extends Application {
 		tp3.setContent(borderPanetp3);
 
 	}
+	
 
 	private void displayTp2() {
 		// GRIDPANE LABELS
@@ -398,6 +446,7 @@ public class MitarbeiterGUI_main extends Application {
 		tp2.setContent(borderPanetp2);
 
 	}
+	
 
 	private void displayTp1() {
 

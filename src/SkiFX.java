@@ -31,6 +31,18 @@ public class SkiFX {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SkiFX(int int1, int int2, String string, String string2, String string3, String string4, double double1,
+			String string5) {
+		skiNr = new SimpleIntegerProperty(ski.getSkiNr());
+		skiKategorieNr = new SimpleIntegerProperty(ski.getSkiKategorieNr());
+		skiProduktname = new SimpleStringProperty(ski.getSkiProduktname());
+		skiTyp = new SimpleStringProperty(ski.getSkiTyp());
+		skiBildpfad = new SimpleStringProperty(ski.getSkiBildpfad());
+		regalNr = new SimpleStringProperty(ski.getRegalNr());
+		tagespreis = new SimpleDoubleProperty(ski.getTagespreis());
+		farbe = new SimpleStringProperty(ski.getFarbe());
+	}
+
 	public int getSkiNr() {
 		return skiNr.get();
 	}
