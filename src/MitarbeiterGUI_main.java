@@ -170,9 +170,7 @@ public class MitarbeiterGUI_main extends Application {
 			System.out.println("Tage: " + tage);
 			System.out.println("Nachzahlung: " + nachzahlung);
 			return nachzahlung;
-		
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	private void displayTp6(Ausleihe a) {
@@ -334,6 +332,8 @@ public class MitarbeiterGUI_main extends Application {
 			table.setItems(skiFXListe);
 		}
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
+		//FUNKTIONIERT NICHT!!!
 		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<SkiFX>() {
 			@SuppressWarnings("unused")
 			public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX> c) {
@@ -415,7 +415,6 @@ public class MitarbeiterGUI_main extends Application {
 		tp3.setContent(borderPanetp3);
 
 	}
-	
 
 	private void displayTp2() {
 		// GRIDPANE LABELS
@@ -447,7 +446,6 @@ public class MitarbeiterGUI_main extends Application {
 
 	}
 	
-
 	private void displayTp1() {
 
 		// GRIDPANE LABELS

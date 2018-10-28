@@ -28,10 +28,9 @@ import javafx.stage.Stage;
 
 public class KundenGUI_main extends Application {
 
-	// statischer Initialisierer analog VinothekJerseyResoure - DB wird nur 1x
-	// erstellt MUSS auskommentiert werden sobald die Datenbank steht - Methode soll dann
-	// nicht mehr aufgerufen werden! ODER: DB Ordner löschen!!!
-	// Achtung: bei kd nr vergabe nach auskommentierung immer +100!?!?
+	// statischer Initialisierer: DB wird nur 1x
+	// erstellt --> MUSS auskommentiert werden sobald die Datenbank steht 
+	// Achtung: NACH der Auskommentierung ändert sich die Logik der IDnr vergabe auf +100!?
 	
 //	static {
 //		try {
@@ -101,8 +100,6 @@ public class KundenGUI_main extends Application {
 			System.out.println("SKI Button clicked");
 			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue()));
 			a.setLeihende(java.sql.Date.valueOf(datePicker2.getValue()));
-			//java.sql.Date.valueOf(dateToConvert)
-			//a.setLeihStart(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()));
 			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 

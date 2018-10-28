@@ -9,6 +9,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -58,9 +60,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb6tp1 = new Label("Pistenpräferenz");
 	Label lb7tp1 = new Label("Beinstellung"); // nur für Snowboard!!!
 	Label lb8tp1 = new Label("Schuhart"); // nur für Snowboard!!!
-	Label lb9tp1 = new Label(); //Fehlermeldung für Alter
-	Label lb10tp1 = new Label(); //Fehlermeldung für Gewicht
-	Label lb11tp1 = new Label(); //Fehlermeldung für Schuhgröße
+	Label lb9tp1 = new Label(); // Fehlermeldung für Alter
+	Label lb10tp1 = new Label(); // Fehlermeldung für Gewicht
+	Label lb11tp1 = new Label(); // Fehlermeldung für Schuhgröße
 
 	// TP2
 	HBox hb1tp2 = new HBox();
@@ -97,7 +99,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf7tp3 = new TextField(); // wohnort
 	TextField tf8tp3 = new TextField(); // plz
 	TextField tf9tp3 = new TextField(); // land
-	TextField tf10tp3 = new TextField(); // krediknr
+	TextField tf10tp3 = new TextField(); // kknr
 	TextField tf11tp3 = new TextField(); // kkname
 	TextField tf12tp3 = new TextField(); // kkinhabername
 	TextField tf13tp3 = new TextField(); // kkprüf
@@ -117,6 +119,20 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb13tp3 = new Label("Kreditkarteninhabername");
 	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb15tp3 = new Label("Kreditkartengültigkeit");
+	Label lb16tp3 = new Label("");
+	Label lb17tp3 = new Label("");
+	Label lb18tp3 = new Label("");
+	Label lb19tp3 = new Label("");
+	Label lb20tp3 = new Label("");
+	Label lb21tp3 = new Label("");
+	Label lb22tp3 = new Label("");
+	Label lb23tp3 = new Label("");
+	Label lb24tp3 = new Label("");
+	Label lb25tp3 = new Label("");
+	Label lb26tp3 = new Label("");
+	Label lb27tp3 = new Label("");
+	Label lb28tp3 = new Label("");
+	Label lb29tp3 = new Label("");
 
 	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) {
 		super();
@@ -145,9 +161,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					//if (isInputValid()) { // alle TF?? !tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()
+					if (isInputValid()) { 
 						try {
-							// TP1 TF INPUT abfragen
+							// TP1 TF INPUT abfragen und Kundenobjekt anlegen
 							k.setAlter(Integer.parseInt(tf1tp1.getText()));
 							k.setGewicht(Integer.parseInt(tf2tp1.getText()));
 							k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
@@ -155,7 +171,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
 							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
 							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
-
 							// TP3 TF Input abfragen
 							if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {
 								k.setAnrede(1);
@@ -163,7 +178,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 								k.setAnrede(2);
 							} else
 								k.setAnrede(3);
-
 							k.setVorname(tf2tp3.getText());
 							k.setNachname(tf3tp3.getText());
 							k.setTelefonNr(tf4tp3.getText());
@@ -194,17 +208,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							Datenbank.getAusleihen();
 
 							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
+							
 						} catch (IOException e) {
-
 							e.printStackTrace();
 						}
-			//		} else
-						try {
-							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					} else
+						System.out.println("FEHLERHAFTE EINGABE");
 				return null;
 			}
 
@@ -212,31 +221,26 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-//	public boolean isInputValid() {
-//
-//		// TextField tf1tp1 = new TextField(); // Alter
-//		// TextField tf2tp1 = new TextField(); // Gewicht
-//		// TextField tf3tp1 = new TextField(); // SChuhgrösse
-//		Boolean b = false;
-//		String s = null;
-//		//ALTER
-//		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)) {
-//			try {
-//				// Do all the validation you need here such as
-//				int i = Integer.parseInt(tf1tp1.getText());
-//				if (i >= 3 && i <= 110) {
-//					b = true;
-//				} else {
-//					s = "Alter muss zwischen 3 und 110 sein!";
-//					lb9tp1.setText(s);
-//					tp1.setExpanded(true);
-//				}
-//			} catch (NumberFormatException e) {
-//			}
-//
-//		}
-//		return b;
-//	}
+	// prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
+	public boolean isInputValid() {
+
+		Boolean b = false;
+		//String s = null;
+		// ALTER
+		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)) { //Auch für alle anderen Textfelder schreiben
+			b = true;
+		} else {
+			 Alert alert = new Alert(AlertType.ERROR);
+		        alert.setTitle("FEHLERHAFTE EINGABE!");
+		        alert.setContentText("DATEN FEHLEN!!!");
+		        alert.showAndWait();
+		        
+			//OPTIONAL gelöst mit DIALOG3 als Warnhinweis - funktioniert aber auch nicht!
+//			s = "FEHLERHAFTE EINGABE!";
+//			new KundenGUI_Dialog3(s).showAndWait();
+		}
+		return b;
+	}
 
 	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) {
 
@@ -275,7 +279,22 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(lb13tp3, 0, 11);
 		gridPanetp3.add(lb14tp3, 0, 12);
 		gridPanetp3.add(lb15tp3, 0, 13);
-
+		// Fehleranzeigen
+		// gridPanetp3.add(lb16tp3, 2, 0);
+		gridPanetp3.add(lb17tp3, 2, 1);
+		gridPanetp3.add(lb18tp3, 2, 2);
+		gridPanetp3.add(lb19tp3, 2, 3);
+		gridPanetp3.add(lb20tp3, 2, 4);
+		gridPanetp3.add(lb21tp3, 2, 5);
+		gridPanetp3.add(lb22tp3, 2, 6);
+		gridPanetp3.add(lb23tp3, 2, 7);
+		gridPanetp3.add(lb24tp3, 2, 8);
+		gridPanetp3.add(lb25tp3, 2, 9);
+		gridPanetp3.add(lb26tp3, 2, 10);
+		gridPanetp3.add(lb27tp3, 2, 11);
+		gridPanetp3.add(lb28tp3, 2, 12);
+		gridPanetp3.add(lb29tp3, 2, 13);
+		// Textfelder
 		gridPanetp3.add(cob1tp3, 1, 0);
 		gridPanetp3.add(tf2tp3, 1, 1);
 		gridPanetp3.add(tf3tp3, 1, 2);
@@ -291,6 +310,177 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf13tp3, 1, 12);
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
+
+		// Check user input
+		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf2tp3.getText().matches("[a-z]*")) {
+					tf2tp3.setStyle("-fx-background-color: orangered;");
+					lb17tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf2tp3.setStyle("-fx-background-color: white;");
+					lb17tp3.setText("");
+				}
+			}
+		});
+
+		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf3tp3.getText().matches("[a-z]*")) {
+					tf3tp3.setStyle("-fx-background-color: orangered;");
+					lb18tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf3tp3.setStyle("-fx-background-color: white;");
+					lb18tp3.setText("");
+				}
+			}
+		});
+
+		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf4tp3.getText().matches("[a-z]*")) {
+					tf4tp3.setStyle("-fx-background-color: orangered;");
+					lb19tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf4tp3.setStyle("-fx-background-color: white;");
+					lb19tp3.setText("");
+				}
+			}
+		});
+
+		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf5tp3.getText().matches("[a-z]*")) {
+					tf5tp3.setStyle("-fx-background-color: orangered;");
+					lb20tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf5tp3.setStyle("-fx-background-color: white;");
+					lb20tp3.setText("");
+				}
+			}
+		});
+
+		tf6tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf6tp3.getText().matches("[a-z]*")) {
+					tf6tp3.setStyle("-fx-background-color: orangered;");
+					lb21tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf6tp3.setStyle("-fx-background-color: white;");
+					lb21tp3.setText("");
+				}
+			}
+		});
+
+		tf7tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf7tp3.getText().matches("[a-z]*")) {
+					tf7tp3.setStyle("-fx-background-color: orangered;");
+					lb22tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf7tp3.setStyle("-fx-background-color: white;");
+					lb22tp3.setText("");
+				}
+			}
+		});
+
+		tf8tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf8tp3.getText().matches("[a-z]*")) {
+					tf8tp3.setStyle("-fx-background-color: orangered;");
+					lb23tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf8tp3.setStyle("-fx-background-color: white;");
+					lb23tp3.setText("");
+				}
+			}
+		});
+
+		tf9tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf9tp3.getText().matches("[a-z]*")) {
+					tf9tp3.setStyle("-fx-background-color: orangered;");
+					lb24tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf9tp3.setStyle("-fx-background-color: white;");
+					lb24tp3.setText("");
+				}
+			}
+		});
+
+		tf10tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf10tp3.getText().matches("[0-9]*")) {
+					tf10tp3.setStyle("-fx-background-color: orangered;");
+					lb25tp3.setText("Falsche Eingabe - nur Zahlen!");
+				} else {
+					tf10tp3.setStyle("-fx-background-color: white;");
+					lb25tp3.setText("");
+				}
+			}
+		});
+
+		tf11tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf11tp3.getText().matches("[a-z]*")) {
+					tf11tp3.setStyle("-fx-background-color: orangered;");
+					lb26tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf11tp3.setStyle("-fx-background-color: white;");
+					lb26tp3.setText("");
+				}
+			}
+		});
+
+		tf12tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf12tp3.getText().matches("[a-z]*")) {
+					tf12tp3.setStyle("-fx-background-color: orangered;");
+					lb27tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf12tp3.setStyle("-fx-background-color: white;");
+					lb27tp3.setText("");
+				}
+			}
+		});
+
+		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf13tp3.getText().matches("[a-z]*")) {
+					tf13tp3.setStyle("-fx-background-color: orangered;");
+					lb28tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf13tp3.setStyle("-fx-background-color: white;");
+					lb28tp3.setText("");
+				}
+			}
+		});
+
+		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+
+			if (observable != null) {
+				if (!tf14tp3.getText().matches("[a-z]*")) {
+					tf14tp3.setStyle("-fx-background-color: orangered;");
+					lb29tp3.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf14tp3.setStyle("-fx-background-color: white;");
+					lb29tp3.setText("");
+				}
+			}
+		});
+
 		// BORDERPANE
 		BorderPane borderPanetp3 = new BorderPane();
 		borderPanetp3.setPadding(new Insets(5));
@@ -379,10 +569,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb4tp1, 0, 2);
 		gridPanetp1.add(lb5tp1, 0, 3);
 		gridPanetp1.add(lb6tp1, 0, 4);
-		gridPanetp1.add(lb9tp1, 2, 0); //Fehleranzeige
-		gridPanetp1.add(lb10tp1, 2, 1); //Fehleranzeige
-		gridPanetp1.add(lb11tp1, 2, 2); //Fehleranzeige
-		
+		gridPanetp1.add(lb9tp1, 2, 0); // Fehleranzeige
+		gridPanetp1.add(lb10tp1, 2, 1); // Fehleranzeige
+		gridPanetp1.add(lb11tp1, 2, 2); // Fehleranzeige
+
 		// nur für Snowboard
 		if (s.equals("Snowboard")) {
 			gridPanetp1.add(lb7tp1, 0, 5);
@@ -409,48 +599,48 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		cob3tp1.setItems(FXCollections.observableArrayList("regular", "goofy"));
 		cob4tp1.setItems(FXCollections.observableArrayList("soft", "hart"));
 		// BORDERPANE
-		
-		//Check ALTER
+
+		// Check ALTER
 		tf1tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			
-		    	 if(observable != null)  { //("[0-9]*")
-		          if (!tf1tp1.getText().matches("[0-9]*")) { //  &&{3,110}2.REGEX Bedingung funkt nicht
-		        	  tf1tp1.setStyle("-fx-background-color: orangered;");
-		        	  lb9tp1.setText("Alter muss zwischen 3 und 110 sein");
-		          } else {
-		        	  tf1tp1.setStyle("-fx-background-color: white;");
-		        	  lb9tp1.setText("");
-		          }
-		       }
-		    });
-		
-		//CHECK GEWICHT
+
+			if (observable != null) { // ("[0-9]*")
+				if (!tf1tp1.getText().matches("[0-9]*")) { // &&{3,110}2.REGEX Bedingung funkt nicht
+					tf1tp1.setStyle("-fx-background-color: orangered;");
+					lb9tp1.setText("Alter muss zwischen 3 und 110 sein");
+				} else {
+					tf1tp1.setStyle("-fx-background-color: white;");
+					lb9tp1.setText("");
+				}
+			}
+		});
+
+		// CHECK GEWICHT
 		tf2tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			
-	    	 if(observable != null)  { 
-	          if (!tf2tp1.getText().matches("[0-9]*")) { 
-	        	  tf2tp1.setStyle("-fx-background-color: orangered;");
-	        	  lb10tp1.setText("Gewicht eingeben!");
-	          } else {
-	        	  tf2tp1.setStyle("-fx-background-color: white;");
-	        	  lb10tp1.setText("");
-	          }
-	       }
-	    });
-		//CHECK SCHUHGRÖSSE
+
+			if (observable != null) {
+				if (!tf2tp1.getText().matches("[0-9]*")) {
+					tf2tp1.setStyle("-fx-background-color: orangered;");
+					lb10tp1.setText("Gewicht eingeben!");
+				} else {
+					tf2tp1.setStyle("-fx-background-color: white;");
+					lb10tp1.setText("");
+				}
+			}
+		});
+		// CHECK SCHUHGRÖSSE
 		tf3tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			
-	    	 if(observable != null)  { 
-	          if (!tf3tp1.getText().matches("[0-9]*")) { 
-	        	  tf3tp1.setStyle("-fx-background-color: orangered;");
-	        	  lb11tp1.setText("Schuhgrösse");
-	          } else {
-	        	  tf3tp1.setStyle("-fx-background-color: white;");
-	        	  lb11tp1.setText("");
-	          }
-	       }
-	    });
-		
+
+			if (observable != null) {
+				if (!tf3tp1.getText().matches("[0-9]*")) {
+					tf3tp1.setStyle("-fx-background-color: orangered;");
+					lb11tp1.setText("Schuhgrösse");
+				} else {
+					tf3tp1.setStyle("-fx-background-color: white;");
+					lb11tp1.setText("");
+				}
+			}
+		});
+
 		BorderPane borderPanetp1 = new BorderPane();
 		borderPanetp1.setPadding(new Insets(5));
 		borderPanetp1.setPrefSize(700, 580);
