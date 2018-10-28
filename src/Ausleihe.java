@@ -2,14 +2,11 @@ import java.sql.Date;
 
 public class Ausleihe {
 	
-	private int abholNr; //autogen. postAusleihe
+	private int abholNr; 
 	private int kundenNr;
-	//private Kunde kunde;
 	private int skiNr;
-	//private Ski ski;
 	private int snowboardNr;
-	//private Snowboard snowboard;
-	private Date leihstart; //setzt der Mitarbeiter?
+	private Date leihstart; 
 	private Date leihende; 
 	private double mietpreis;
 	private double kaution;
@@ -35,25 +32,6 @@ public class Ausleihe {
 		this.gesamtpreis = gesamtpreis;
 	}
 	
-//	public Ausleihe(int abholNr, int kundenNr, Kunde kunde, int skiNr, Ski ski, int snowboardNr, Snowboard snowboard,
-//			Date leihStart, Date leihEnde, double mietpreis, double kaution, double nachzahlung,
-//			double gesamtpreis) {
-//		super();
-//		this.abholNr = abholNr;
-//		this.kundenNr = kundenNr;
-//		this.kunde = kunde;
-//		this.skiNr = skiNr;
-//		this.ski = ski;
-//		this.snowboardNr = snowboardNr;
-//		this.snowboard = snowboard;
-//		this.leihStart = leihStart;
-//		this.leihEnde = leihEnde;
-//		this.mietpreis = mietpreis;
-//		this.kaution = kaution;
-//		this.nachzahlung = nachzahlung;
-//		this.gesamtpreis = gesamtpreis;
-//	}
-
 	public Ausleihe() {
 		// TODO Auto-generated constructor stub
 	}
@@ -66,25 +44,13 @@ public class Ausleihe {
 		this.kundenNr = kundenNr;
 	}
 
-//	public void setKunde(Kunde kunde) {
-//		this.kunde = kunde;
-//	}
-
 	public void setSkiNr(int skiNr) {
 		this.skiNr = skiNr;
 	}
 
-//	public void setSki(Ski ski) {
-//		this.ski = ski;
-//	}
-
 	public void setSnowboardNr(int snowboardNr) {
 		this.snowboardNr = snowboardNr;
 	}
-
-//	public void setSnowboard(Snowboard snowboard) {
-//		this.snowboard = snowboard;
-//	}
 
 	public void setLeihstart(Date leihstart) {
 		this.leihstart = leihstart;
@@ -118,25 +84,13 @@ public class Ausleihe {
 		return kundenNr;
 	}
 
-//	public Kunde getKunde() {
-//		return kunde;
-//	}
-
 	public int getSkiNr() {
 		return skiNr;
 	}
 
-//	public Ski getSki() {
-//		return ski;
-//	}
-
 	public int getSnowboardNr() {
 		return snowboardNr;
 	}
-
-//	public Snowboard getSnowboard() {
-//		return snowboard;
-//	}
 
 	public Date getLeihstart() {
 		return leihstart;

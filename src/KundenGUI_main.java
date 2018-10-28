@@ -55,7 +55,7 @@ public class KundenGUI_main extends Application {
 		borderPane.setPadding(new Insets(5));
 
 		// BILD
-		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri();
+		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri(); //Bild aus Ordner holen
 		ImageView imageView = new ImageView(uri.toString());
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
@@ -72,8 +72,8 @@ public class KundenGUI_main extends Application {
 		// DATEPICKER
 		DatePicker datePicker1 = new DatePicker();
 		DatePicker datePicker2 = new DatePicker();
-		datePicker1.setValue(LocalDate.now());
-		datePicker2.setValue(LocalDate.now());
+		datePicker1.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
+		datePicker2.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
 
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(lbl3, datePicker1, lbl4, datePicker2);
@@ -85,12 +85,10 @@ public class KundenGUI_main extends Application {
 		bt1.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt1.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		// mit Hintergrundfarbe sieht man anklicken nicht mehr?!?
+		// Achtung: mit Hintergrundfarbe sieht man anklicken nicht mehr?!?
 		Button bt2 = new Button("SNOWBOARD");
 		bt2.setPrefSize(120, 60);
 		bt2.setTextFill(Color.BLUE);
-		// bt2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null,
-		// null)));
 		bt2.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		HBox hb2 = new HBox();
@@ -98,14 +96,14 @@ public class KundenGUI_main extends Application {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
-			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue())); // LocalDate Objekt zu Date konvertieren
 			a.setLeihende(java.sql.Date.valueOf(datePicker2.getValue()));
 			new KundenGUI_Dialog1("Ski", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 
 		bt2.setOnAction(gd -> {
 			System.out.println("SNOWBOARD Button clicked");
-			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue()));
+			a.setLeihstart(java.sql.Date.valueOf(datePicker1.getValue())); // LocalDate Objekt zu Date konvertieren
 			a.setLeihende(java.sql.Date.valueOf(datePicker2.getValue()));
 			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});

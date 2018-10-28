@@ -20,7 +20,7 @@ public class KundeFX {
 	private SimpleStringProperty pistenPraef;
 	private SimpleIntegerProperty gewicht;
 	private SimpleDoubleProperty schuhgroesse;
-	private SimpleStringProperty technik; // enum???
+	private SimpleStringProperty technik; 
 	private SimpleBooleanProperty beinstellung;
 	private SimpleBooleanProperty bindungstyp;
 

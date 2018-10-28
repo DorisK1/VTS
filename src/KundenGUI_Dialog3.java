@@ -4,7 +4,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 
-public class KundenGUI_Dialog3 extends Dialog<ButtonType> {
+public class KundenGUI_Dialog3 extends Dialog<ButtonType> { // NÖTIG? Besser über ALERT?
 
 	public KundenGUI_Dialog3(String s) {
 		super();

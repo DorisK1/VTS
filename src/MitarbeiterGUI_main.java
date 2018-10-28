@@ -108,10 +108,10 @@ public class MitarbeiterGUI_main extends Application {
 
 		displayTp1();
 		displayTp2();
-		displayTp3(k);
+		displayTp3();
 		displayTp4();
 		displayTp5();
-		displayTp6(a);
+		displayTp6();
 
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(800);
@@ -127,7 +127,8 @@ public class MitarbeiterGUI_main extends Application {
 		bt1.setOnAction(gd -> {
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
-			// muss die Ausleihe befüllt werden
+			// muss die Ausleihe befüllt werden --> TP1
+			//SNOWBOARD??
 			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart()
 					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
 				tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
@@ -137,7 +138,7 @@ public class MitarbeiterGUI_main extends Application {
 				tf4tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
 				tp1.setExpanded(true);
 
-			} else {
+			} else { // Sonst die Rücknahme TP2
 				tf1tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
 				tf2tp2.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
 						.getRegalNr()); // regalNr
@@ -153,7 +154,6 @@ public class MitarbeiterGUI_main extends Application {
 				tf5tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKaution()));
 				tf6tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr()));
 				tp2.setExpanded(true);
-//SNOWBOARD??
 				
 			}
 
@@ -161,7 +161,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	}
 
-	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) {
+	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) { //berechnet Nachzahlung wenn das Produkt nach dem Leihende retourniert wird
 
 		Period period = Period.between(selreturnDate, LocalDate.now());
 		int tage = period.getDays();
@@ -172,12 +172,11 @@ public class MitarbeiterGUI_main extends Application {
 			return nachzahlung;
 	}
 
-	@SuppressWarnings("unchecked")
-	private void displayTp6(Ausleihe a) {
+	@SuppressWarnings("unchecked") 
+	private void displayTp6() { // Listung ALLER Ausleihen
 		// TABLE VIEW
 		borderPanetp6.setPadding(new Insets(5));
-		// borderPanetp6.setBottom(lb1tp3);
-
+		// Columns
 		TableColumn<AusleiheFX, Integer> ausleiheIdCol = new TableColumn<>("abholNr");
 		ausleiheIdCol.setCellValueFactory(new PropertyValueFactory<>("abholNr"));
 		ausleiheIdCol.setMinWidth(100);
@@ -204,21 +203,12 @@ public class MitarbeiterGUI_main extends Application {
 		ObservableList<AusleiheFX> ausleihenFXListe = FXCollections.observableArrayList();
 		ArrayList<Ausleihe> ausleihenNrs = Datenbank.getAusleihen();
 
-		for (Ausleihe au : ausleihenNrs) {
+		for (Ausleihe au : ausleihenNrs) { // Ausleihe auf AusleiheFX umschreiben
 			Ausleihe ausleihe = new Ausleihe(au.getAbholNr(), au.getKundenNr(), au.getSkiNr(), au.getSnowboardNr(),
 					au.getLeihstart(), au.getLeihende(), au.getMietpreis(), au.getKaution(), au.getNachzahlung(),
 					au.getGesamtpreis());
 			ausleihenFXListe.add(new AusleiheFX(ausleihe));
 		}
-
-		// for (Ausleihe au : ausleihenNrs) {
-		// Ausleihe ausleihe = new Ausleihe(au.getAbholNr(), au.getKundenNr(),
-		// au.getKunde(), au.getSkiNr(), au.getSki(),
-		// au.getSnowboardNr(), au.getSnowboard(), au.getLeihStart(), au.getLeihEnde(),
-		// au.getMietpreis(),
-		// au.getKaution(), au.getNachzahlung(), au.getGesamtpreis());
-		// ausleihenFXListe.add(new AusleiheFX(ausleihe));
-		// }
 
 		table.setItems(ausleihenFXListe);
 		table.getColumns().addAll(ausleiheIdCol, customerIdCol, skiNrCol, snowboardNrCol, leihstartCol, leihendeCol,
@@ -230,7 +220,7 @@ public class MitarbeiterGUI_main extends Application {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void displayTp5() {
+	private void displayTp5() { // Listung aller Snowboards aus der Datenbank
 		// TABLE VIEW
 		borderPanetp5.setPadding(new Insets(5));
 		h1tp5.getChildren().addAll(bt1tp5, bt2tp5);
@@ -262,7 +252,7 @@ public class MitarbeiterGUI_main extends Application {
 		TableView<SnowboardFX> table1 = new TableView<>();
 		ArrayList<Snowboard> sbNrs = Datenbank.getSnowboard();
 
-		for (Snowboard sb : sbNrs) {
+		for (Snowboard sb : sbNrs) { // Snowboard auf SnowboardFX umschreiben
 			Snowboard snowboard = new Snowboard(sb.getSnowboardNr(), sb.getSnowboardKategorieNr(),
 					sb.getSnowboardProduktname(), sb.getSnowboardTyp(), sb.getSnowboardBildpfad(), sb.getRegalNr(),
 					sb.getTagespreis(), sb.getFarbe(), sb.isBeinstellung(), sb.isBindungstyp());
@@ -276,29 +266,28 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp5.setCenter(table1);
 		tp5.setContent(borderPanetp5);
 
-		bt1tp5.setOnAction(bt -> {
+		bt1tp5.setOnAction(bt -> { // Snowboard NEU
 			System.out.println("Neues Snowboard anlegen");
 			String s = "Snowboard";
 			new MitarbeiterGUI_Dialog1(s).showAndWait();
 		});
 
-		bt2tp5.setOnAction(bt -> {
+		bt2tp5.setOnAction(bt -> { // Snowboard LÖSCHEN
 			SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
-			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr());
-			table1.getItems().remove(selectedItem);
-
+			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); //LÖSCHEN aus DB
+			table1.getItems().remove(selectedItem); //LÖSCHEN aus Anzeige
+			
 		});
 
 	}
 
 	@SuppressWarnings("unchecked")
-	private void displayTp4() {
+	private void displayTp4() { // Listung aller Ski aus der Datenbank
 		// TABLE VIEW
 		borderPanetp4.setPadding(new Insets(5));
 		h1tp4.getChildren().addAll(bt1tp4, bt2tp4);
 		borderPanetp4.setBottom(h1tp4);
-		// borderPanetp4.setCenter(lb1tp4);
-
+		// Columns
 		TableColumn<SkiFX, Integer> skiNrCol = new TableColumn<>("skiNr");
 		skiNrCol.setCellValueFactory(new PropertyValueFactory<>("skiNr"));
 		skiNrCol.setMinWidth(100);
@@ -325,7 +314,7 @@ public class MitarbeiterGUI_main extends Application {
 		ObservableList<SkiFX> skiFXListe = FXCollections.observableArrayList();
 		ArrayList<Ski> skiNrs = Datenbank.getSki();
 
-		for (Ski sk : skiNrs) {
+		for (Ski sk : skiNrs) { // Ski auf SkiFX umschreiben
 			Ski ski = new Ski(sk.getSkiNr(), sk.getSkiKategorieNr(), sk.getSkiProduktname(), sk.getSkiTyp(),
 					sk.getSkiBildpfad(), sk.getRegalNr(), sk.getTagespreis(), sk.getFarbe());
 			skiFXListe.add(new SkiFX(ski));
@@ -340,8 +329,10 @@ public class MitarbeiterGUI_main extends Application {
 				ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<? extends SkiFX>) c).getList();
 				String s = "";
 				for (SkiFX sk : changesList) {
-					s += sk.getSkiNr() + sk.getSkiKategorieNr();
+					//s += sk.getSkiNr() + sk.getSkiKategorieNr();
 					// lb1tp4.setText(s.substring(0, s.length() - 2));
+					table.getItems().add(sk);
+
 				}
 			}
 
@@ -374,12 +365,11 @@ public class MitarbeiterGUI_main extends Application {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void displayTp3(Kunde k) {
-
+	private void displayTp3() { // Listung aller Kunden aus der Datenbank
 		// TABLE VIEW
 		borderPanetp3.setPadding(new Insets(5));
 		borderPanetp3.setBottom(lb1tp3);
-
+		// Columns
 		TableColumn<KundeFX, Integer> customerIdCol = new TableColumn<>("kundenNr");
 		customerIdCol.setCellValueFactory(new PropertyValueFactory<>("kundenNr"));
 		customerIdCol.setMinWidth(100);
@@ -400,7 +390,7 @@ public class MitarbeiterGUI_main extends Application {
 		ObservableList<KundeFX> kundenFXListe = FXCollections.observableArrayList();
 		ArrayList<Kunde> kundenNrs = Datenbank.getKunden();
 
-		for (Kunde ku : kundenNrs) {
+		for (Kunde ku : kundenNrs) { // kundenobj auf kundenFX umschreiben für Darstellung in TableView
 			Kunde kunde = new Kunde(ku.getKundenNr(), ku.getAnrede(), ku.getVorname(), ku.getNachname(),
 					ku.getTelefonNr(), ku.getStrasse(), ku.getHausNr(), ku.getWohnort(), ku.getPlz(), ku.getLand(),
 					ku.getAlter(), ku.getPistenPraef(), ku.getGewicht(), ku.getSchuhgroesse(), ku.getTechnik(),
@@ -416,7 +406,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	}
 
-	private void displayTp2() {
+	private void displayTp2() { // Anzeige dieser TP bei Rücknahme des Produkts
 		// GRIDPANE LABELS
 		gridPanetp2.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp2.setVgap(5);
@@ -446,7 +436,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	}
 	
-	private void displayTp1() {
+	private void displayTp1() { // Anzeige dieser TP bei Ausleihe des Produkts
 
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 public class Datenbank {
 
 	public static final String DBlocation = "C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Datenbank\\DB1";
@@ -19,7 +18,7 @@ public class Datenbank {
 	Ski sk = new Ski();
 	Snowboard sb = new Snowboard();
 
-	public static void createTables() {
+	public static void createTables() { // erstellt Tabellen in der Datenbank
 
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -35,11 +34,6 @@ public class Datenbank {
 				stmt.executeUpdate("DROP TABLE snowboardkategorien");
 				System.out.println("Tables dropped");
 
-				// wird nicht ausgegeben wenn keine tables vorhanden sind. Exception statement
-				// ist dann ok.
-				// Putting ‘drop table’ in front of it ensure you don't get an error if the
-				// table already exist (and get stuck with the old table).
-
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -51,21 +45,19 @@ public class Datenbank {
 					+ "nachname  			VARCHAR(200)," + "telefonNr   			VARCHAR(200),"
 					+ "strasse     			VARCHAR(200)," + "hausNr   			VARCHAR(200),"
 					+ "wohnort				VARCHAR(200)," + "plz		   			VARCHAR(200),"
-					+ "land		   			VARCHAR(200)," + "kundenalter	  		integer," // alter geht nicht -
-																								// Achtung: diskrepanz
-																								// zu kundenklassen
+					+ "land		   			VARCHAR(200)," + "kundenalter	  		integer,"
 					+ "pistenPraef 			VARCHAR(200)," + "gewicht				integer,"
 					+ "schuhgroesse			double," + "technik				VARCHAR(200),"
 					+ "beinstellung			BOOLEAN," + "bindungstyp			BOOLEAN," + "PRIMARY KEY(kundenNr))";
 
-			stmt.executeUpdate(s1); // könnte man alle strings zusammenfassen in einem update?
+			stmt.executeUpdate(s1);
 			System.out.println("Table 'kunden' created");
 
 			// TABLE KREDITKARTEN ANLEGEN
 			String s2 = "CREATE TABLE kreditkarten (" + "kreditkartenNr       	VARCHAR(200),"
-					+ "kundenNr					integer," // FK aus table kunden
-					+ "kreditkartenname			VARCHAR(200)," + "inhabername 				VARCHAR(200),"
-					+ "kreditkartenpruefzahl   	integer," + "kreditkartengueltigkeit	VARCHAR(5),"
+					+ "kundenNr					integer," + "kreditkartenname			VARCHAR(200),"
+					+ "inhabername 				VARCHAR(200)," + "kreditkartenpruefzahl   	integer,"
+					+ "kreditkartengueltigkeit	VARCHAR(5),"
 					+ "CONSTRAINT kundenNr_fk FOREIGN KEY (kundenNr) REFERENCES kunden(kundenNr),"
 					+ "PRIMARY KEY(kreditkartenNr))";
 
@@ -73,18 +65,14 @@ public class Datenbank {
 			System.out.println("Table 'kreditkarten' created");
 
 			// TABLE SKIKATEGORIE ANLEGEN
-			String s4 = "CREATE TABLE skikategorien (" + "skiKategorieNr			integer NOT NULL," // nicht
-																										// automatisch
-																										// anlegen!
+			String s4 = "CREATE TABLE skikategorien (" + "skiKategorieNr			integer NOT NULL,"
 					+ "skiKategorieName			VARCHAR(200)," + "PRIMARY KEY(skiKategorieNr))";
 
 			stmt.executeUpdate(s4);
 			System.out.println("Table 'skikategorien' created");
 
 			// TABLE SNOWBOARDKATEGORIE ANLEGEN
-			String s5 = "CREATE TABLE snowboardkategorien (" + "snowboardKategorieNr			integer NOT NULL," // nicht
-																													// automatisch
-																													// anlegen!
+			String s5 = "CREATE TABLE snowboardkategorien (" + "snowboardKategorieNr			integer NOT NULL,"
 					+ "snowboardKategorieName		VARCHAR(200)," + "PRIMARY KEY(snowboardKategorieNr))";
 
 			stmt.executeUpdate(s5);
@@ -92,7 +80,7 @@ public class Datenbank {
 
 			// TABLE SKI ANLEGEN
 			String s6 = "CREATE TABLE ski ("
-					+ "skiNr       			integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," // automatisch
+					+ "skiNr       			integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 					+ "skiKategorieNr		integer," + "skiProduktname		VARCHAR(200),"
 					+ "skiTyp		 		VARCHAR(200)," + "skiBildpfad			VARCHAR(1500),"
 					+ "regalNr				VARCHAR(200)," + "tagespreis			double,"
@@ -105,14 +93,12 @@ public class Datenbank {
 
 			// TABLE SNOWBOARD ANLEGEN
 			String s7 = "CREATE TABLE snowboard ("
-					+ "snowboardNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," // automatisch
+					+ "snowboardNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 					+ "snowboardKategorieNr		integer," + "snowboardProduktname		VARCHAR(200),"
 					+ "snowboardTyp		 		VARCHAR(200)," + "snowboardBildpfad		VARCHAR(1500),"
 					+ "regalNr					VARCHAR(200)," + "tagespreis				double,"
-					+ "farbe					VARCHAR(200)," + "beinstellung				BOOLEAN," // gemeinsames
-																										// Merkmal mit
-																										// kunde...?
-					+ "bindungstyp				BOOLEAN," // gemeinsames Merkmal mit kunde...?
+					+ "farbe					VARCHAR(200)," + "beinstellung				BOOLEAN,"
+					+ "bindungstyp				BOOLEAN,"
 					+ "CONSTRAINT snowboardKategorieNr_fk FOREIGN KEY (snowboardKategorieNr) REFERENCES snowboardkategorien (snowboardKategorieNr),"
 					+ "PRIMARY KEY(snowboardNr))";
 
@@ -121,7 +107,7 @@ public class Datenbank {
 
 			// TABLE AUSLEIHEN ANLEGEN
 			String s8 = "CREATE TABLE ausleihen ("
-					+ "abholNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," // automatisch
+					+ "abholNr       		integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
 					+ "kundenNr				integer," // FK
 					+ "skiNr				integer," // FK
 					+ "snowboardNr			integer," // FK
@@ -153,7 +139,8 @@ public class Datenbank {
 
 	}
 
-	public static void insertRows(Ski sk, Snowboard sb) throws SQLException {
+	public static void insertRows(Ski sk, Snowboard sb) throws SQLException { // legt Kategorien für Ski und Snowboards
+																				// und Produkte an
 
 		conn = DriverManager.getConnection(connString);
 		stmt = conn.createStatement();
@@ -552,7 +539,7 @@ public class Datenbank {
 		rs = null;
 	}
 
-	public static Boolean postKunde(Kunde k) {
+	public static Boolean postKunde(Kunde k) { // Speichert einen neuen Kunden in der Datenbank ab
 
 		System.out.println("neuen Kunden anlegen");
 		try {
@@ -610,7 +597,7 @@ public class Datenbank {
 
 	}
 
-	public static Kunde getKunde(int kundenNr) {
+	public static Kunde getKunde(int kundenNr) { // holt sich einen Kunden über die Kundennummer aus der Datenbank
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -674,7 +661,7 @@ public class Datenbank {
 		return k;
 	}
 
-	public static ArrayList<Kunde> getKunden() {
+	public static ArrayList<Kunde> getKunden() { // gibt eine ArrayList aller Kunden zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Kunde> kl = new ArrayList<Kunde>();
@@ -721,7 +708,7 @@ public class Datenbank {
 		return kl;
 	}
 
-	public static Boolean postAusleihe(Ausleihe a) {
+	public static Boolean postAusleihe(Ausleihe a) { // Speichert eine neuen Ausleihe in der Datenbank ab
 
 		System.out.println("neue Ausleihe anlegen");
 		try {
@@ -772,19 +759,16 @@ public class Datenbank {
 
 	}
 
-	public static Ausleihe getAusleihe(int abholNr) {
+	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?? holt sich eine Ausleihe über die Abholnummer aus der Datenbank
 
 		Connection conn = null;
 		ResultSet rs = null;
 		Ausleihe a = new Ausleihe();
-		System.out.println("Query Ausleihen Suche nach KundenNr");
+		System.out.println("Query Ausleihen Suche nach AbholNr");
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE abholNr =" + abholNr);
-			//"INSERT INTO ausleihen(kundenNr,"
-//			+ (a.getSkiNr() > 0 ? " skiNr," : " snowboardNr,") + " leihstart, leihende, mietpreis, "
-//			+ "kaution, nachzahlung, gesamtpreis) " + "VALUES(?,?,?,?,?,?,?,?)"
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -795,8 +779,10 @@ public class Datenbank {
 				// AUSLEIHE OBJ ANLEGeN aus DB
 				a.setAbholNr(rs.getInt("abholNr"));
 				a.setKundenNr(rs.getInt("kundenNr"));
-				//a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) : a.setSnowboardNr(rs.getInt("snowboardNr")));
-				a.setSkiNr(rs.getInt("skiNr")); //pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() : a.getSnowboardNr());
+				// a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) :
+				// a.setSnowboardNr(rs.getInt("snowboardNr")));
+				a.setSkiNr(rs.getInt("skiNr")); // pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() :
+												// a.getSnowboardNr());
 				a.setSnowboardNr(rs.getInt("snowboardNr"));
 				a.setLeihstart(rs.getDate("leihstart"));
 				a.setLeihende(rs.getDate("leihende"));
@@ -828,7 +814,7 @@ public class Datenbank {
 
 	}
 
-	public static ArrayList<Ausleihe> getAusleihen() {
+	public static ArrayList<Ausleihe> getAusleihen() { // gibt eine ArrayList aller Ausleihen zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Ausleihe> kl = new ArrayList<Ausleihe>();
@@ -873,7 +859,7 @@ public class Datenbank {
 		return kl;
 	}
 
-	public static ArrayList<Ski> getSki(int skiKategorieNr) {
+	public static ArrayList<Ski> getSki(int skiKategorieNr) { // gibt eine ArrayList aller Ski einer bestimmten Kat.Nr zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Ski> sl = new ArrayList<Ski>();
@@ -917,7 +903,7 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static ArrayList<Ski> getSki() { // alle Ski
+	public static ArrayList<Ski> getSki() { // gibt eine ArrayList aller Ski zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Ski> sl = new ArrayList<Ski>();
@@ -959,8 +945,8 @@ public class Datenbank {
 		}
 		return sl;
 	}
-	
-	public static ArrayList<SkiFX> getSkiFX() throws SQLException {
+
+	public static ArrayList<SkiFX> getSkiFX() throws SQLException { //UNNÖTIG?? Testklasse für denn ListChangeListener in MitarbeiterGUI
 		ArrayList<SkiFX> array2 = new ArrayList<SkiFX>();
 		Connection conn = null;
 		Statement stmt = null;
@@ -1001,7 +987,7 @@ public class Datenbank {
 
 	}
 
-	public static int getSki(String skiProduktname) { // eine skinr zurückgeben
+	public static int getSki(String skiProduktname) { // gibt eine skinr über den Produktnamen zurück - UNNÖTIG? s.u.
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1045,7 +1031,7 @@ public class Datenbank {
 		return s;
 	}
 
-	public static Ski getNewSki(String skiProduktname) { // einen Ski zurückgeben
+	public static Ski getNewSki(String skiProduktname) { // gibt ein Skiobjekt über den Produktnamen zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1089,8 +1075,8 @@ public class Datenbank {
 		}
 		return sk;
 	}
-	
-	public static Ski getNewSki(int skiNr) { // einen Ski zurückgeben
+
+	public static Ski getNewSki(int skiNr) { // gibt ein Skiobjekt über die SkiNr zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1100,7 +1086,7 @@ public class Datenbank {
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiNr =" + skiNr); 
+			rs = stmt.executeQuery("SELECT * FROM ski WHERE skiNr =" + skiNr);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -1133,7 +1119,7 @@ public class Datenbank {
 		return sk;
 	}
 
-	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) {
+	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) { // gibt eine ArrayList aller Snowboards einer bestimmten Kat.Nr zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Snowboard> sl = new ArrayList<Snowboard>();
@@ -1178,7 +1164,7 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static ArrayList<Snowboard> getSnowboard() { // alle sb
+	public static ArrayList<Snowboard> getSnowboard() { // // gibt eine ArrayList aller Snowboards zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1224,7 +1210,7 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static Snowboard getNewSnowboard(String snowboardProduktname) {
+	public static Snowboard getNewSnowboard(String snowboardProduktname) { //gibt ein Snowboardobjekt über den Produktnamen zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1272,7 +1258,7 @@ public class Datenbank {
 		return sb;
 	}
 
-	public static Boolean postSki(Ski sk) {
+	public static Boolean postSki(Ski sk) { // Speichert einen neuen Ski in der Datenbank ab
 		System.out.println("neuen Ski anlegen");
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -1319,7 +1305,7 @@ public class Datenbank {
 
 	}
 
-	public static Boolean postSnowboard(Snowboard sb) {
+	public static Boolean postSnowboard(Snowboard sb) { // Speichert ein neues Snowboard in der Datenbank ab
 		System.out.println("neues Snowboard anlegen");
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -1366,7 +1352,7 @@ public class Datenbank {
 
 	}
 
-	public static void deleteSki(int skiNr) {
+	public static void deleteSki(int skiNr) { // löscht einen Ski aus der Datenbank
 		System.out.println("Ski löschen");
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -1392,7 +1378,7 @@ public class Datenbank {
 		}
 	}
 
-	public static void deleteSnowboard(int snowboardNr) {
+	public static void deleteSnowboard(int snowboardNr) { // löscht ein Snowboard aus der Datenbank
 		System.out.println("Snowboard löschen");
 		try {
 			conn = DriverManager.getConnection(connString);
@@ -1419,15 +1405,15 @@ public class Datenbank {
 		}
 
 	}
-	
 
-	public static void updateAusleihe(int abholNr, double nachzahlung) {
-		
+	public static void updateAusleihe(int abholNr, double nachzahlung) { // aktualisiert eine Ausleihe mit neuem Wert der Nachzahlung bei verspäteter Rückgabe
+
 		System.out.println("Ausleihe ändern");
-		
+
 		try {
 			conn = DriverManager.getConnection(connString);
-			pstmt = conn.prepareStatement("UPDATE ausleihen SET nachzahlung = " + nachzahlung + "WHERE abholNr = " + abholNr);
+			pstmt = conn.prepareStatement(
+					"UPDATE ausleihen SET nachzahlung = " + nachzahlung + "WHERE abholNr = " + abholNr);
 			pstmt.executeUpdate();
 			System.out.println("Ausleihe mit AbholNr: " + abholNr + " aktualisiert");
 
@@ -1448,7 +1434,7 @@ public class Datenbank {
 			}
 
 		}
-		
+
 	}
 
 }

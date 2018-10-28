@@ -48,7 +48,9 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(tf4, 1, 3);
 		gridPanetp1.add(tf5, 1, 4);
 		gridPanetp1.add(tf6, 1, 5);
-		gridPanetp1.add(tf7, 1, 6);
+		gridPanetp1.add(tf7, 1, 6); 
+		//Input validation einbauen
+		
 		BorderPane borderPane1 = new BorderPane();
 		borderPane1.setPadding(new Insets(5));
 		borderPane1.setPrefSize(700, 580);
@@ -60,7 +62,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
 		
 		// OK Button function
-		this.setResultConverter(new Callback<ButtonType, Integer>() {
+		this.setResultConverter(new Callback<ButtonType, Integer>() { // neues Produkt in der Datenbank abspeichern
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
@@ -73,8 +75,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sk.setRegalNr(tf5.getText());
 							sk.setTagespreis(Double.parseDouble(tf6.getText()));
 							sk.setFarbe(tf7.getText());
-							//Ski in der Datenbank ablegen					
-							Datenbank.postSki(sk);
+										
+							Datenbank.postSki(sk); //Ski in der Datenbank ablegen	
 						} else {
 							sb.setSnowboardKategorieNr(Integer.parseInt(tf1.getText()));
 							sb.setSnowboardProduktname(tf2.getText());
@@ -83,8 +85,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sb.setRegalNr(tf5.getText());
 							sb.setTagespreis(Double.parseDouble(tf6.getText()));
 							sb.setFarbe(tf7.getText());
-							//Snowboard in der Datenbank ablegen					
-							Datenbank.postSnowboard(sb);
+												
+							Datenbank.postSnowboard(sb); //Snowboard in der Datenbank ablegen
 						}
 					} else {
 						

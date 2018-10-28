@@ -10,8 +10,8 @@ public class AusleiheFX {
 	private SimpleIntegerProperty kundenNr;
 	private SimpleIntegerProperty skiNr;
 	private SimpleIntegerProperty snowboardNr;
-	private SimpleObjectProperty<Date> leihstart; // ??
-	private SimpleObjectProperty<Date> leihende; // ??
+	private SimpleObjectProperty<Date> leihstart; 
+	private SimpleObjectProperty<Date> leihende; 
 	private SimpleDoubleProperty mietpreis;
 	private SimpleDoubleProperty kaution;
 	private SimpleDoubleProperty nachzahlung;
@@ -32,9 +32,7 @@ public class AusleiheFX {
 
 	}
 
-	public AusleiheFX() {
-		// TODO Auto-generated constructor stub
-	}
+	public AusleiheFX() {}
 
 	public int getAbholNr() {
 		return abholNr.get();
@@ -55,7 +53,7 @@ public class AusleiheFX {
 
 	public void setKundenNr(int i) {
 		kundenNr.set(i);
-		ausleihefx.setKundenNr(i); // klasse kunde!
+		ausleihefx.setKundenNr(i); 
 	}
 
 	public SimpleIntegerProperty kundenNrProperty() {

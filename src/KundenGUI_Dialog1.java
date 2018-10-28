@@ -73,8 +73,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	VBox vb2tp2 = new VBox();
 	GridPane gridPanetp2 = new GridPane();
 	Label lb1tp2 = new Label("Gemäß Ihren Angaben können wir Ihnen folgende Produkte zur Auswahl anbieten: ");
-	Label lb2tp2 = new Label();
-	Label lb3tp2 = new Label();
+	Label lb2tp2 = new Label(); //Leihstart - Datum
+	Label lb3tp2 = new Label(); //Leihende - Datum
 	Label lb4tp2 = new Label("von: ");
 	Label lb5tp2 = new Label(" bis: ");
 	Button bt1tp2 = new Button("Weiter");
@@ -119,7 +119,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb13tp3 = new Label("Kreditkarteninhabername");
 	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb15tp3 = new Label("Kreditkartengültigkeit");
-	Label lb16tp3 = new Label("");
+	Label lb16tp3 = new Label(""); 
+	//Fehleranzeigen ff
 	Label lb17tp3 = new Label("");
 	Label lb18tp3 = new Label("");
 	Label lb19tp3 = new Label("");
@@ -134,7 +135,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb28tp3 = new Label("");
 	Label lb29tp3 = new Label("");
 
-	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) {
+	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) { //AUFBAU des Dialogs
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -156,7 +157,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
-		// OK Button function
+		// OK Button function --> erst wenn OK geklickt wird, werden die Daten in der Datenbank gespeichert
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
 			@Override
 			public Integer call(ButtonType arg0) {
@@ -193,21 +194,20 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							kk.setGueltigkeit(tf14tp3.getText());
 
 							Datenbank.postKunde(k); // Kunde in DB speichern
-							Datenbank.getKunden(); // Ausgabe aller Kunden in Konsole
+							Datenbank.getKunden(); // Ausgabe aller Kunden in Konsole zur Überprüfung
 
 							// Ausleihe Obj anlegen
 							a.setKundenNr(k.getKundenNr());
-							System.out.println("Mietpreis: " + a.getMietpreis());
-							a.setKaution(200);
-							a.setNachzahlung(0);
+							a.setKaution(200); // immer 200
+							a.setNachzahlung(0); //kann sich noch ändern
 							a.setGesamtpreis(a.getMietpreis() + a.getKaution() + a.getNachzahlung());
 
 							// Ausleihe in DB anlegen und holen
-							Datenbank.postAusleihe(a);
-							Datenbank.getAusleihe(33);
-							Datenbank.getAusleihen();
+							Datenbank.postAusleihe(a); // Ausleihe in der Datenbank speichern
+							Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen - Falsch?
+							Datenbank.getAusleihen(); //alle Ausleihen anzeigen
 
-							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
+							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait(); //nächsten Dialog öffnen
 							
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -221,8 +221,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	// prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
-	public boolean isInputValid() {
+	
+	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis 
 
 		Boolean b = false;
 		//String s = null;
@@ -242,7 +242,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		return b;
 	}
 
-	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) {
+	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) { //berechnet Miete aus Datum
 
 		Period period = Period.between(selpickupDate, selreturnDate);
 		int tage = period.getDays() + 1;
@@ -259,7 +259,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		}
 	}
 
-	private void displayTp3() {
+	private void displayTp3() { // Aufbau der TabPane 3 - Kundendaten
 
 		// GRIDPANE
 		gridPanetp3.setPadding(new Insets(10, 10, 10, 10));
@@ -311,9 +311,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
 
-		// Check user input
-		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-
+		// Validation user input - Textfelder Kundendaten
+		
+		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorn
+			
 			if (observable != null) {
 				if (!tf2tp3.getText().matches("[a-z]*")) {
 					tf2tp3.setStyle("-fx-background-color: orangered;");
@@ -325,8 +326,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-
+		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Nachn
+		
 			if (observable != null) {
 				if (!tf3tp3.getText().matches("[a-z]*")) {
 					tf3tp3.setStyle("-fx-background-color: orangered;");
@@ -338,10 +339,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-
+		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { 	// tel
+			
 			if (observable != null) {
-				if (!tf4tp3.getText().matches("[a-z]*")) {
+				if (!tf4tp3.getText().matches("[a-z]*")) { //UND [0-9]!!!!
 					tf4tp3.setStyle("-fx-background-color: orangered;");
 					lb19tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -351,7 +352,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // str
 
 			if (observable != null) {
 				if (!tf5tp3.getText().matches("[a-z]*")) {
@@ -364,10 +365,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf6tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf6tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // hausnr
 
 			if (observable != null) {
-				if (!tf6tp3.getText().matches("[a-z]*")) {
+				if (!tf6tp3.getText().matches("[a-z]*")) { // UND 0-9
 					tf6tp3.setStyle("-fx-background-color: orangered;");
 					lb21tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -377,7 +378,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf7tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf7tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // wohnort
 
 			if (observable != null) {
 				if (!tf7tp3.getText().matches("[a-z]*")) {
@@ -390,10 +391,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf8tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf8tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // plz
 
 			if (observable != null) {
-				if (!tf8tp3.getText().matches("[a-z]*")) {
+				if (!tf8tp3.getText().matches("[a-z]*")) { // UND 0-9!!!
 					tf8tp3.setStyle("-fx-background-color: orangered;");
 					lb23tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -403,7 +404,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf9tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf9tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { 	// land
 
 			if (observable != null) {
 				if (!tf9tp3.getText().matches("[a-z]*")) {
@@ -416,7 +417,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf10tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf10tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kknr
 
 			if (observable != null) {
 				if (!tf10tp3.getText().matches("[0-9]*")) {
@@ -429,7 +430,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf11tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf11tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkname
 
 			if (observable != null) {
 				if (!tf11tp3.getText().matches("[a-z]*")) {
@@ -442,7 +443,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf12tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf12tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkinhabername
 
 			if (observable != null) {
 				if (!tf12tp3.getText().matches("[a-z]*")) {
@@ -455,10 +456,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-
+		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkprüf
+			
 			if (observable != null) {
-				if (!tf13tp3.getText().matches("[a-z]*")) {
+				if (!tf13tp3.getText().matches("[0-9]*")) {
 					tf13tp3.setStyle("-fx-background-color: orangered;");
 					lb28tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -468,10 +469,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkgült
 
 			if (observable != null) {
-				if (!tf14tp3.getText().matches("[a-z]*")) {
+				if (!tf14tp3.getText().matches("[0-9]*")) { //UND Sonderzeichen 10/20/2020
 					tf14tp3.setStyle("-fx-background-color: orangered;");
 					lb29tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -493,14 +494,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a, String s) {
-
+	private void displayTp2(LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a, String s) { //AUFBAU TP2 Produktauswahl
 		rb1tp2.setToggleGroup(grouptp2); // damit nur 1 radiobutton ausgewählt werden kann!
 		rb2tp2.setToggleGroup(grouptp2);
 		rb3tp2.setToggleGroup(grouptp2);
 		lb2tp2.setText(selpickupDate.toString());
 		lb3tp2.setText(selreturnDate.toString());
-		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); // Datum
+		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); // Datumsanzeige
 		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, rb2tp2, lb7tp2, rb3tp2, lb8tp2);
 
 		// BORDERPANE
@@ -513,7 +513,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp2.setContent(borderPanetp2);
 		accordion.getPanes().add(tp2);
 
-		grouptp2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+		grouptp2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { // Aktionen bei Auswahl eines Radionbuttons
 
 			@Override
 			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldToggle, Toggle newToggle) {
@@ -521,13 +521,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 				if (rb1tp2.isSelected()) {
 					if (s.equals("Ski")) {
-						a.setSkiNr(Datenbank.getSki(rb1tp2.getText()));
+						a.setSkiNr(Datenbank.getSki(rb1tp2.getText())); //Auswahl ins Ausleihe-Obj speichern
 					} else {
 						a.setSnowboardNr(Datenbank.getNewSnowboard(rb1tp2.getText()).getSnowboardNr());
 					}
 
 					produktname = rb1tp2.getText();
-					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname, s));
+					a.setMietpreis(calcMietpreis(selpickupDate, selreturnDate, produktname, s)); //Mietpreis berechnen
 					System.out.println(rb1tp2.getText() + " gewählt");
 				} else if (rb2tp2.isSelected()) {
 					if (s.equals("Ski")) {
@@ -558,7 +558,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void displayTp1(String s, SkiFX skfx, Snowboard sb) {
+	private void displayTp1(String s, SkiFX skfx, Snowboard sb) { //AUFBAU TP1 Basisdaten
 
 		// GRIDPANE LABELS
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
@@ -735,7 +735,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	private void setRadioButtons(int i, String s) {
+	private void setRadioButtons(int i, String s) { // Radiobuttons werden mit Bildern der jeweiligen Skikategorie/Snowb.Kat. und dem Tagespreis befüllt
 
 		if (s.equals("Ski")) {
 			Datenbank.getSki(i);

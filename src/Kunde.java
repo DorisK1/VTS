@@ -1,6 +1,5 @@
 
-public class Kunde { //dies als Datenbankklasse (normale java class) + FX Klasse mit Simple property! auch für ski und snowboard!!! analog
-	//projekt restfuljersey weindetails class und wein class
+public class Kunde { 
 	
 	private int kundenNr;
 	private int anrede;
