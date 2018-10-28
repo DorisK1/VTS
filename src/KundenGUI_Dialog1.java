@@ -58,6 +58,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb6tp1 = new Label("Pistenpräferenz");
 	Label lb7tp1 = new Label("Beinstellung"); // nur für Snowboard!!!
 	Label lb8tp1 = new Label("Schuhart"); // nur für Snowboard!!!
+	Label lb9tp1 = new Label(); //Fehlermeldung für Alter
+	Label lb10tp1 = new Label(); //Fehlermeldung für Gewicht
+	Label lb11tp1 = new Label(); //Fehlermeldung für Schuhgröße
+
 	// TP2
 	HBox hb1tp2 = new HBox();
 	HBox hb2tp2 = new HBox();
@@ -141,7 +145,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					if (!tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()) { // alle TF??
+					//if (isInputValid()) { // alle TF?? !tf1tp1.getText().isEmpty() && !tf2tp1.getText().isEmpty()
 						try {
 							// TP1 TF INPUT abfragen
 							k.setAlter(Integer.parseInt(tf1tp1.getText()));
@@ -194,7 +198,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 							e.printStackTrace();
 						}
-					} else
+			//		} else
 						try {
 							new KundenGUI_Dialog2(k.getKundenNr()).showAndWait();
 						} catch (IOException e) {
@@ -207,6 +211,32 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		});
 
 	}
+
+//	public boolean isInputValid() {
+//
+//		// TextField tf1tp1 = new TextField(); // Alter
+//		// TextField tf2tp1 = new TextField(); // Gewicht
+//		// TextField tf3tp1 = new TextField(); // SChuhgrösse
+//		Boolean b = false;
+//		String s = null;
+//		//ALTER
+//		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)) {
+//			try {
+//				// Do all the validation you need here such as
+//				int i = Integer.parseInt(tf1tp1.getText());
+//				if (i >= 3 && i <= 110) {
+//					b = true;
+//				} else {
+//					s = "Alter muss zwischen 3 und 110 sein!";
+//					lb9tp1.setText(s);
+//					tp1.setExpanded(true);
+//				}
+//			} catch (NumberFormatException e) {
+//			}
+//
+//		}
+//		return b;
+//	}
 
 	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) {
 
@@ -320,7 +350,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					System.out.println(rb2tp2.getText() + " gewählt");
 				} else if (rb3tp2.isSelected()) {
 					if (s.equals("Ski")) {
-					a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
+						a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
 					} else {
 						a.setSnowboardNr(Datenbank.getNewSnowboard(rb3tp2.getText()).getSnowboardNr());
 					}
@@ -349,6 +379,10 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb4tp1, 0, 2);
 		gridPanetp1.add(lb5tp1, 0, 3);
 		gridPanetp1.add(lb6tp1, 0, 4);
+		gridPanetp1.add(lb9tp1, 2, 0); //Fehleranzeige
+		gridPanetp1.add(lb10tp1, 2, 1); //Fehleranzeige
+		gridPanetp1.add(lb11tp1, 2, 2); //Fehleranzeige
+		
 		// nur für Snowboard
 		if (s.equals("Snowboard")) {
 			gridPanetp1.add(lb7tp1, 0, 5);
@@ -375,6 +409,48 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		cob3tp1.setItems(FXCollections.observableArrayList("regular", "goofy"));
 		cob4tp1.setItems(FXCollections.observableArrayList("soft", "hart"));
 		// BORDERPANE
+		
+		//Check ALTER
+		tf1tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			
+		    	 if(observable != null)  { //("[0-9]*")
+		          if (!tf1tp1.getText().matches("[0-9]*")) { //  &&{3,110}2.REGEX Bedingung funkt nicht
+		        	  tf1tp1.setStyle("-fx-background-color: orangered;");
+		        	  lb9tp1.setText("Alter muss zwischen 3 und 110 sein");
+		          } else {
+		        	  tf1tp1.setStyle("-fx-background-color: white;");
+		        	  lb9tp1.setText("");
+		          }
+		       }
+		    });
+		
+		//CHECK GEWICHT
+		tf2tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			
+	    	 if(observable != null)  { 
+	          if (!tf2tp1.getText().matches("[0-9]*")) { 
+	        	  tf2tp1.setStyle("-fx-background-color: orangered;");
+	        	  lb10tp1.setText("Gewicht eingeben!");
+	          } else {
+	        	  tf2tp1.setStyle("-fx-background-color: white;");
+	        	  lb10tp1.setText("");
+	          }
+	       }
+	    });
+		//CHECK SCHUHGRÖSSE
+		tf3tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			
+	    	 if(observable != null)  { 
+	          if (!tf3tp1.getText().matches("[0-9]*")) { 
+	        	  tf3tp1.setStyle("-fx-background-color: orangered;");
+	        	  lb11tp1.setText("Schuhgrösse");
+	          } else {
+	        	  tf3tp1.setStyle("-fx-background-color: white;");
+	        	  lb11tp1.setText("");
+	          }
+	       }
+	    });
+		
 		BorderPane borderPanetp1 = new BorderPane();
 		borderPanetp1.setPadding(new Insets(5));
 		borderPanetp1.setPrefSize(700, 580);

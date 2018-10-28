@@ -795,8 +795,8 @@ public class Datenbank {
 				// AUSLEIHE OBJ ANLEGeN aus DB
 				a.setAbholNr(rs.getInt("abholNr"));
 				a.setKundenNr(rs.getInt("kundenNr"));
-				a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) : a.setSnowboardNr(rs.getInt("snowboardNr")));
-				//a.setSkiNr(rs.getInt("skiNr")); //pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() : a.getSnowboardNr());
+				//a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) : a.setSnowboardNr(rs.getInt("snowboardNr")));
+				a.setSkiNr(rs.getInt("skiNr")); //pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() : a.getSnowboardNr());
 				a.setSnowboardNr(rs.getInt("snowboardNr"));
 				a.setLeihstart(rs.getDate("leihstart"));
 				a.setLeihende(rs.getDate("leihende"));
