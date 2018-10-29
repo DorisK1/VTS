@@ -36,6 +36,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	SkiFX skfx = new SkiFX();
 	Snowboard sb = new Snowboard();
 	Kreditkarte kk = new Kreditkarte();
+	// SUCHE Kundennummer
+	Label lb1 = new Label("Falls Sie bereits eine Kundennummer haben, bitte hier eingeben: ");
+	Label lb2 = new Label();
+	TextField tf1 = new TextField();
+	HBox hb1 = new HBox();
+	VBox vb1 = new VBox();
+	Button bt1 = new Button("Suche");
 	// ACCORDION
 	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
@@ -144,6 +151,20 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp1.setText("SCHRITT 1: Basisangaben");
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
+		// Kundennummernsuche
+		tf1.setPromptText("Kundennummer");
+		hb1.getChildren().addAll(lb1, tf1, bt1);
+		bt1.setOnAction(gd -> {
+			System.out.println("Kundennummersuche");
+			if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
+				lb2.setText("Kundennummer gefunden!");
+			} else {
+				lb2.setText("Kundennummer nicht gefunden!");
+			}
+
+		});
+		
+		
 		// TP Methoden
 		displayTp1(s, skfx, sb);
 		displayTp2(selpickupDate, selreturnDate, a, s);
@@ -152,7 +173,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(600);
 		accordion.setExpandedPane(tp1); // erstes tp geöffnet
-		this.getDialogPane().setContent(accordion);
+		vb1.getChildren().addAll(hb1, lb2, accordion);
+		this.getDialogPane().setContent(vb1);
 		// button types
 		ButtonType close = ButtonType.OK;
 		ButtonType cancel = ButtonType.CANCEL;
