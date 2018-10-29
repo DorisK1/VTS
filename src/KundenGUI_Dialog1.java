@@ -168,7 +168,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
 				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
 				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
-				//comboboxen setzen???
+				// comboboxen setzen???
 				tf2tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname());
 				tf3tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname());
 				tf4tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getTelefonNr());
@@ -180,12 +180,14 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				tf10tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenNr());
 				tf11tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenName());
 				tf12tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getInhaberName());
-				tf13tp3.setText(Integer.toString(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getPruefzahl()));
+				tf13tp3.setText(
+						Integer.toString(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getPruefzahl()));
 				tf14tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getGueltigkeit());
 
 				b = true; // später KEIN neues KundenOBJ sondern NUR Ausleihe speichern!
 			} else {
 				lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
+				b = false;
 			}
 
 		});
@@ -214,8 +216,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					if (isInputValid()) { // prüft ob alle Felder befüllt sind - Komboboxen?
 						try {
 							// Kundenobjekt anlegen NUR wenn NEUKUNDE
-							if (b = false) { // = NEUKUNDE
-								// TP1 TF INPUT abfragen und 
+							if (b == false) { // = NEUKUNDE
+								// TP1 TF INPUT abfragen und
 								k.setAlter(Integer.parseInt(tf1tp1.getText()));
 								k.setGewicht(Integer.parseInt(tf2tp1.getText()));
 								k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
@@ -240,7 +242,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 								k.setPlz(tf8tp3.getText());
 								k.setLand(tf9tp3.getText());
 								Datenbank.postKunde(k); // Kunde in DB speichern
-								
+
 								// Kreditkarteninformationen
 								kk.setKundenNr(k.getKundenNr());
 								kk.setKreditkartenNr(tf10tp3.getText());
@@ -249,11 +251,11 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 								kk.setPruefzahl(Integer.parseInt(tf13tp3.getText()));
 								kk.setGueltigkeit(tf14tp3.getText());
 								Datenbank.postKreditkarte(kk); // Kreditkarteninformationen in DB speichern
-								
+
 								// Abfragen
 								Datenbank.getKunden(); // Ausgabe aller Kunden in Konsole zur Überprüfung
 								Datenbank.getKreditkarten(); // Ausgabe aller KK in Konsole zur Überprüfung
-								
+
 								// Kundennummer NEU
 								a.setKundenNr(k.getKundenNr());
 							} else {
@@ -284,7 +286,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		});
 
 	}
-	
 
 	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
 
@@ -306,7 +307,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		}
 		return b;
 	}
-	
 
 	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) { // berechnet
 																													// Miete
@@ -327,10 +327,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			return miete;
 		}
 	}
-	
 
 	private void displayTp3() { // Aufbau TP 3 - Kundendaten
-		
+
 		// GRIDPANE
 		gridPanetp3.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp3.setVgap(5);
@@ -379,7 +378,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf13tp3, 1, 12);
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
-		
+
 		// Validation user input - Textfelder Kundendaten
 
 		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorn
@@ -550,7 +549,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				}
 			}
 		});
-		
+
 		// Scrollpane
 		sp.vbarPolicyProperty().setValue(ScrollBarPolicy.AS_NEEDED);
 		sp.hbarPolicyProperty().setValue(ScrollBarPolicy.ALWAYS);
@@ -561,7 +560,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		borderPanetp3.setPrefSize(700, 400);
 		borderPanetp3.setTop(lb1tp3);
 		borderPanetp3.setCenter(gridPanetp3);
-		sp.setContent(borderPanetp3);		
+		sp.setContent(borderPanetp3);
 		tp.setContent(sp);
 		tp3.setContent(sp);
 		accordion.getPanes().add(tp3);
@@ -810,7 +809,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		});
 
 	}
-	
 
 	private void setRadioButtons(int i, String s) { // Radiobuttons werden mit Bildern der jeweiligen
 													// Skikategorie/Snowb.Kat. und dem Tagespreis befüllt
