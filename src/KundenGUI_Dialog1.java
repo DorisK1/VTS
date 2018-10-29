@@ -384,7 +384,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorn
 
 			if (observable != null) {
-				if (!tf2tp3.getText().matches("[a-z]*")) {
+				if (!tf2tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
 					tf2tp3.setStyle("-fx-background-color: orangered;");
 					lb17tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -397,7 +397,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Nachn
 
 			if (observable != null) {
-				if (!tf3tp3.getText().matches("[a-z]*")) {
+				if (!tf3tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
 					tf3tp3.setStyle("-fx-background-color: orangered;");
 					lb18tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -410,9 +410,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // tel
 
 			if (observable != null) {
-				if (!tf4tp3.getText().matches("[a-z]*")) { // UND [0-9]!!!!
+				if (!tf4tp3.getText().matches("[0-9+ ]*")) { // UND +!!!! ok
 					tf4tp3.setStyle("-fx-background-color: orangered;");
-					lb19tp3.setText("Falsche Eingabe - nur Buchstaben!");
+					lb19tp3.setText("Falsche Eingabe - nur Zahlen und '+' !");
 				} else {
 					tf4tp3.setStyle("-fx-background-color: white;");
 					lb19tp3.setText("");
@@ -423,7 +423,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // str
 
 			if (observable != null) {
-				if (!tf5tp3.getText().matches("[a-z]*")) {
+				if (!tf5tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
 					tf5tp3.setStyle("-fx-background-color: orangered;");
 					lb20tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -436,7 +436,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf6tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // hausnr
 
 			if (observable != null) {
-				if (!tf6tp3.getText().matches("[a-z]*")) { // UND 0-9
+				if (!tf6tp3.getText().matches("[0-9a-zA-Z ]*")) { // UND 0-9
 					tf6tp3.setStyle("-fx-background-color: orangered;");
 					lb21tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -449,7 +449,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf7tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // wohnort
 
 			if (observable != null) {
-				if (!tf7tp3.getText().matches("[a-z]*")) {
+				if (!tf7tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
 					tf7tp3.setStyle("-fx-background-color: orangered;");
 					lb22tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -462,7 +462,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf8tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // plz
 
 			if (observable != null) {
-				if (!tf8tp3.getText().matches("[a-z]*")) { // UND 0-9!!!
+				if (!tf8tp3.getText().matches("[0-9a-zA-Z]*")) { // UND 0-9!!!
 					tf8tp3.setStyle("-fx-background-color: orangered;");
 					lb23tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -475,7 +475,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf9tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // land
 
 			if (observable != null) {
-				if (!tf9tp3.getText().matches("[a-z]*")) {
+				if (!tf9tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
 					tf9tp3.setStyle("-fx-background-color: orangered;");
 					lb24tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -488,7 +488,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf10tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kknr
 
 			if (observable != null) {
-				if (!tf10tp3.getText().matches("[0-9]*")) {
+				if (!tf10tp3.getText().matches("[0-9- ]*")) {
 					tf10tp3.setStyle("-fx-background-color: orangered;");
 					lb25tp3.setText("Falsche Eingabe - nur Zahlen!");
 				} else {
@@ -501,7 +501,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf11tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkname
 
 			if (observable != null) {
-				if (!tf11tp3.getText().matches("[a-z]*")) {
+				if (!tf11tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) {
 					tf11tp3.setStyle("-fx-background-color: orangered;");
 					lb26tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -514,7 +514,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf12tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkinhabername
 
 			if (observable != null) {
-				if (!tf12tp3.getText().matches("[a-z]*")) {
+				if (!tf12tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) {
 					tf12tp3.setStyle("-fx-background-color: orangered;");
 					lb27tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
@@ -540,9 +540,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkgült
 
 			if (observable != null) {
-				if (!tf14tp3.getText().matches("[0-9]*")) { // UND Sonderzeichen 10/20/2020
+				if (!tf14tp3.getText().matches("[0-9/]*")) { // UND Sonderzeichen 10/20/2020
 					tf14tp3.setStyle("-fx-background-color: orangered;");
-					lb29tp3.setText("Falsche Eingabe - nur Zahlen und / !");
+					lb29tp3.setText("Falsche Eingabe - nur Zahlen und / ! Ohne Leerzeichen");
 				} else {
 					tf14tp3.setStyle("-fx-background-color: white;");
 					lb29tp3.setText("");
