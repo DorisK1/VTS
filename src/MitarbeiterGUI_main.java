@@ -131,9 +131,15 @@ public class MitarbeiterGUI_main extends Application {
 			//SNOWBOARD??
 			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart()
 					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+				if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
 				tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
 				tf2tp1.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
 						.getRegalNr()); // regalNr
+				} else {
+					tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
+					tf2tp1.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+							.getRegalNr()); // regalNr
+				}
 				tf3tp1.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().toString()); // ausleihstart
 				tf4tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
 				tp1.setExpanded(true);

@@ -328,7 +328,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		}
 	}
 
-	private void displayTp3() { // Aufbau TP 3 - Kundendaten
+	private void displayTp3() { // Aufbau TP 3 - Kundendaten + input validation
 
 		// GRIDPANE
 		gridPanetp3.setPadding(new Insets(10, 10, 10, 10));
@@ -529,7 +529,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			if (observable != null) {
 				if (!tf13tp3.getText().matches("[0-9]*")) {
 					tf13tp3.setStyle("-fx-background-color: orangered;");
-					lb28tp3.setText("Falsche Eingabe - nur Buchstaben!");
+					lb28tp3.setText("Falsche Eingabe - nur Zahlen!");
 				} else {
 					tf13tp3.setStyle("-fx-background-color: white;");
 					lb28tp3.setText("");
@@ -542,7 +542,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			if (observable != null) {
 				if (!tf14tp3.getText().matches("[0-9]*")) { // UND Sonderzeichen 10/20/2020
 					tf14tp3.setStyle("-fx-background-color: orangered;");
-					lb29tp3.setText("Falsche Eingabe - nur Buchstaben!");
+					lb29tp3.setText("Falsche Eingabe - nur Zahlen und / !");
 				} else {
 					tf14tp3.setStyle("-fx-background-color: white;");
 					lb29tp3.setText("");
