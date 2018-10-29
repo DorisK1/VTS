@@ -5,17 +5,17 @@ public class Kreditkarte {
 	private int kundenNr;
 	private String kreditkartenName;
 	private String inhaberName;
-	private String pruefzahl;
+	private int pruefzahl;
 	private String gueltigkeit;
 	
 	public Kreditkarte(String kreditkartenNr, int kundenNr, String kreditkartenName, String inhaberName,
-			String pruefzahl, String gueltigkeit) {
+			int i, String gueltigkeit) {
 		super();
 		this.kreditkartenNr = kreditkartenNr;
 		this.kundenNr = kundenNr;
 		this.kreditkartenName = kreditkartenName;
 		this.inhaberName = inhaberName;
-		this.pruefzahl = pruefzahl;
+		this.pruefzahl = i;
 		this.gueltigkeit = gueltigkeit;
 	}
 
@@ -39,7 +39,7 @@ public class Kreditkarte {
 		this.inhaberName = inhaberName;
 	}
 
-	public void setPruefzahl(String pruefzahl) {
+	public void setPruefzahl(int pruefzahl) {
 		this.pruefzahl = pruefzahl;
 	}
 
@@ -63,7 +63,7 @@ public class Kreditkarte {
 		return inhaberName;
 	}
 
-	public String getPruefzahl() {
+	public int getPruefzahl() {
 		return pruefzahl;
 	}
 

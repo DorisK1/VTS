@@ -13,11 +13,11 @@ public class Datenbank {
 	public static Statement stmt = null;
 	public static Connection conn = null;
 	public static PreparedStatement pstmt = null;
-	Kunde k = new Kunde();
-	Ausleihe a = new Ausleihe();
-	Ski sk = new Ski();
-	Snowboard sb = new Snowboard();
-
+//	Kunde k = new Kunde();
+//	Ausleihe a = new Ausleihe();
+//	Ski sk = new Ski();
+//	Snowboard sb = new Snowboard();
+	
 	public static void createTables() { // erstellt Tabellen in der Datenbank
 
 		try {
@@ -661,6 +661,55 @@ public class Datenbank {
 		rs = null;
 
 	}
+	
+	public static void insertCreditCardRows(Kreditkarte kk) throws SQLException {
+		
+		conn = DriverManager.getConnection(connString);
+		stmt = conn.createStatement();
+		String s = "INSERT INTO kreditkarten (kreditkartenNr, kundenNr, kreditkartenname, inhabername, kreditkartenpruefzahl, "
+				+ "kreditkartengueltigkeit) VALUES (?,?,?,?,?,?)";
+		
+		//KK 1 - Kunde 1
+		pstmt = conn.prepareStatement(s);
+		pstmt.setString(1, "7894-5461-7894-7897"); // kreditkartenNr
+		pstmt.setInt(2, 1); // kundenNr
+		pstmt.setString(3, "Mastercard"); // kreditkartenname
+		pstmt.setString(4, "Maria Mustermann"); // inhabername
+		pstmt.setInt(5, 899); // kreditkartenpruefzahl
+		pstmt.setString(6, "12/22"); // kreditkartengueltigkeit
+		pstmt.executeUpdate();
+		System.out.println("Kreditkarte 1 angelegt");
+		//KK 2 - Kunde 2
+		pstmt = conn.prepareStatement(s);
+		pstmt.setString(1, "1565-5461-6465-5454"); // kreditkartenNr
+		pstmt.setInt(2, 2); // kundenNr
+		pstmt.setString(3, "Visa"); // kreditkartenname
+		pstmt.setString(4, "Max Mustermann"); // inhabername
+		pstmt.setInt(5, 588); // kreditkartenpruefzahl
+		pstmt.setString(6, "04/25"); // kreditkartengueltigkeit
+		pstmt.executeUpdate();
+		System.out.println("Kreditkarte 2 angelegt");		
+		//KK 3 - Kunde 3
+		pstmt = conn.prepareStatement(s);
+		pstmt.setString(1, "2465-8465-6655-5454"); // kreditkartenNr
+		pstmt.setInt(2, 3); // kundenNr
+		pstmt.setString(3, "Visa"); // kreditkartenname
+		pstmt.setString(4, "Tanja Toll"); // inhabername
+		pstmt.setInt(5, 485); // kreditkartenpruefzahl
+		pstmt.setString(6, "08/19"); // kreditkartengueltigkeit
+		pstmt.executeUpdate();
+		System.out.println("Kreditkarte 3 angelegt");		
+		//KK 4 - Kunde 4
+		pstmt = conn.prepareStatement(s);
+		pstmt.setString(1, "8799-8953-9987-3333"); // kreditkartenNr
+		pstmt.setInt(2, 4); // kundenNr
+		pstmt.setString(3, "American Express"); // kreditkartenname
+		pstmt.setString(4, "Thomas Müller"); // inhabername
+		pstmt.setInt(5, 485); // kreditkartenpruefzahl
+		pstmt.setString(6, "01/20"); // kreditkartengueltigkeit
+		pstmt.executeUpdate();
+		System.out.println("Kreditkarte 4 angelegt");				
+	}
 
 	public static Boolean postKunde(Kunde k) { // Speichert einen neuen Kunden in der Datenbank ab
 
@@ -725,7 +774,7 @@ public class Datenbank {
 		Connection conn = null;
 		ResultSet rs = null;
 		Kunde k = new Kunde();
-		System.out.println("Query ALLE KUNDEN");
+		System.out.println("Query Kunde über Kundennummer");
 		try {
 			conn = DriverManager.getConnection(connString);
 			stmt = conn.createStatement();
@@ -1619,7 +1668,145 @@ public class Datenbank {
 		}
 
 	}
+	
 
+	public static Boolean postKreditkarte(Kreditkarte kk) {
+		
+		System.out.println("neue Kreditkarte anlegen");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			pstmt = conn.prepareStatement("INSERT INTO kreditkarten(kreditkartenNr, kundenNr, kreditkartenname, inhabername, "
+					+ "kreditkartenpruefzahl, kreditkartengueltigkeit) VALUES(?,?,?,?,?,?) ");
+			pstmt.setString(1, kk.getKreditkartenNr());
+			pstmt.setInt(2, kk.getKundenNr());
+			pstmt.setString(3, kk.getKreditkartenName());
+			pstmt.setString(4, kk.getInhaberName());
+			pstmt.setInt(5, kk.getPruefzahl());
+			pstmt.setString(6, kk.getGueltigkeit());
+			pstmt.executeUpdate();
+			System.out.println("Kreditkarte angelegt");
+			return true;
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 
+			}
+
+		}
+
+	}
+
+	public static ArrayList<Kreditkarte> getKreditkarten() { // holt sich alle Kreditkarten aus der Datenbanl
+		
+		
+		Connection conn = null;
+		ResultSet rs = null;
+		ArrayList<Kreditkarte> kkl = new ArrayList<Kreditkarte>();
+
+		System.out.println("Query ALLE Kreditkarten");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM kreditkarten  ");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("kreditkartenNr = " + rs.getString("kreditkartenNr") + " kundenNr = " + rs.getInt("kundenNr")
+						+ " kreditkartenname = " + rs.getString("kreditkartenname") + " inhabername = " + rs.getString("inhabername")
+						+ " kreditkartenpruefzahl = " + rs.getInt("kreditkartenpruefzahl") + " kreditkartengueltigkeit = " 
+						+ rs.getString("kreditkartengueltigkeit"));
+
+				kkl.add(new Kreditkarte(rs.getString("kreditkartenNr"), rs.getInt("kundenNr"), rs.getString("kreditkartenname"),
+						rs.getString("inhabername"), rs.getInt("kreditkartenpruefzahl"), rs.getString("kreditkartengueltigkeit")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return kkl;
+		
+	}
+
+	public static Kreditkarte getKreditkarte(int kundenNr) { // holt sich Kreditkarteninformationen über die Kundennummer
+		
+		Kreditkarte kk = new Kreditkarte();		
+		Connection conn = null;
+		ResultSet rs = null;
+		System.out.println("Query Kreditkarte über Kundennummer");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM kreditkarten WHERE kundenNr =" + kundenNr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("kreditkartenNr = " + rs.getString("kreditkartenNr") + " kundenNr = " + rs.getInt("kundenNr")
+				+ " kreditkartenname = " + rs.getString("kreditkartenname") + " inhabername = " + rs.getString("inhabername")
+				+ " kreditkartenpruefzahl = " + rs.getInt("kreditkartenpruefzahl") + " kreditkartengueltigkeit = " 
+				+ rs.getString("kreditkartengueltigkeit"));
+
+				// KUNDEN OBJ ANLEGEN
+				kk.setKreditkartenNr(rs.getString("kreditkartenNr"));
+				kk.setKundenNr(rs.getInt("kundenNr"));
+				kk.setKreditkartenName(rs.getString("kreditkartenname"));
+				kk.setInhaberName(rs.getString("inhabername"));
+				kk.setPruefzahl(rs.getInt("kreditkartenpruefzahl"));
+				kk.setGueltigkeit(rs.getString("kreditkartengueltigkeit"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return kk;
+	}
+
+	
 }

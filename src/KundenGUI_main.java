@@ -37,10 +37,13 @@ public class KundenGUI_main extends Application {
 //			Ski sk = new Ski();
 //			Snowboard sb = new Snowboard();
 //			Kunde k = new Kunde();
+//			Kreditkarte kk = new Kreditkarte();
 //			Datenbank.createTables();
 //			Datenbank.insertSkiRows(sk);
 //			Datenbank.insertSnowboardRows(sb);
 //			Datenbank.insertCustomerRows(k);
+//			Datenbank.insertCreditCardRows(kk);
+//			
 //			
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
