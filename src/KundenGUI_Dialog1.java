@@ -222,7 +222,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	
 	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis 
 
 		Boolean b = false;

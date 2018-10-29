@@ -32,20 +32,21 @@ public class KundenGUI_main extends Application {
 	// erstellt --> MUSS auskommentiert werden sobald die Datenbank steht 
 	// Achtung: NACH der Auskommentierung ändert sich die Logik der IDnr vergabe auf +100!?
 	
-	static {
-		try {
-			Ski sk = new Ski();
-			Snowboard sb = new Snowboard();
-			Kunde k = new Kunde();
-			Datenbank.createTables();
-			Datenbank.insertRows(sk, sb);
-			Datenbank.insertCustomerRows(k);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			Ski sk = new Ski();
+//			Snowboard sb = new Snowboard();
+//			Kunde k = new Kunde();
+//			Datenbank.createTables();
+//			Datenbank.insertSkiRows(sk);
+//			Datenbank.insertSnowboardRows(sb);
+//			Datenbank.insertCustomerRows(k);
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public void start(Stage primaryStage) {

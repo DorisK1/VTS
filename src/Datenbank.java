@@ -138,9 +138,8 @@ public class Datenbank {
 		}
 
 	}
-
-	public static void insertRows(Ski sk, Snowboard sb) throws SQLException { // legt Kategorien für Ski und Snowboards
-																				// und Produkte an
+	
+	public static void insertSkiRows(Ski sk) throws SQLException { // legt Kategorien für Ski und Produkte an
 
 		conn = DriverManager.getConnection(connString);
 		stmt = conn.createStatement();
@@ -338,6 +337,12 @@ public class Datenbank {
 		sk.setSkiNr(skiNr9);
 		System.out.println("SkiNr: " + skiNr9);
 		rs = null;
+		
+	}
+	
+	public static void insertSnowboardRows(Snowboard sb) throws SQLException { // legt Kategorien für Snowboards und Produkte an
+		conn = DriverManager.getConnection(connString);
+		stmt = conn.createStatement();
 		// SNOWBOARDKategorien anlegen
 		// KAT 1
 		String s15 = "INSERT INTO snowboardkategorien (snowboardKategorieNr, snowboardKategorieName) VALUES (?,?)";
@@ -377,6 +382,8 @@ public class Datenbank {
 		pstmt.setString(7, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freestyle A in KAT 1 angelegt");
+		String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM snowboard"; // spezieller derby sql befehl
+		ResultSet rs = stmt.executeQuery(autowert);
 		rs = stmt.executeQuery(autowert); //immer noch autowert für ski??? deshalb immer gleiche id?!?
 		rs.next();
 		int snowboardNr1 = rs.getInt("1");
@@ -626,6 +633,32 @@ public class Datenbank {
 		k.setKundenNr(kundenNr3);
 		System.out.println("Kunde mit KundenNr: " + kundenNr3 + " angelegt");
 		rs = null;
+		
+		pstmt = conn.prepareStatement(s);
+		pstmt.setInt(1, 2); // anrede
+		pstmt.setString(2, "Thomas"); // vorname
+		pstmt.setString(3, "Müller"); // nachname
+		pstmt.setString(4, "+43-664-3889985"); // telefonNr
+		pstmt.setString(5, "Ringstrasse"); // strasse
+		pstmt.setString(6, "17"); // hausNr
+		pstmt.setString(7, "München"); // wohnort
+		pstmt.setString(8, "42187"); // plz
+		pstmt.setString(9, "DE"); // land
+		pstmt.setInt(10, 59); // kundenalter
+		pstmt.setString(11, "schwarz"); // pistenPraef
+		pstmt.setDouble(12, 89); // gewicht
+		pstmt.setDouble(13, 43); // schuhgroesse
+		pstmt.setString(14, "sehr gut"); // technik
+		pstmt.setBoolean(15, false); // beinstellung
+		pstmt.setBoolean(16, false); // bindungstyp
+		pstmt.executeUpdate();
+
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int kundenNr4 = rs.getInt("1");
+		k.setKundenNr(kundenNr4);
+		System.out.println("Kunde mit KundenNr: " + kundenNr4 + " angelegt");
+		rs = null;
 
 	}
 
@@ -849,8 +882,7 @@ public class Datenbank {
 
 	}
 
-	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?? holt sich eine Ausleihe über die Abholnummer aus der
-														// Datenbank
+	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?!? holt sich Ausleihe über die Abholnummer
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -905,6 +937,61 @@ public class Datenbank {
 
 	}
 
+	public static Ausleihe getNewAusleihe(int kundenNr) { // holt sich Ausleihe über die Kundennummer
+
+		Connection conn = null;
+		ResultSet rs = null;
+		Ausleihe a = new Ausleihe();
+		System.out.println("Query Ausleihen Suche nach kundenNr");
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE kundenNr =" + kundenNr);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("kundenNr = " + rs.getInt("kundenNr") + "abholNr = " + rs.getInt("abholNr"));
+
+				// AUSLEIHE OBJ ANLEGeN aus DB
+				a.setAbholNr(rs.getInt("abholNr"));
+				a.setKundenNr(rs.getInt("kundenNr"));
+				// a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) :
+				// a.setSnowboardNr(rs.getInt("snowboardNr")));
+//				a.setSkiNr(rs.getInt("skiNr")); // pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() :
+//												// a.getSnowboardNr());
+//				a.setSnowboardNr(rs.getInt("snowboardNr"));
+//				a.setLeihstart(rs.getDate("leihstart"));
+				a.setLeihende(rs.getDate("leihende"));
+//				a.setMietpreis(rs.getDouble("mietpreis"));
+//				a.setKaution(rs.getDouble("kaution"));
+//				a.setNachzahlung(rs.getDouble("nachzahlung"));
+//				a.setGesamtpreis(rs.getDouble("gesamtpreis"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+
+		}
+		return a;
+
+	}
+	
 	public static ArrayList<Ausleihe> getAusleihen() { // gibt eine ArrayList aller Ausleihen zurück
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1532,5 +1619,7 @@ public class Datenbank {
 		}
 
 	}
+
+
 
 }
