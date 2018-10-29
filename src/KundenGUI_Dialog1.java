@@ -170,7 +170,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
 							k.setTechnik(cob1tp1.getSelectionModel().getSelectedItem());
 							k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
-							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
+							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem())); 
+							//wenn keine Angabe dann by default false????
 							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
 							// TP3 TF Input abfragen
 							if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {

@@ -377,7 +377,7 @@ public class Datenbank {
 		pstmt.setString(7, "SCHWARZ"); // farbe, String
 		pstmt.executeUpdate();
 		System.out.println("Freestyle A in KAT 1 angelegt");
-		rs = stmt.executeQuery(autowert);
+		rs = stmt.executeQuery(autowert); //immer noch autowert für ski??? deshalb immer gleiche id?!?
 		rs.next();
 		int snowboardNr1 = rs.getInt("1");
 		sb.setSnowboardNr(snowboardNr1);
@@ -537,6 +537,96 @@ public class Datenbank {
 		sb.setSnowboardNr(snowboardNr9);
 		System.out.println("SnowboardNr: " + snowboardNr9);
 		rs = null;
+	}
+
+	public static void insertCustomerRows(Kunde k) throws SQLException { // Kunden anlegen
+		conn = DriverManager.getConnection(connString);
+		stmt = conn.createStatement();
+		String s = "INSERT INTO kunden (anrede, vorname, nachname, telefonNr, strasse, hausNr, wohnort, plz, land, kundenalter, "
+				+ "pistenPraef, gewicht, schuhgroesse, technik, beinstellung, bindungstyp) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		//Kunde 1
+		pstmt = conn.prepareStatement(s);
+		pstmt.setInt(1, 1); // anrede
+		pstmt.setString(2, "Maria"); // vorname
+		pstmt.setString(3, "Mustermann"); // nachname
+		pstmt.setString(4, "+43-664-1584798"); // telefonNr
+		pstmt.setString(5, "Musterstrasse"); // strasse
+		pstmt.setString(6, "1a"); // hausNr
+		pstmt.setString(7, "Wien"); // wohnort
+		pstmt.setString(8, "1020"); // plz
+		pstmt.setString(9, "AT"); // land
+		pstmt.setInt(10, 44); // kundenalter
+		pstmt.setString(11, "blau"); // pistenPraef
+		pstmt.setDouble(12, 59.5); // gewicht
+		pstmt.setDouble(13, 38.5); // schuhgroesse
+		pstmt.setString(14, "mittel"); // technik
+		pstmt.setBoolean(15, true); // beinstellung
+		pstmt.setBoolean(16, false); // bindungstyp
+		pstmt.executeUpdate();
+
+		String autowert = "SELECT IDENTITY_VAL_LOCAL() FROM kunden";
+		ResultSet rs = stmt.executeQuery(autowert);
+		rs.next();
+		int kundenNr1 = rs.getInt("1");
+		k.setKundenNr(kundenNr1);
+		System.out.println("Kunde mit KundenNr: " + kundenNr1 + " angelegt");
+		rs = null;
+		
+		//Kunde 2
+		pstmt = conn.prepareStatement(s);
+		pstmt.setInt(1, 2); // anrede
+		pstmt.setString(2, "Max"); // vorname
+		pstmt.setString(3, "Mustermann"); // nachname
+		pstmt.setString(4, "+43-664-1584798"); // telefonNr
+		pstmt.setString(5, "Musterstrasse"); // strasse
+		pstmt.setString(6, "1a"); // hausNr
+		pstmt.setString(7, "Wien"); // wohnort
+		pstmt.setString(8, "1020"); // plz
+		pstmt.setString(9, "AT"); // land
+		pstmt.setInt(10, 44); // kundenalter
+		pstmt.setString(11, "blau"); // pistenPraef
+		pstmt.setDouble(12, 81.5); // gewicht
+		pstmt.setDouble(13, 42.5); // schuhgroesse
+		pstmt.setString(14, "sehr gut"); // technik
+		pstmt.setBoolean(15, true); // beinstellung
+		pstmt.setBoolean(16, false); // bindungstyp
+		pstmt.executeUpdate();
+
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int kundenNr2 = rs.getInt("1");
+		k.setKundenNr(kundenNr2);
+		System.out.println("Kunde mit KundenNr: " + kundenNr2 + " angelegt");
+		rs = null;
+		
+		// Kunde 3
+		pstmt = conn.prepareStatement(s);
+		pstmt.setInt(1, 3); // anrede
+		pstmt.setString(2, "Tanja"); // vorname
+		pstmt.setString(3, "Toll"); // nachname
+		pstmt.setString(4, "+43-664-35879655"); // telefonNr
+		pstmt.setString(5, "Tollstrasse"); // strasse
+		pstmt.setString(6, "1a"); // hausNr
+		pstmt.setString(7, "Mannheim"); // wohnort
+		pstmt.setString(8, "48946"); // plz
+		pstmt.setString(9, "DE"); // land
+		pstmt.setInt(10, 27); // kundenalter
+		pstmt.setString(11, "rot"); // pistenPraef
+		pstmt.setDouble(12, 55.5); // gewicht
+		pstmt.setDouble(13, 37.5); // schuhgroesse
+		pstmt.setString(14, "sehr gut"); // technik
+		pstmt.setBoolean(15, false); // beinstellung
+		pstmt.setBoolean(16, false); // bindungstyp
+		pstmt.executeUpdate();
+
+		rs = stmt.executeQuery(autowert);
+		rs.next();
+		int kundenNr3 = rs.getInt("1");
+		k.setKundenNr(kundenNr3);
+		System.out.println("Kunde mit KundenNr: " + kundenNr3 + " angelegt");
+		rs = null;
+
 	}
 
 	public static Boolean postKunde(Kunde k) { // Speichert einen neuen Kunden in der Datenbank ab
@@ -759,7 +849,8 @@ public class Datenbank {
 
 	}
 
-	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?? holt sich eine Ausleihe über die Abholnummer aus der Datenbank
+	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?? holt sich eine Ausleihe über die Abholnummer aus der
+														// Datenbank
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -859,7 +950,8 @@ public class Datenbank {
 		return kl;
 	}
 
-	public static ArrayList<Ski> getSki(int skiKategorieNr) { // gibt eine ArrayList aller Ski einer bestimmten Kat.Nr zurück
+	public static ArrayList<Ski> getSki(int skiKategorieNr) { // gibt eine ArrayList aller Ski einer bestimmten Kat.Nr
+																// zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Ski> sl = new ArrayList<Ski>();
@@ -946,7 +1038,8 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static ArrayList<SkiFX> getSkiFX() throws SQLException { //UNNÖTIG?? Testklasse für denn ListChangeListener in MitarbeiterGUI
+	public static ArrayList<SkiFX> getSkiFX() throws SQLException { // UNNÖTIG?? Testklasse für denn ListChangeListener
+																	// in MitarbeiterGUI
 		ArrayList<SkiFX> array2 = new ArrayList<SkiFX>();
 		Connection conn = null;
 		Statement stmt = null;
@@ -1119,7 +1212,8 @@ public class Datenbank {
 		return sk;
 	}
 
-	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) { // gibt eine ArrayList aller Snowboards einer bestimmten Kat.Nr zurück
+	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) { // gibt eine ArrayList aller Snowboards
+																				// einer bestimmten Kat.Nr zurück
 		Connection conn = null;
 		ResultSet rs = null;
 		ArrayList<Snowboard> sl = new ArrayList<Snowboard>();
@@ -1210,7 +1304,8 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static Snowboard getNewSnowboard(String snowboardProduktname) { //gibt ein Snowboardobjekt über den Produktnamen zurück
+	public static Snowboard getNewSnowboard(String snowboardProduktname) { // gibt ein Snowboardobjekt über den
+																			// Produktnamen zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1406,7 +1501,8 @@ public class Datenbank {
 
 	}
 
-	public static void updateAusleihe(int abholNr, double nachzahlung) { // aktualisiert eine Ausleihe mit neuem Wert der Nachzahlung bei verspäteter Rückgabe
+	public static void updateAusleihe(int abholNr, double nachzahlung) { // aktualisiert eine Ausleihe mit neuem Wert
+																			// der Nachzahlung bei verspäteter Rückgabe
 
 		System.out.println("Ausleihe ändern");
 
