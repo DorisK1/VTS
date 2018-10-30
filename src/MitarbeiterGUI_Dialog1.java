@@ -198,7 +198,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sb.setFarbe(tf7.getText());
 
 							Datenbank.postSnowboard(sb); // Snowboard in der Datenbank ablegen
-						}
+						} 
+						return 1;	
 					} else {
 
 					}

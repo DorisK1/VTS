@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -145,10 +147,10 @@ public class MitarbeiterGUI_main extends Application {
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
 			// muss die Ausleihe befüllt werden --> TP1
-			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime?
+			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime!!!
 
 			if (!Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().equals(Datenbank
-					.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) {
+					.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) { // wenn LEIHSTART != LEIHENDE
 				if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() // wenn LEIHSTART = HEUTE
 																							// Befüllung der Ausleihe
 						.equals(java.sql.Date.valueOf(LocalDate.now()))) {
@@ -377,14 +379,24 @@ public class MitarbeiterGUI_main extends Application {
 		bt1tp5.setOnAction(bt -> { // Snowboard NEU
 			System.out.println("Neues Snowboard anlegen");
 			String s = "Snowboard";
-			new MitarbeiterGUI_Dialog1(s).showAndWait();
+			Optional<Integer> newSnowboard = new MitarbeiterGUI_Dialog1(s).showAndWait();
+			if (newSnowboard.isPresent()) {
+				ArrayList<Snowboard> sbNrs1 = Datenbank.getSnowboard();
+				sbFXListe.clear();
+				for (Snowboard sb : sbNrs1) { // Snowboard auf SnowboardFX umschreiben
+					Snowboard snowboard = new Snowboard(sb.getSnowboardNr(), sb.getSnowboardKategorieNr(),
+							sb.getSnowboardProduktname(), sb.getSnowboardTyp(), sb.getSnowboardBildpfad(), sb.getRegalNr(),
+							sb.getTagespreis(), sb.getFarbe(), sb.isBeinstellung(), sb.isBindungstyp());
+					sbFXListe.add(new SnowboardFX(snowboard));
+				}
+			}
 		});
 
 		bt2tp5.setOnAction(bt -> { // Snowboard LÖSCHEN
 			SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
 			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); // LÖSCHEN aus DB
-			table1.getItems().remove(selectedItem); // LÖSCHEN aus Anzeige
-
+			//table1.getItems().remove(selectedItem); 
+			sbFXListe.remove(selectedItem);// LÖSCHEN aus Anzeige
 		});
 
 	}
@@ -426,31 +438,28 @@ public class MitarbeiterGUI_main extends Application {
 			Ski ski = new Ski(sk.getSkiNr(), sk.getSkiKategorieNr(), sk.getSkiProduktname(), sk.getSkiTyp(),
 					sk.getSkiBildpfad(), sk.getRegalNr(), sk.getTagespreis(), sk.getFarbe());
 			skiFXListe.add(new SkiFX(ski));
-			table.setItems(skiFXListe);
 		}
+		table.setItems(skiFXListe);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		// FUNKTIONIERT NICHT!!!
-		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<SkiFX>() {
-			@SuppressWarnings("unused")
-			public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX> c) {
-				ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<? extends SkiFX>) c).getList();
-				String s = "";
-				for (SkiFX sk : changesList) {
-					// s += sk.getSkiNr() + sk.getSkiKategorieNr();
-					// lb1tp4.setText(s.substring(0, s.length() - 2));
-					table.getItems().add(sk);
-
-				}
-			}
-
-			@Override
-			public void onChanged(Change<? extends SkiFX> c) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
+		// nur info wenn änderung in der tableview! --> auskommentieren
+//		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<SkiFX>() {
+//			@SuppressWarnings("unused")
+//			public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX> c) {
+//				ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<? extends SkiFX>) c).getList();
+//				String s = "";
+//				for (SkiFX sk : changesList) {
+//					// s += sk.getSkiNr() + sk.getSkiKategorieNr();
+//					// lb1tp4.setText(s.substring(0, s.length() - 2));
+//					table.getItems().add(sk);
+//				}
+//			}
+//
+//			@Override
+//			public void onChanged(Change<? extends SkiFX> c) {
+//				// TODO Auto-generated method stub
+//			}
+//		});
 
 		table.getColumns().addAll(skiNrCol, skiKategorieNrCol, skiProduktnameCol, skiTypCol, regalNrCol, tagespreisCol,
 				farbeCol); // Anzeige OHNE skiBildpfad!!!!
@@ -461,14 +470,23 @@ public class MitarbeiterGUI_main extends Application {
 		bt1tp4.setOnAction(bt -> {
 			System.out.println("Neuen Ski anlegen");
 			String s = "Ski";
-			new MitarbeiterGUI_Dialog1(s).showAndWait();
+			Optional<Integer> newSki = new MitarbeiterGUI_Dialog1(s).showAndWait(); //Dialog liefert 1 zurück
+			if (newSki.isPresent()) { // ja - weil newSki = 1
+				ArrayList<Ski> skiNrs1 = Datenbank.getSki();
+				skiFXListe.clear();
+				for (Ski sk : skiNrs1) { // Ski auf SkiFX umschreiben
+					Ski ski = new Ski(sk.getSkiNr(), sk.getSkiKategorieNr(), sk.getSkiProduktname(), sk.getSkiTyp(),
+							sk.getSkiBildpfad(), sk.getRegalNr(), sk.getTagespreis(), sk.getFarbe());
+					skiFXListe.add(new SkiFX(ski));
+				}
+			}
 		});
 
 		bt2tp4.setOnAction(bt -> {
 			SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
 			Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
-			table.getItems().remove(selectedItem);
-
+			//table.getItems().remove(selectedItem);
+			skiFXListe.remove(selectedItem);
 		});
 	}
 
