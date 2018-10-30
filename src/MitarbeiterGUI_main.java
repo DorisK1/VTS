@@ -1,5 +1,6 @@
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,7 +114,7 @@ public class MitarbeiterGUI_main extends Application {
 		displayTp4();
 		displayTp5();
 		displayTp6();
-		//Input validation
+		// Input validation
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
 			if (observable != null) {
 				if (!tf1.getText().matches("[0-9]*")) {
@@ -136,83 +137,150 @@ public class MitarbeiterGUI_main extends Application {
 		primaryStage.setTitle("MITARBEITERANSICHT");
 		primaryStage.setResizable(true);
 		primaryStage.show();
-		
-		// Suche nach der Abhonummer UND Auswahl ob es sich um eine Ausgabe oder Rücknahme handelt
+
+		// Suche nach der Abhonummer UND Auswahl ob es sich um eine Ausgabe oder
+		// Rücknahme handelt
 		bt1.setOnAction(gd -> {
-			
+
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
 			// muss die Ausleihe befüllt werden --> TP1
 			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime?
-			
-			
-//			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() 
-//					!= Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende()) {
-			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() // wenn LEIHSTART = HEUTE Befüllung der Ausleihe
-					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
-				// Prüfen ob SKI oder SNOWBOARD
-				if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) { // PRÜFEN OB SKINR vorhanden
-				tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
-				tf2tp1.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
-						.getRegalNr()); // regalNr SKI
-				} else {
-					tf1tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
-					tf2tp1.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
-							.getRegalNr()); // regalNr Snowboard
-				}
-				tf3tp1.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().toString()); // ausleihstart
-				tf4tp1.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
-				tp1.setExpanded(true);
 
-			} else { // BEFÜLLUNG der Rücknahme in TP2 WENN Leihstart in der Vergangenheit liegt
-				// Wenn SKI NR vorhanden dann..
-				if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
-				tf1tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
-				tf2tp2.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
-						.getRegalNr()); // regalNr Ski
-				} else {
-					tf1tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
-					tf2tp2.setText(Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
-							.getRegalNr()); // regalNr Snowboard
+			if (!Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().equals(Datenbank
+					.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) {
+				if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() // wenn LEIHSTART = HEUTE
+																							// Befüllung der Ausleihe
+						.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+					// Prüfen ob SKI oder SNOWBOARD
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) { // PRÜFEN OB SKINR
+																									// vorhanden
+						tf1tp1.setText(
+								Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+						tf2tp1.setText(
+								Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+										.getRegalNr()); // regalNr SKI
+					} else {
+						tf1tp1.setText(Integer
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
+						tf2tp1.setText(Datenbank
+								.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+								.getRegalNr()); // regalNr Snowboard
+					}
+					tf3tp1.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().toString()); // ausleihstart
+					tf4tp1.setText(
+							Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
+					tp1.setExpanded(true);
+
+				} else { // BEFÜLLUNG der Rücknahme in TP2 WENN Leihstart in der Vergangenheit liegt
+					// Wenn SKI NR vorhanden dann..
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
+						tf1tp2.setText(
+								Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+						tf2tp2.setText(
+								Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+										.getRegalNr()); // regalNr Ski
+					} else {
+						tf1tp2.setText(Integer
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
+						tf2tp2.setText(Datenbank
+								.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+								.getRegalNr()); // regalNr Snowboard
+					}
+
+					tf3tp2.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende().toString());
+					// WENN LEIHENDE = HEUTE --> KEINE NACHZAHLUNG
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende()
+							.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+						tf4tp2.setText(Double
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+					} else { // nachzahlung mit UPDATE in db
+						Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()),
+								calcNachzahlung(LocalDate.parse(tf3tp2.getText()), Integer.parseInt(tf1.getText())));
+						tf4tp2.setText(Double
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+					}
+					tf5tp2.setText(
+							Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKaution()));
+					tf6tp2.setText(
+							Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr()));
+					tp2.setExpanded(true);
+
 				}
-				
-				tf3tp2.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende().toString());
-				// WENN LEIHENDE = HEUTE --> KEINE NACHZAHLUNG
-				if(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende()
-					.equals(java.sql.Date.valueOf(LocalDate.now()))) {
-					tf4tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
-				} else { // nachzahlung mit UPDATE in db 
-					Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()), calcNachzahlung(LocalDate.parse(tf3tp2.getText()), Integer.parseInt(tf1.getText())));//diff zw. rückgabedatum und localdate.now * tagespreis
-					tf4tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
-					
+			} else {
+				if (LocalDateTime.now().getHour() <= 12) { // = Ausleihe wenn VOR 12H, sonst Rücknahme
+					// wenn Skinr vorhanden...
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) { // PRÜFEN OB SKINR
+						// vorhanden
+						tf1tp1.setText(
+								Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+						tf2tp1.setText(
+								Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+										.getRegalNr()); // regalNr SKI
+					} else {
+						tf1tp1.setText(Integer
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
+						tf2tp1.setText(Datenbank
+								.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+								.getRegalNr()); // regalNr Snowboard
+					}
+					tf3tp1.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart().toString()); // ausleihstart
+					tf4tp1.setText(
+							Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
+					tp1.setExpanded(true);
+
+				} else { // Rücknahme
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
+						tf1tp2.setText(
+								Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
+						tf2tp2.setText(
+								Datenbank.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
+										.getRegalNr()); // regalNr Ski
+					} else {
+						tf1tp2.setText(Integer
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
+						tf2tp2.setText(Datenbank
+								.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+								.getRegalNr()); // regalNr Snowboard
+					}
+
+					tf3tp2.setText(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende().toString());
+					// WENN LEIHENDE = HEUTE --> KEINE NACHZAHLUNG
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende()
+							.equals(java.sql.Date.valueOf(LocalDate.now()))) {
+						tf4tp2.setText(Double
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+					} else { // nachzahlung mit UPDATE in db
+						Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()),
+								calcNachzahlung(LocalDate.parse(tf3tp2.getText()), Integer.parseInt(tf1.getText())));
+						tf4tp2.setText(Double
+								.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getNachzahlung()));
+
+					}
+					tf5tp2.setText(
+							Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKaution()));
+					tf6tp2.setText(
+							Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr()));
+					tp2.setExpanded(true);
 				}
-				tf5tp2.setText(Double.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKaution()));
-				tf6tp2.setText(Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr()));
-				tp2.setExpanded(true);
-				
 			}
-//			} else {
-//			if (LocalDateTime.now() <= 12) { // Ausleihe
-//			wenn Skinr vorhanden...
-//		} else { // Rücknahme
-//		}
-//		}
 		});
 
 	}
 
-	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) { //berechnet Nachzahlung wenn das Produkt nach dem Leihende retourniert wird
+	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) { // berechnet Nachzahlung wenn das Produkt
+																			// nach dem Leihende retourniert wird
 
 		Period period = Period.between(selreturnDate, LocalDate.now());
 		int tage = period.getDays();
-		
-			double nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
-			System.out.println("Tage: " + tage);
-			System.out.println("Nachzahlung: " + nachzahlung);
-			return nachzahlung;
+
+		double nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
+		System.out.println("Tage: " + tage);
+		System.out.println("Nachzahlung: " + nachzahlung);
+		return nachzahlung;
 	}
 
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	private void displayTp6() { // Listung ALLER Ausleihen
 		// TABLE VIEW
 		borderPanetp6.setPadding(new Insets(5));
@@ -314,9 +382,9 @@ public class MitarbeiterGUI_main extends Application {
 
 		bt2tp5.setOnAction(bt -> { // Snowboard LÖSCHEN
 			SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
-			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); //LÖSCHEN aus DB
-			table1.getItems().remove(selectedItem); //LÖSCHEN aus Anzeige
-			
+			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); // LÖSCHEN aus DB
+			table1.getItems().remove(selectedItem); // LÖSCHEN aus Anzeige
+
 		});
 
 	}
@@ -361,15 +429,15 @@ public class MitarbeiterGUI_main extends Application {
 			table.setItems(skiFXListe);
 		}
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		
-		//FUNKTIONIERT NICHT!!!
+
+		// FUNKTIONIERT NICHT!!!
 		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<SkiFX>() {
 			@SuppressWarnings("unused")
 			public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX> c) {
 				ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<? extends SkiFX>) c).getList();
 				String s = "";
 				for (SkiFX sk : changesList) {
-					//s += sk.getSkiNr() + sk.getSkiKategorieNr();
+					// s += sk.getSkiNr() + sk.getSkiKategorieNr();
 					// lb1tp4.setText(s.substring(0, s.length() - 2));
 					table.getItems().add(sk);
 
@@ -475,7 +543,7 @@ public class MitarbeiterGUI_main extends Application {
 		tp2.setContent(borderPanetp2);
 
 	}
-	
+
 	private void displayTp1() { // Anzeige dieser TP bei Ausleihe des Produkts
 
 		// GRIDPANE LABELS
