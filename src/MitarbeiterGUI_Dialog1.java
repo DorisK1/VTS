@@ -12,6 +12,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	Ski sk = new Ski();
 	Snowboard sb = new Snowboard();
 	GridPane gridPanetp1 = new GridPane();
+	// LB
 	Label lb1 = new Label("Kategorienummer");
 	Label lb2 = new Label("Produktname");
 	Label lb3 = new Label("Typ");
@@ -19,6 +20,15 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	Label lb5 = new Label("RegalNr");
 	Label lb6 = new Label("Tagespreis");
 	Label lb7 = new Label("Farbe");
+	// input validation messages
+	Label lb8 = new Label();
+	Label lb9 = new Label();
+	Label lb10 = new Label();
+	Label lb11 = new Label();
+	Label lb12 = new Label();
+	Label lb13 = new Label();
+	Label lb14 = new Label();
+	// TF
 	TextField tf1 = new TextField();
 	TextField tf2 = new TextField();
 	TextField tf3 = new TextField();
@@ -31,10 +41,11 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Neues Produkt anlegen");
-		
+
 		gridPanetp1.setPadding(new Insets(10, 10, 10, 10));
 		gridPanetp1.setVgap(5);
 		gridPanetp1.setHgap(5);
+		// LB
 		gridPanetp1.add(lb1, 0, 0);
 		gridPanetp1.add(lb2, 0, 1);
 		gridPanetp1.add(lb3, 0, 2);
@@ -42,15 +53,115 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp1.add(lb5, 0, 4);
 		gridPanetp1.add(lb6, 0, 5);
 		gridPanetp1.add(lb7, 0, 6);
+
+		gridPanetp1.add(lb8, 2, 0);
+		gridPanetp1.add(lb9, 2, 1);
+		gridPanetp1.add(lb10, 2, 2);
+		gridPanetp1.add(lb11, 2, 3);
+		gridPanetp1.add(lb12, 2, 4);
+		gridPanetp1.add(lb13, 2, 5);
+		gridPanetp1.add(lb14, 2, 6);
+		// TF
 		gridPanetp1.add(tf1, 1, 0);
 		gridPanetp1.add(tf2, 1, 1);
 		gridPanetp1.add(tf3, 1, 2);
 		gridPanetp1.add(tf4, 1, 3);
 		gridPanetp1.add(tf5, 1, 4);
 		gridPanetp1.add(tf6, 1, 5);
-		gridPanetp1.add(tf7, 1, 6); 
-		//Input validation einbauen
-		
+		gridPanetp1.add(tf7, 1, 6);
+		// Prompttext
+		tf1.setPromptText("1");
+		tf2.setPromptText("Alpin XYZ");
+		tf3.setPromptText("Alpin");
+		tf4.setPromptText("C:\\Users\\Doris\\Bilder\\001.jpg");
+		tf5.setPromptText("R999");
+		tf6.setPromptText("19.5");
+		tf7.setPromptText("ROT");
+		// Input validation
+		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
+			if (observable != null) {
+				if (!tf1.getText().matches("[0-9]*")) {
+					tf1.setStyle("-fx-background-color: orangered;");
+					lb8.setText("Falsche Eingabe - nur Zahlen!");
+				} else {
+					tf1.setStyle("-fx-background-color: white;");
+					lb8.setText("");
+				}
+			}
+		});
+
+		tf2.focusedProperty().addListener((observable, oldValue, newValue) -> { // Produktname
+			if (observable != null) {
+				if (!tf2.getText().matches("[a-zA-z ]*")) {
+					tf2.setStyle("-fx-background-color: orangered;");
+					lb9.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf2.setStyle("-fx-background-color: white;");
+					lb9.setText("");
+				}
+			}
+		});
+
+		tf3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Typ
+			if (observable != null) {
+				if (!tf3.getText().matches("[a-zA-z ]*")) {
+					tf3.setStyle("-fx-background-color: orangered;");
+					lb10.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf3.setStyle("-fx-background-color: white;");
+					lb10.setText("");
+				}
+			}
+		});
+
+		tf4.focusedProperty().addListener((observable, oldValue, newValue) -> { // Bildpfad
+			if (observable != null) {
+				if (!tf4.getText().matches("[a-zA-z.\\:]*")) {
+					tf4.setStyle("-fx-background-color: orangered;");
+					lb11.setText("Falsche Eingabe - nur Buchstaben und Sonderzeichen ':' '.' '\'!");
+				} else {
+					tf4.setStyle("-fx-background-color: white;");
+					lb11.setText("");
+				}
+			}
+		});
+
+		tf5.focusedProperty().addListener((observable, oldValue, newValue) -> { // RegalNr
+			if (observable != null) {
+				if (!tf5.getText().matches("[a-zA-z0-9]*")) {
+					tf5.setStyle("-fx-background-color: orangered;");
+					lb12.setText("Falsche Eingabe - nur Buchstaben und Zahlen!");
+				} else {
+					tf5.setStyle("-fx-background-color: white;");
+					lb12.setText("");
+				}
+			}
+		});
+
+		tf6.focusedProperty().addListener((observable, oldValue, newValue) -> { // Tagespreis
+			if (observable != null) {
+				if (!tf6.getText().matches("[0-9.]*")) {
+					tf6.setStyle("-fx-background-color: orangered;");
+					lb13.setText("Falsche Eingabe - nur Ganz- und Gleitkommazahlen!");
+				} else {
+					tf6.setStyle("-fx-background-color: white;");
+					lb13.setText("");
+				}
+			}
+		});
+
+		tf7.focusedProperty().addListener((observable, oldValue, newValue) -> { // Farbe
+			if (observable != null) {
+				if (!tf7.getText().matches("[a-zA-Z]*")) {
+					tf7.setStyle("-fx-background-color: orangered;");
+					lb14.setText("Falsche Eingabe - nur Buchstaben!");
+				} else {
+					tf7.setStyle("-fx-background-color: white;");
+					lb14.setText("");
+				}
+			}
+		});
+
 		BorderPane borderPane1 = new BorderPane();
 		borderPane1.setPadding(new Insets(5));
 		borderPane1.setPrefSize(700, 580);
@@ -60,7 +171,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 
 		this.getDialogPane().setContent(borderPane1);
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
-		
+
 		// OK Button function
 		this.setResultConverter(new Callback<ButtonType, Integer>() { // neues Produkt in der Datenbank abspeichern
 			@Override
@@ -75,8 +186,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sk.setRegalNr(tf5.getText());
 							sk.setTagespreis(Double.parseDouble(tf6.getText()));
 							sk.setFarbe(tf7.getText());
-										
-							Datenbank.postSki(sk); //Ski in der Datenbank ablegen	
+
+							Datenbank.postSki(sk); // Ski in der Datenbank ablegen
 						} else {
 							sb.setSnowboardKategorieNr(Integer.parseInt(tf1.getText()));
 							sb.setSnowboardProduktname(tf2.getText());
@@ -85,11 +196,11 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sb.setRegalNr(tf5.getText());
 							sb.setTagespreis(Double.parseDouble(tf6.getText()));
 							sb.setFarbe(tf7.getText());
-												
-							Datenbank.postSnowboard(sb); //Snowboard in der Datenbank ablegen
+
+							Datenbank.postSnowboard(sb); // Snowboard in der Datenbank ablegen
 						}
 					} else {
-						
+
 					}
 				return null;
 			}
