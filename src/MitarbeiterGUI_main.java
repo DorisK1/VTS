@@ -32,6 +32,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	VBox vb1 = new VBox();
 	Label lb1 = new Label("Bitte Abholnummer eingeben:");
+	Label lb2 = new Label(); // input validation message
 	TextField tf1 = new TextField();
 	Button bt1 = new Button("Suche");
 
@@ -112,11 +113,23 @@ public class MitarbeiterGUI_main extends Application {
 		displayTp4();
 		displayTp5();
 		displayTp6();
+		//Input validation
+		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
+			if (observable != null) {
+				if (!tf1.getText().matches("[0-9]*")) {
+					tf1.setStyle("-fx-background-color: orangered;");
+					lb2.setText("Falsche Eingabe - nur Zahlen!");
+				} else {
+					tf1.setStyle("-fx-background-color: white;");
+					lb2.setText("");
+				}
+			}
+		});
 
 		accordion.setPrefHeight(600);
 		accordion.setPrefWidth(800);
 		accordion.getPanes().addAll(tp1, tp2, tp3, tp4, tp5, tp6);
-		vb1.getChildren().addAll(lb1, tf1, bt1, accordion);
+		vb1.getChildren().addAll(lb1, tf1, bt1, lb2, accordion);
 
 		// PRIMARY STAGE
 		primaryStage.setScene(new Scene(vb1));

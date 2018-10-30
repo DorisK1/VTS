@@ -378,6 +378,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf13tp3, 1, 12);
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
+		
+		tf13tp3.setPromptText("999");
 
 		// Validation user input - Textfelder Kundendaten
 
@@ -527,9 +529,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkprüf
 
 			if (observable != null) {
-				if (!tf13tp3.getText().matches("[0-9]*")) {
-					tf13tp3.setStyle("-fx-background-color: orangered;");
-					lb28tp3.setText("Falsche Eingabe - nur Zahlen!");
+				if (!tf13tp3.getText().matches("[0-9]{3}")) { //genau 3 Stellen
+					tf13tp3.setStyle("-fx-background-color: lightblue;");
+					lb28tp3.setText("3-stellige Zahl!");
 				} else {
 					tf13tp3.setStyle("-fx-background-color: white;");
 					lb28tp3.setText("");
