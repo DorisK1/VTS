@@ -1,8 +1,12 @@
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -171,6 +175,13 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 
 		this.getDialogPane().setContent(borderPane1);
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
+		final Button btOk = (Button) this.getDialogPane().lookupButton(ButtonType.OK);
+		btOk.addEventFilter(ActionEvent.ACTION, event -> {
+			if (!isInputValid()) {
+				event.consume();
+
+			}
+		});
 
 		// OK Button function
 		this.setResultConverter(new Callback<ButtonType, Integer>() { // neues Produkt in der Datenbank abspeichern
@@ -198,8 +209,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 							sb.setFarbe(tf7.getText());
 
 							Datenbank.postSnowboard(sb); // Snowboard in der Datenbank ablegen
-						} 
-						return 1;	
+						}
+						return 1;
 					} else {
 
 					}
@@ -209,4 +220,26 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
+	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
+
+		Boolean b = false;
+		// String s = null;
+		// ALTER
+		if (!(tf1.getText() == null || tf1.getText().length() == 0)
+				&& !(tf2.getText() == null || tf2.getText().length() == 0)
+				&& !(tf3.getText() == null || tf3.getText().length() == 0)
+				&& !(tf4.getText() == null || tf4.getText().length() == 0)
+				&& !(tf5.getText() == null || tf5.getText().length() == 0)
+				&& !(tf6.getText() == null || tf6.getText().length() == 0)
+				&& !(tf7.getText() == null || tf7.getText().length() == 0)) {
+			b = true;
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("FEHLERHAFTE EINGABE!");
+			alert.setContentText("DATEN FEHLEN!!!");
+			alert.showAndWait();
+
+		}
+		return b;
+	}
 }

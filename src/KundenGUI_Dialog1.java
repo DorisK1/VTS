@@ -7,6 +7,8 @@ import java.time.Period;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
@@ -169,6 +171,18 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
 				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
 				// comboboxen setzen???
+//				ObservableList<String> options = 
+//					    FXCollections.observableArrayList("Frau","Herr","divers");
+//				cob1tp3.setItems(options);
+				cob1tp3.getItems();
+				if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 1) {
+					cob1tp3.setValue("Frau");
+				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 2) {
+					cob1tp3.setValue("Mann");
+				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 3) {
+					cob1tp3.setValue("divers");
+				}
+				
 				tf2tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname());
 				tf3tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname());
 				tf4tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getTelefonNr());
@@ -209,11 +223,19 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
 		// OK Button function --> erst wenn OK geklickt wird, werden die Daten in der
 		// Datenbank gespeichert
+		final Button btOk = (Button) this.getDialogPane().lookupButton(ButtonType.OK);
+		btOk.addEventFilter(ActionEvent.ACTION, event -> {
+			if (!isInputValid()) {
+				event.consume();
+				
+			}
+			//getDialogPane().isDisable();
+		});
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					if (isInputValid()) { // prüft ob alle Felder befüllt sind - Komboboxen?
+					//if (isInputValid()) { // prüft ob alle Felder befüllt sind - Komboboxen?
 						try {
 							// Kundenobjekt anlegen NUR wenn NEUKUNDE
 							if (b == false) { // = NEUKUNDE
@@ -277,7 +299,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 						} catch (IOException e) {
 							e.printStackTrace();
-						}
+						
 					} else
 						System.out.println("FEHLERHAFTE EINGABE");
 				return null;
@@ -292,8 +314,28 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		Boolean b = false;
 		// String s = null;
 		// ALTER
-		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)) { // Auch für alle anderen Textfelder
-																				// schreiben
+		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0) &&
+			!(tf2tp1.getText() == null || tf2tp1.getText().length() == 0) &&
+			!(tf3tp1.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(cob1tp1.getValue() == null) &&
+			!(cob2tp1.getValue() == null) &&
+			// evtl noch die beiden Snowboard Comboboxen einbauen
+			(rb1tp2.isSelected() || rb2tp2.isSelected() || rb3tp2.isSelected()) &&
+			!(cob1tp3.getValue() == null) &&
+			!(tf2tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf3tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
+			!(tf4tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
+			!(tf5tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
+			!(tf6tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf7tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf8tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf9tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf10tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf11tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf12tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf13tp3.getText() == null || tf3tp1.getText().length() == 0) &&
+			!(tf14tp3.getText() == null || tf3tp1.getText().length() == 0)
+				) { 
 			b = true;
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);

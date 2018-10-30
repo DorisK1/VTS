@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -25,31 +26,33 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class KundenGUI_main extends Application {
 
 	// statischer Initialisierer: DB wird nur 1x
-	// erstellt --> MUSS auskommentiert werden sobald die Datenbank steht 
-	// Achtung: NACH der Auskommentierung ändert sich die Logik der IDnr vergabe auf +100!?
-	
-//	static {
-//		try {
-//			Ski sk = new Ski();
-//			Snowboard sb = new Snowboard();
-//			Kunde k = new Kunde();
-//			Kreditkarte kk = new Kreditkarte();
-//			Datenbank.createTables();
-//			Datenbank.insertSkiRows(sk);
-//			Datenbank.insertSnowboardRows(sb);
-//			Datenbank.insertCustomerRows(k);
-//			Datenbank.insertCreditCardRows(kk);
-//			
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	// erstellt --> MUSS auskommentiert werden sobald die Datenbank steht
+	// Achtung: NACH der Auskommentierung ändert sich die Logik der IDnr vergabe auf
+	// +100!?
+
+	// static {
+	// try {
+	// Ski sk = new Ski();
+	// Snowboard sb = new Snowboard();
+	// Kunde k = new Kunde();
+	// Kreditkarte kk = new Kreditkarte();
+	// Datenbank.createTables();
+	// Datenbank.insertSkiRows(sk);
+	// Datenbank.insertSnowboardRows(sb);
+	// Datenbank.insertCustomerRows(k);
+	// Datenbank.insertCreditCardRows(kk);
+	//
+	//
+	// } catch (SQLException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -62,7 +65,9 @@ public class KundenGUI_main extends Application {
 		borderPane.setPadding(new Insets(5));
 
 		// BILD
-		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri(); //Bild aus Ordner holen
+		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri(); // Bild aus
+																												// Ordner
+																												// holen
 		ImageView imageView = new ImageView(uri.toString());
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
@@ -81,6 +86,24 @@ public class KundenGUI_main extends Application {
 		DatePicker datePicker2 = new DatePicker();
 		datePicker1.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
 		datePicker2.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
+
+		final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+			@Override
+			public DateCell call(final DatePicker datePicker) {
+				return new DateCell() {
+					@Override
+					public void updateItem(LocalDate item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item.isBefore(datePicker1.getValue())) {
+							setDisable(true);
+						}
+					}
+				};
+			}
+
+		};
+		datePicker2.setDayCellFactory(dayCellFactory);
+		datePicker2.setValue(datePicker1.getValue());
 
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(lbl3, datePicker1, lbl4, datePicker2);
