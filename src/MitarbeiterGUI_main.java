@@ -110,8 +110,8 @@ public class MitarbeiterGUI_main extends Application {
 		displayTp4();
 		displayTp5();
 		displayTp6();
-		// Input validation
-		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
+		// Input validation der Abholnummer  - nur Zahlen erlaubt
+		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { 
 			if (observable != null) {
 				if (!tf1.getText().matches("[0-9]*")) {
 					tf1.setStyle("-fx-background-color: orangered;");
@@ -137,12 +137,13 @@ public class MitarbeiterGUI_main extends Application {
 		// Suche nach der Abhonummer UND Auswahl ob es sich um eine Ausgabe oder
 		// Rücknahme handelt
 		bt1.setOnAction(gd -> {
-
+			
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
 			// muss die Ausleihe befüllt werden --> TP1
 			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime!!!
-
+			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getAbholNr() > 0) {
+				lb2.setText("Abholnummer gefunden!"); // lb2 wird auch für die input validation message verwendet!
 			if (!Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart()
 					.equals(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) { // wenn LEIHSTART
 																										// != LEIHENDE
@@ -261,8 +262,10 @@ public class MitarbeiterGUI_main extends Application {
 					tp2.setExpanded(true);
 				}
 			}
+			} else {
+				lb2.setText("Abholnummer NICHT gefunden! Bitte um erneute Eingabe einer korrekten Nummer");
+			}
 		});
-
 	}
 
 	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) { // berechnet Nachzahlung wenn das Produkt

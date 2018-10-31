@@ -12,7 +12,7 @@ public class Datenbank {
 	public static final String connString = "jdbc:derby:" + DBlocation + ";create=true";
 	public static Statement stmt = null;
 	public static Connection conn = null;
-	public static PreparedStatement pstmt = null;
+	public static PreparedStatement pstmt = null; 
 //	Kunde k = new Kunde();
 //	Ausleihe a = new Ausleihe();
 //	Ski sk = new Ski();

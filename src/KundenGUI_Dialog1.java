@@ -308,14 +308,11 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
 
 		Boolean b = false;
-		// String s = null;
-		// ALTER
 		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0) &&
 			!(tf2tp1.getText() == null || tf2tp1.getText().length() == 0) &&
 			!(tf3tp1.getText() == null || tf3tp1.getText().length() == 0) &&
 			!(cob1tp1.getValue() == null) &&
 			!(cob2tp1.getValue() == null) &&
-			// evtl noch die beiden Snowboard Comboboxen einbauen
 			(rb1tp2.isSelected() || rb2tp2.isSelected() || rb3tp2.isSelected()) &&
 			!(cob1tp3.getValue() == null) &&
 			!(tf2tp3.getText() == null || tf3tp1.getText().length() == 0) &&
