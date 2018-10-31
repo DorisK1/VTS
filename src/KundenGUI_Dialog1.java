@@ -7,7 +7,6 @@ import java.time.Period;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
@@ -170,15 +169,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
 				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
 				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
-				// comboboxen setzen???
-//				ObservableList<String> options = 
-//					    FXCollections.observableArrayList("Frau","Herr","divers");
-//				cob1tp3.setItems(options);
+
 				cob1tp3.getItems();
 				if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 1) {
 					cob1tp3.setValue("Frau");
 				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 2) {
-					cob1tp3.setValue("Mann");
+					cob1tp3.setValue("Herr");
 				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 3) {
 					cob1tp3.setValue("divers");
 				}
@@ -251,7 +247,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 								// TP3 TF Input abfragen
 								if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {
 									k.setAnrede(1);
-								} else if (cob1tp3.getSelectionModel().getSelectedItem().equals("Mann")) {
+								} else if (cob1tp3.getSelectionModel().getSelectedItem().equals("Herr")) {
 									k.setAnrede(2);
 								} else
 									k.setAnrede(3);
@@ -343,9 +339,6 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			alert.setContentText("DATEN FEHLEN!!!");
 			alert.showAndWait();
 
-			// OPTIONAL gelöst mit DIALOG3 als Warnhinweis - funktioniert aber auch nicht!
-			// s = "FEHLERHAFTE EINGABE!";
-			// new KundenGUI_Dialog3(s).showAndWait();
 		}
 		return b;
 	}
