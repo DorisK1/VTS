@@ -333,7 +333,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("FEHLERHAFTE EINGABE!");
-			alert.setContentText("DATEN FEHLEN!!!");
+			alert.setContentText("DATEN FEHLEN! Bitte kontrollieren Sie Ihre Eingabe");
 			alert.showAndWait();
 
 		}
@@ -411,15 +411,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
 		
-		tf13tp3.setPromptText("999");
+		//tf13tp3.setPromptText("999");
 
 		// Validation user input - Textfelder Kundendaten
 
 		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorn
 
 			if (observable != null) {
-				if (!tf2tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
-					tf2tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf2tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) { // keine Beschränkung in der Länge
+					tf2tp3.setStyle("-fx-background-color: khaki;");
 					lb17tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf2tp3.setStyle("-fx-background-color: white;");
@@ -431,8 +431,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Nachn
 
 			if (observable != null) {
-				if (!tf3tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
-					tf3tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf3tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) { // keine Beschränkung in der Länge
+					tf3tp3.setStyle("-fx-background-color: khaki;");
 					lb18tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf3tp3.setStyle("-fx-background-color: white;");
@@ -444,8 +444,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // tel
 
 			if (observable != null) {
-				if (!tf4tp3.getText().matches("[0-9+ ]*")) { // UND +!!!! ok
-					tf4tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf4tp3.getText().matches("[0-9+ ]*")) { // keine Beschränkung in der Länge
+					tf4tp3.setStyle("-fx-background-color: khaki;");
 					lb19tp3.setText("Falsche Eingabe - nur Zahlen und '+' !");
 				} else {
 					tf4tp3.setStyle("-fx-background-color: white;");
@@ -457,8 +457,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // str
 
 			if (observable != null) {
-				if (!tf5tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
-					tf5tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf5tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) { // keine Beschränkung in der Länge
+					tf5tp3.setStyle("-fx-background-color: khaki;");
 					lb20tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf5tp3.setStyle("-fx-background-color: white;");
@@ -470,8 +470,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf6tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // hausnr
 
 			if (observable != null) {
-				if (!tf6tp3.getText().matches("[0-9a-zA-Z ]*")) { // UND 0-9
-					tf6tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf6tp3.getText().matches("[0-9a-zA-Z ]*")) { // keine Beschränkung in der Länge
+					tf6tp3.setStyle("-fx-background-color: khaki;");
 					lb21tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf6tp3.setStyle("-fx-background-color: white;");
@@ -483,8 +483,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf7tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // wohnort
 
 			if (observable != null) {
-				if (!tf7tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
-					tf7tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf7tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) { // keine Beschränkung in der Länge
+					tf7tp3.setStyle("-fx-background-color: khaki;");
 					lb22tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf7tp3.setStyle("-fx-background-color: white;");
@@ -496,8 +496,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf8tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // plz
 
 			if (observable != null) {
-				if (!tf8tp3.getText().matches("[0-9a-zA-Z]*")) { // UND 0-9!!!
-					tf8tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf8tp3.getText().matches("[0-9a-zA-Z ]*")) { // keine Beschränkung in der Länge
+					tf8tp3.setStyle("-fx-background-color: khaki;");
 					lb23tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf8tp3.setStyle("-fx-background-color: white;");
@@ -509,8 +509,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf9tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // land
 
 			if (observable != null) {
-				if (!tf9tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) {
-					tf9tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf9tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) { // keine Beschränkung in der Länge
+					tf9tp3.setStyle("-fx-background-color: khaki;");
 					lb24tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf9tp3.setStyle("-fx-background-color: white;");
@@ -522,8 +522,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf10tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kknr
 
 			if (observable != null) {
-				if (!tf10tp3.getText().matches("[0-9- ]*")) {
-					tf10tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf10tp3.getText().matches("[0-9- ]*")) { // keine Beschränkung in der Länge
+					tf10tp3.setStyle("-fx-background-color: khaki;");
 					lb25tp3.setText("Falsche Eingabe - nur Zahlen!");
 				} else {
 					tf10tp3.setStyle("-fx-background-color: white;");
@@ -535,8 +535,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf11tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkname
 
 			if (observable != null) {
-				if (!tf11tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) {
-					tf11tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf11tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) { // keine Beschränkung in der Länge
+					tf11tp3.setStyle("-fx-background-color: khaki;");
 					lb26tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf11tp3.setStyle("-fx-background-color: white;");
@@ -548,8 +548,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf12tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkinhabername
 
 			if (observable != null) {
-				if (!tf12tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) {
-					tf12tp3.setStyle("-fx-background-color: orangered;");
+				if (!tf12tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) { // keine Beschränkung in der Länge
+					tf12tp3.setStyle("-fx-background-color: khaki;");
 					lb27tp3.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf12tp3.setStyle("-fx-background-color: white;");
@@ -562,8 +562,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 			if (observable != null) {
 				if (!tf13tp3.getText().matches("[0-9]{3}")) { //genau 3 Stellen
-					tf13tp3.setStyle("-fx-background-color: lightblue;");
-					lb28tp3.setText("3-stellige Zahl!");
+					tf13tp3.setStyle("-fx-background-color: khaki;");
+					lb28tp3.setText("Bitte 3-stellige Kartenprüfnummer eingeben.");
 				} else {
 					tf13tp3.setStyle("-fx-background-color: white;");
 					lb28tp3.setText("");
@@ -574,9 +574,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkgült
 
 			if (observable != null) {
-				if (!tf14tp3.getText().matches("[0-9/]*")) { // UND Sonderzeichen 10/20/2020
-					tf14tp3.setStyle("-fx-background-color: orangered;");
-					lb29tp3.setText("Falsche Eingabe - nur Zahlen und / ! Ohne Leerzeichen");
+				if (!tf14tp3.getText().matches("[0-9]{2}[/]{1}[0-9]{2}")) { // zb 10/20
+					tf14tp3.setStyle("-fx-background-color: khaki;");
+					lb29tp3.setText("Bitte Gültigkeit __/__ eingeben");
 				} else {
 					tf14tp3.setStyle("-fx-background-color: white;");
 					lb29tp3.setText("");
@@ -713,9 +713,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf1tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
 
 			if (observable != null) { // ("[0-9]*")
-				if (!tf1tp1.getText().matches("[0-9]*")) { // &&{3,110}2.REGEX Bedingung funkt nicht
-					tf1tp1.setStyle("-fx-background-color: orangered;");
-					lb9tp1.setText("Alter muss zwischen 3 und 110 sein");
+				if (!tf1tp1.getText().matches("[1-9]{1}[0-9]{0,1}")) { // Alter zwischen 1-99
+					tf1tp1.setStyle("-fx-background-color: khaki;");
+					lb9tp1.setText("Bitte Altersangabe machen.");
 				} else {
 					tf1tp1.setStyle("-fx-background-color: white;");
 					lb9tp1.setText("");
@@ -727,9 +727,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf2tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
 
 			if (observable != null) {
-				if (!tf2tp1.getText().matches("[0-9]*")) {
-					tf2tp1.setStyle("-fx-background-color: orangered;");
-					lb10tp1.setText("Gewicht eingeben!");
+				if (!tf2tp1.getText().matches("[1-9]{1}[0-9]{1}[0-9]{0,1}")) { // von 10-999
+					tf2tp1.setStyle("-fx-background-color: khaki;");
+					lb10tp1.setText("Bitte Gewichtsangabe machen (min. 10).");
 				} else {
 					tf2tp1.setStyle("-fx-background-color: white;");
 					lb10tp1.setText("");
@@ -737,12 +737,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 		// CHECK SCHUHGRÖSSE
-		tf3tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+		tf3tp1.focusedProperty().addListener((observable, oldValue, newValue) -> { // 1-99
 
 			if (observable != null) {
-				if (!tf3tp1.getText().matches("[0-9]*")) {
-					tf3tp1.setStyle("-fx-background-color: orangered;");
-					lb11tp1.setText("Schuhgrösse");
+				if (!tf3tp1.getText().matches("[1-9]{1}[0-9]{0,1}")) {
+					tf3tp1.setStyle("-fx-background-color: khaki;");
+					lb11tp1.setText("Bitte Schuhgrösse angeben.");
 				} else {
 					tf3tp1.setStyle("-fx-background-color: white;");
 					lb11tp1.setText("");

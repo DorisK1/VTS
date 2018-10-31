@@ -16,7 +16,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	Ski sk = new Ski();
 	Snowboard sb = new Snowboard();
 	GridPane gridPanetp1 = new GridPane();
-	// LB
+	// LB 
 	Label lb1 = new Label("Kategorienummer");
 	Label lb2 = new Label("Produktname");
 	Label lb3 = new Label("Typ");
@@ -85,7 +85,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
 			if (observable != null) {
 				if (!tf1.getText().matches("[0-9]*")) {
-					tf1.setStyle("-fx-background-color: orangered;");
+					tf1.setStyle("-fx-background-color: khaki;");
 					lb8.setText("Falsche Eingabe - nur Zahlen!");
 				} else {
 					tf1.setStyle("-fx-background-color: white;");
@@ -97,7 +97,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf2.focusedProperty().addListener((observable, oldValue, newValue) -> { // Produktname
 			if (observable != null) {
 				if (!tf2.getText().matches("[a-zA-z ]*")) {
-					tf2.setStyle("-fx-background-color: orangered;");
+					tf2.setStyle("-fx-background-color: khaki;");
 					lb9.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf2.setStyle("-fx-background-color: white;");
@@ -109,7 +109,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Typ
 			if (observable != null) {
 				if (!tf3.getText().matches("[a-zA-z ]*")) {
-					tf3.setStyle("-fx-background-color: orangered;");
+					tf3.setStyle("-fx-background-color: khaki;");
 					lb10.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf3.setStyle("-fx-background-color: white;");
@@ -121,7 +121,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf4.focusedProperty().addListener((observable, oldValue, newValue) -> { // Bildpfad
 			if (observable != null) {
 				if (!tf4.getText().matches("[a-zA-z.\\:]*")) {
-					tf4.setStyle("-fx-background-color: orangered;");
+					tf4.setStyle("-fx-background-color: khaki;");
 					lb11.setText("Falsche Eingabe - nur Buchstaben und Sonderzeichen ':' '.' '\'!");
 				} else {
 					tf4.setStyle("-fx-background-color: white;");
@@ -133,7 +133,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf5.focusedProperty().addListener((observable, oldValue, newValue) -> { // RegalNr
 			if (observable != null) {
 				if (!tf5.getText().matches("[a-zA-z0-9]*")) {
-					tf5.setStyle("-fx-background-color: orangered;");
+					tf5.setStyle("-fx-background-color: khaki;");
 					lb12.setText("Falsche Eingabe - nur Buchstaben und Zahlen!");
 				} else {
 					tf5.setStyle("-fx-background-color: white;");
@@ -145,7 +145,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf6.focusedProperty().addListener((observable, oldValue, newValue) -> { // Tagespreis
 			if (observable != null) {
 				if (!tf6.getText().matches("[0-9.]*")) {
-					tf6.setStyle("-fx-background-color: orangered;");
+					tf6.setStyle("-fx-background-color: khaki;");
 					lb13.setText("Falsche Eingabe - nur Ganz- und Gleitkommazahlen!");
 				} else {
 					tf6.setStyle("-fx-background-color: white;");
@@ -157,7 +157,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf7.focusedProperty().addListener((observable, oldValue, newValue) -> { // Farbe
 			if (observable != null) {
 				if (!tf7.getText().matches("[a-zA-Z]*")) {
-					tf7.setStyle("-fx-background-color: orangered;");
+					tf7.setStyle("-fx-background-color: khaki;");
 					lb14.setText("Falsche Eingabe - nur Buchstaben!");
 				} else {
 					tf7.setStyle("-fx-background-color: white;");
