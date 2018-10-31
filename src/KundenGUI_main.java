@@ -124,7 +124,7 @@ public class KundenGUI_main extends Application {
 		bt1.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt1.setBorder(new Border(
 				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		// Achtung: mit Hintergrundfarbe sieht man anklicken nicht mehr
+			// Achtung: mit Hintergrundfarbe sieht man anklicken nicht mehr
 		Button bt2 = new Button("SNOWBOARD");
 		bt2.setPrefSize(150, 60);
 		bt2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));

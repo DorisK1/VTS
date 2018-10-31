@@ -97,9 +97,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	ToggleGroup grouptp2 = new ToggleGroup();
 	// set Radiobuttons
 	VBox vb3tp2 = new VBox();
-	Label lb6tp2 = new Label();
-	Label lb7tp2 = new Label();
-	Label lb8tp2 = new Label();
+	Label lb6tp2 = new Label(); //preis
+	Label lb7tp2 = new Label(); //preis
+	Label lb8tp2 = new Label(); //preis
+	Label lb9tp2 = new Label(); //abstand
+	Label lb10tp2 = new Label(); //abstand
+	Label lb11tp2 = new Label(); //abstand
+	
 	// TP3
 	VBox vb1tp3 = new VBox();
 	GridPane gridPanetp3 = new GridPane();
@@ -610,8 +614,11 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		rb3tp2.setToggleGroup(grouptp2);
 		lb2tp2.setText(selpickupDate.toString());
 		lb3tp2.setText(selreturnDate.toString());
+		lb9tp2.setText(" ");
+		lb10tp2.setText(" ");
+		lb11tp2.setText(" ");
 		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); // Datumsanzeige
-		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, rb2tp2, lb7tp2, rb3tp2, lb8tp2);
+		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, lb9tp2, rb2tp2, lb7tp2, lb10tp2, rb3tp2, lb8tp2, lb11tp2); //rb + preis
 
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
@@ -879,14 +886,17 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			imageView3.setFitWidth(100);
 			rb3tp2.setGraphic(imageView3);
 
-		} else {
+		} else { 
 			Datenbank.getSnowboard(i);
 			rb1tp2.setText(Datenbank.getSnowboard(i).get(0).getSnowboardProduktname());
-			lb6tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis() + " pro Tag");
+			rb1tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb6tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb2tp2.setText(Datenbank.getSnowboard(i).get(1).getSnowboardProduktname());
-			lb7tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis() + " pro Tag");
+			rb2tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb7tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb3tp2.setText(Datenbank.getSnowboard(i).get(2).getSnowboardProduktname());
-			lb8tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis() + " pro Tag");
+			rb3tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb8tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 
 			URI uri1 = Paths.get(Datenbank.getSnowboard(i).get(0).getSnowboardBildpfad()).toUri();
 			ImageView imageView1 = new ImageView(uri1.toString());
