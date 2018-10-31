@@ -9,7 +9,7 @@ public class Kunde {
 	private String strasse;
 	private String hausNr;
 	private String wohnort;
-	private String plz;
+	private String plz; 
 	private String land;
 	private int alter;
 	private String pistenPraef;

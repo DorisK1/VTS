@@ -38,15 +38,15 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	// OBJEKTE
 	Kunde k = new Kunde();
 	Ski sk = new Ski();
-	SkiFX skfx = new SkiFX(); 
+	SkiFX skfx = new SkiFX();
 	Snowboard sb = new Snowboard();
-	Kreditkarte kk = new Kreditkarte(); 
+	Kreditkarte kk = new Kreditkarte();
 	// SUCHE Kundennummer
 	Label lb1 = new Label("Falls Sie bereits eine Kundennummer haben, bitte hier eingeben: ");
 	Label lb2 = new Label();
 	TextField tf1 = new TextField();
 	HBox hb1 = new HBox();
-	VBox vb1 = new VBox(); 
+	VBox vb1 = new VBox();
 	Button bt1 = new Button("Suche");
 	Boolean b = false;
 	// ACCORDION
@@ -97,13 +97,13 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	ToggleGroup grouptp2 = new ToggleGroup();
 	// set Radiobuttons
 	VBox vb3tp2 = new VBox();
-	Label lb6tp2 = new Label(); //preis
-	Label lb7tp2 = new Label(); //preis
-	Label lb8tp2 = new Label(); //preis
-	Label lb9tp2 = new Label(); //abstand
-	Label lb10tp2 = new Label(); //abstand
-	Label lb11tp2 = new Label(); //abstand
-	
+	Label lb6tp2 = new Label(); // preis
+	Label lb7tp2 = new Label(); // preis
+	Label lb8tp2 = new Label(); // preis
+	Label lb9tp2 = new Label(); // abstand
+	Label lb10tp2 = new Label(); // abstand
+	Label lb11tp2 = new Label(); // abstand
+
 	// TP3
 	VBox vb1tp3 = new VBox();
 	GridPane gridPanetp3 = new GridPane();
@@ -139,7 +139,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb15tp3 = new Label("Kreditkartengültigkeit");
 	Label lb16tp3 = new Label("");
-	// Fehleranzeigen 
+	// Fehleranzeigen
 	Label lb17tp3 = new Label("");
 	Label lb18tp3 = new Label("");
 	Label lb19tp3 = new Label("");
@@ -154,7 +154,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb28tp3 = new Label("");
 	Label lb29tp3 = new Label("");
 
-	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) { 
+	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) {
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -170,9 +170,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		bt1.setOnAction(gd -> {
 			System.out.println("Kundennummersuche");
 			if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
-				lb2.setText("Kundennummer gefunden! Guten Tag " 
-			+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname() 
-			+ " " + Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname() + "!");
+				lb2.setText("Kundennummer gefunden! Guten Tag "
+						+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname() + " "
+						+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname() + "!");
 				tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
 				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
 				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
@@ -185,7 +185,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 3) {
 					cob1tp3.setValue("divers");
 				}
-				
+
 				tf2tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname());
 				tf3tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname());
 				tf4tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getTelefonNr());
@@ -230,80 +230,80 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		btOk.addEventFilter(ActionEvent.ACTION, event -> {
 			if (!isInputValid()) {
 				event.consume();
-				
+
 			}
-			//getDialogPane().isDisable();
+			// getDialogPane().isDisable();
 		});
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
 					try {
-							// Kundenobjekt anlegen NUR wenn NEUKUNDE
-							if (b == false) { // = NEUKUNDE
-								// TP1 TF INPUT abfragen und
-								k.setAlter(Integer.parseInt(tf1tp1.getText()));
-								k.setGewicht(Integer.parseInt(tf2tp1.getText()));
-								k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
-								k.setTechnik(cob1tp1.getSelectionModel().getSelectedItem());
-								k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
-								k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
-								// wenn keine Angabe dann by default false!
-								k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
-								// TP3 TF Input abfragen
-								if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {
-									k.setAnrede(1);
-								} else if (cob1tp3.getSelectionModel().getSelectedItem().equals("Herr")) {
-									k.setAnrede(2);
-								} else
-									k.setAnrede(3);
-								k.setVorname(tf2tp3.getText());
-								k.setNachname(tf3tp3.getText());
-								k.setTelefonNr(tf4tp3.getText());
-								k.setStrasse(tf5tp3.getText());
-								k.setHausNr(tf6tp3.getText());
-								k.setWohnort(tf7tp3.getText());
-								k.setPlz(tf8tp3.getText());
-								k.setLand(tf9tp3.getText());
-								Datenbank.postKunde(k); // Kunde in DB speichern
+						// Kundenobjekt anlegen NUR wenn NEUKUNDE
+						if (b == false) { // = NEUKUNDE
+							// TP1 TF INPUT abfragen und
+							k.setAlter(Integer.parseInt(tf1tp1.getText()));
+							k.setGewicht(Integer.parseInt(tf2tp1.getText()));
+							k.setSchuhgroesse(Integer.parseInt(tf3tp1.getText()));
+							k.setTechnik(cob1tp1.getSelectionModel().getSelectedItem());
+							k.setPistenPraef(cob2tp1.getSelectionModel().getSelectedItem());
+							k.setBeinstellung(Boolean.parseBoolean(cob3tp1.getSelectionModel().getSelectedItem()));
+							// wenn keine Angabe dann by default false!
+							k.setBindungstyp(Boolean.parseBoolean(cob4tp1.getSelectionModel().getSelectedItem()));
+							// TP3 TF Input abfragen
+							if (cob1tp3.getSelectionModel().getSelectedItem().equals("Frau")) {
+								k.setAnrede(1);
+							} else if (cob1tp3.getSelectionModel().getSelectedItem().equals("Herr")) {
+								k.setAnrede(2);
+							} else
+								k.setAnrede(3);
+							k.setVorname(tf2tp3.getText());
+							k.setNachname(tf3tp3.getText());
+							k.setTelefonNr(tf4tp3.getText());
+							k.setStrasse(tf5tp3.getText());
+							k.setHausNr(tf6tp3.getText());
+							k.setWohnort(tf7tp3.getText());
+							k.setPlz(tf8tp3.getText());
+							k.setLand(tf9tp3.getText());
+							Datenbank.postKunde(k); // Kunde in DB speichern
 
-								// Kreditkarteninformationen
-								kk.setKundenNr(k.getKundenNr());
-								kk.setKreditkartenNr(tf10tp3.getText());
-								kk.setKreditkartenName(tf11tp3.getText());
-								kk.setInhaberName(tf12tp3.getText());
-								kk.setPruefzahl(Integer.parseInt(tf13tp3.getText()));
-								kk.setGueltigkeit(tf14tp3.getText());
-								Datenbank.postKreditkarte(kk); // Kreditkarteninformationen in DB speichern
+							// Kreditkarteninformationen
+							kk.setKundenNr(k.getKundenNr());
+							kk.setKreditkartenNr(tf10tp3.getText());
+							kk.setKreditkartenName(tf11tp3.getText());
+							kk.setInhaberName(tf12tp3.getText());
+							kk.setPruefzahl(Integer.parseInt(tf13tp3.getText()));
+							kk.setGueltigkeit(tf14tp3.getText());
+							Datenbank.postKreditkarte(kk); // Kreditkarteninformationen in DB speichern
 
-								// Abfragen
-								Datenbank.getKunden(); // Ausgabe aller Kunden in Konsole zur Überprüfung
-								Datenbank.getKreditkarten(); // Ausgabe aller KK in Konsole zur Überprüfung
+							// Abfragen
+							Datenbank.getKunden(); // Ausgabe aller Kunden in Konsole zur Überprüfung
+							Datenbank.getKreditkarten(); // Ausgabe aller KK in Konsole zur Überprüfung
 
-								// Kundennummer NEU
-								a.setKundenNr(k.getKundenNr());
-							} else {
-								// Kundennummer bereits vorhanden
-								a.setKundenNr(Integer.parseInt(tf1.getText()));
-							}
+							// Kundennummer NEU
+							a.setKundenNr(k.getKundenNr());
+						} else {
+							// Kundennummer bereits vorhanden
+							a.setKundenNr(Integer.parseInt(tf1.getText()));
+						}
 
-							// Ausleihe Obj anlegen - für NEU- und Bestandskunden
-							a.setKaution(200); // zuerst immer 200 - kann sich später noch ändern
-							a.setNachzahlung(0); // zuerst im 0 - kann sich später noch ändern
-							a.setGesamtpreis(a.getMietpreis() + a.getKaution() + a.getNachzahlung());
+						// Ausleihe Obj anlegen - für NEU- und Bestandskunden
+						a.setKaution(200); // zuerst immer 200 - kann sich später noch ändern
+						a.setNachzahlung(0); // zuerst im 0 - kann sich später noch ändern
+						a.setGesamtpreis(a.getMietpreis() + a.getKaution() + a.getNachzahlung());
 
-							// Ausleihe in DB anlegen und holen
-							Datenbank.postAusleihe(a); // Ausleihe in der Datenbank speichern
-							Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen - Falsch?
-							Datenbank.getAusleihen(); // alle Ausleihen anzeigen
+						// Ausleihe in DB anlegen und holen
+						Datenbank.postAusleihe(a); // Ausleihe in der Datenbank speichern
+						Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen - Falsch?
+						Datenbank.getAusleihen(); // alle Ausleihen anzeigen
 
-							new KundenGUI_Dialog2(a.getAbholNr(), a.getKundenNr()).showAndWait(); // nächsten Dialog öffnen
+						new KundenGUI_Dialog2(a.getAbholNr(), a.getKundenNr()).showAndWait(); // nächsten Dialog öffnen
 
-						} catch (IOException e) {
-							e.printStackTrace();
-						
-					} else
-						System.out.println("FEHLERHAFTE EINGABE");
+					} catch (IOException e) {
+						e.printStackTrace();
+
+					}
+
 				return null;
 			}
 
@@ -314,27 +314,23 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
 
 		Boolean b = false;
-		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0) &&
-			!(tf2tp1.getText() == null || tf2tp1.getText().length() == 0) &&
-			!(tf3tp1.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(cob1tp1.getValue() == null) &&
-			!(cob2tp1.getValue() == null) &&
-			(rb1tp2.isSelected() || rb2tp2.isSelected() || rb3tp2.isSelected()) &&
-			!(cob1tp3.getValue() == null) &&
-			!(tf2tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf3tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
-			!(tf4tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
-			!(tf5tp3.getText() == null || tf3tp1.getText().length() == 0) &&	
-			!(tf6tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf7tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf8tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf9tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf10tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf11tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf12tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf13tp3.getText() == null || tf3tp1.getText().length() == 0) &&
-			!(tf14tp3.getText() == null || tf3tp1.getText().length() == 0)
-				) { 
+		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)
+				&& !(tf2tp1.getText() == null || tf2tp1.getText().length() == 0)
+				&& !(tf3tp1.getText() == null || tf3tp1.getText().length() == 0) && !(cob1tp1.getValue() == null)
+				&& !(cob2tp1.getValue() == null) && (rb1tp2.isSelected() || rb2tp2.isSelected() || rb3tp2.isSelected())
+				&& !(cob1tp3.getValue() == null) && !(tf2tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf3tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf4tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf5tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf6tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf7tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf8tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf9tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf10tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf11tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf12tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf13tp3.getText() == null || tf3tp1.getText().length() == 0)
+				&& !(tf14tp3.getText() == null || tf3tp1.getText().length() == 0)) {
 			b = true;
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -416,8 +412,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf13tp3, 1, 12);
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
-		
-		//tf13tp3.setPromptText("999");
+
+		// tf13tp3.setPromptText("999");
 
 		// Validation user input - Textfelder Kundendaten
 
@@ -567,7 +563,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkprüf
 
 			if (observable != null) {
-				if (!tf13tp3.getText().matches("[0-9]{3}")) { //genau 3 Stellen
+				if (!tf13tp3.getText().matches("[0-9]{3}")) { // genau 3 Stellen
 					tf13tp3.setStyle("-fx-background-color: khaki;");
 					lb28tp3.setText("Bitte 3-stellige Kartenprüfnummer eingeben.");
 				} else {
@@ -618,7 +614,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		lb10tp2.setText(" ");
 		lb11tp2.setText(" ");
 		hb1tp2.getChildren().addAll(lb4tp2, lb2tp2, lb5tp2, lb3tp2); // Datumsanzeige
-		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, lb9tp2, rb2tp2, lb7tp2, lb10tp2, rb3tp2, lb8tp2, lb11tp2); //rb + preis
+		vb1tp2.getChildren().addAll(rb1tp2, lb6tp2, lb9tp2, rb2tp2, lb7tp2, lb10tp2, rb3tp2, lb8tp2, lb11tp2); // rb +
+																												// preis
 
 		// BORDERPANE
 		BorderPane borderPanetp2 = new BorderPane();
@@ -641,6 +638,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					if (s.equals("Ski")) {
 						a.setSkiNr(Datenbank.getSki(rb1tp2.getText())); // Auswahl ins Ausleihe-Obj speichern
 					} else {
+						a.setSkiNr(0);
 						a.setSnowboardNr(Datenbank.getNewSnowboard(rb1tp2.getText()).getSnowboardNr());
 					}
 
@@ -651,6 +649,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					if (s.equals("Ski")) {
 						a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
 					} else {
+						a.setSkiNr(0);
 						a.setSnowboardNr(Datenbank.getNewSnowboard(rb2tp2.getText()).getSnowboardNr());
 					}
 					produktname = rb2tp2.getText();
@@ -660,6 +659,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					if (s.equals("Ski")) {
 						a.setSkiNr(Datenbank.getSki(rb3tp2.getText()));
 					} else {
+						a.setSkiNr(0);
 						a.setSnowboardNr(Datenbank.getNewSnowboard(rb3tp2.getText()).getSnowboardNr());
 					}
 					produktname = rb3tp2.getText();
@@ -860,13 +860,16 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			Datenbank.getSki(i);
 			rb1tp2.setText(Datenbank.getSki(i).get(0).getSkiProduktname());
 			rb1tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb6tp2.setText(" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb6tp2.setText(
+					" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb2tp2.setText(Datenbank.getSki(i).get(1).getSkiProduktname());
 			rb2tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb7tp2.setText(" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb7tp2.setText(
+					" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb3tp2.setText(Datenbank.getSki(i).get(2).getSkiProduktname());
 			rb3tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb8tp2.setText(" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb8tp2.setText(
+					" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 
 			URI uri1 = Paths.get(Datenbank.getSki(i).get(0).getSkiBildpfad()).toUri();
 			ImageView imageView1 = new ImageView(uri1.toString());
@@ -886,17 +889,20 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			imageView3.setFitWidth(100);
 			rb3tp2.setGraphic(imageView3);
 
-		} else { 
+		} else {
 			Datenbank.getSnowboard(i);
 			rb1tp2.setText(Datenbank.getSnowboard(i).get(0).getSnowboardProduktname());
 			rb1tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb6tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb6tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(0).getTagespreis()
+					+ " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb2tp2.setText(Datenbank.getSnowboard(i).get(1).getSnowboardProduktname());
 			rb2tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb7tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb7tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(1).getTagespreis()
+					+ " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb3tp2.setText(Datenbank.getSnowboard(i).get(2).getSnowboardProduktname());
 			rb3tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
-			lb8tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
+			lb8tp2.setText(" für EUR " + Datenbank.getSnowboard(i).get(2).getTagespreis()
+					+ " pro Tag (zzgl. Kaution EUR 200.-)");
 
 			URI uri1 = Paths.get(Datenbank.getSnowboard(i).get(0).getSnowboardBildpfad()).toUri();
 			ImageView imageView1 = new ImageView(uri1.toString());

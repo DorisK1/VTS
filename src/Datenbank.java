@@ -1060,6 +1060,7 @@ public class Datenbank {
 		try {
 			while (rs.next()) {
 				System.out.println("abholNr = " + rs.getInt("abholNr") + " kundenNr = " + rs.getInt("kundenNr")
+						+ " skiNr = " + rs.getInt("skiNr") + " snowboardNr = " + rs.getInt("snowboardNr")
 						+ " leihstart = " + rs.getDate("leihstart") + " leihende = " + rs.getDate("leihende")
 						+ " gesamtpreis = " + rs.getDouble("gesamtpreis"));
 

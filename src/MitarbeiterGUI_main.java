@@ -38,7 +38,7 @@ public class MitarbeiterGUI_main extends Application {
 	Button bt1 = new Button("Suche");
 
 	// ACCORDION
-	Accordion accordion = new Accordion();
+	Accordion accordion = new Accordion(); 
 	TitledPane tp1 = new TitledPane();
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
@@ -520,21 +520,39 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp3.setPadding(new Insets(5));
 		borderPanetp3.setBottom(lb1tp3);
 		// Columns
-		TableColumn<KundeFX, Integer> customerIdCol = new TableColumn<>("kundenNr");
+		TableColumn<KundeFX, Integer> customerIdCol = new TableColumn<>("KundenNr");
 		customerIdCol.setCellValueFactory(new PropertyValueFactory<>("kundenNr"));
-		customerIdCol.setMinWidth(100);
+		customerIdCol.setMinWidth(70);
 		TableColumn<KundeFX, String> firstNameCol = new TableColumn<>("Vorname");
 		firstNameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));
 		firstNameCol.setMinWidth(100);
 		TableColumn<KundeFX, String> lastNameCol = new TableColumn<>("Nachname");
 		lastNameCol.setCellValueFactory(new PropertyValueFactory<>("nachname"));
 		lastNameCol.setMinWidth(100);
+		TableColumn<KundeFX, String> ortCol = new TableColumn<>("Wohnort");
+		ortCol.setCellValueFactory(new PropertyValueFactory<>("wohnort"));
+		ortCol.setMinWidth(50);
+		TableColumn<KundeFX, String> landCol = new TableColumn<>("Land");
+		landCol.setCellValueFactory(new PropertyValueFactory<>("land"));
+		landCol.setMinWidth(50);
+		TableColumn<KundeFX, String> phoneCol = new TableColumn<>("TelefonNr");
+		phoneCol.setCellValueFactory(new PropertyValueFactory<>("telefonNr"));
+		phoneCol.setMinWidth(100);
 		TableColumn<KundeFX, String> ageCol = new TableColumn<>("Alter");
 		ageCol.setCellValueFactory(new PropertyValueFactory<>("alter"));
-		ageCol.setMinWidth(200);
+		ageCol.setMinWidth(50);
 		TableColumn<KundeFX, Integer> weightCol = new TableColumn<>("Gewicht");
 		weightCol.setCellValueFactory(new PropertyValueFactory<>("gewicht"));
-		weightCol.setMinWidth(70);
+		weightCol.setMinWidth(50);
+		TableColumn<KundeFX, Double> sizeCol = new TableColumn<>("Schuhgroesse");
+		sizeCol.setCellValueFactory(new PropertyValueFactory<>("schuhgroesse"));
+		sizeCol.setMinWidth(50);
+		TableColumn<KundeFX, String> pisteCol = new TableColumn<>("PistenPraef");
+		pisteCol.setCellValueFactory(new PropertyValueFactory<>("pistenPraef"));
+		pisteCol.setMinWidth(50);
+//		TableColumn<KundeFX, Boolean> beinCol = new TableColumn<>("Beinstellung");
+//		beinCol.setCellValueFactory(new PropertyValueFactory<>("beinstellung"));
+//		beinCol.setMinWidth(70);
 
 		TableView<KundeFX> table = new TableView<>();
 		ObservableList<KundeFX> kundenFXListe = FXCollections.observableArrayList();
@@ -549,7 +567,8 @@ public class MitarbeiterGUI_main extends Application {
 		}
 
 		table.setItems(kundenFXListe);
-		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ageCol, weightCol);
+		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ortCol, landCol, 
+				phoneCol, ageCol, weightCol, sizeCol, pisteCol);
 
 		borderPanetp3.setCenter(table);
 		tp3.setContent(borderPanetp3);
