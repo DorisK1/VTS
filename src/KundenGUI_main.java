@@ -25,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -60,26 +61,25 @@ public class KundenGUI_main extends Application {
 		// Ausleihe Objekt zur Verspeicherung des Datums
 		Ausleihe a = new Ausleihe();
 
-		// BORDERPANE
+		// BORDERPANE 
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPadding(new Insets(5));
 
 		// BILD
-		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri(); // Bild aus
-																												// Ordner
-																												// holen
+		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\001.jpg").toUri(); 
 		ImageView imageView = new ImageView(uri.toString());
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
 
 		// ÜBERSCHRIFT
 		Label lbl1 = new Label("Willkommen bei Ski- und Snowboardverleih AlpineStar!");
-		lbl1.setFont(Font.font("Verdana", 20));
+		lbl1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
 		// LEIHDATUM
-		Label lbl2 = new Label("\nBitte geben Sie die gewünschte Ausleihdauer an:\n");
-		Label lbl3 = new Label("von: ");
-		Label lbl4 = new Label("bis: ");
+		Label lbl2 = new Label("\nBitte geben Sie die gewünschte Ausleihdauer an:\n" + " ");
+		lbl2.setFont(Font.font("Verdana", 12));
+		Label lbl3 = new Label("VON:   ");
+		Label lbl4 = new Label("BIS:   ");
 
 		// DATEPICKER
 		DatePicker datePicker1 = new DatePicker();
@@ -105,24 +105,32 @@ public class KundenGUI_main extends Application {
 		datePicker2.setDayCellFactory(dayCellFactory);
 		datePicker2.setValue(datePicker1.getValue());
 
-		HBox hb1 = new HBox();
-		hb1.getChildren().addAll(lbl3, datePicker1, lbl4, datePicker2);
+		HBox hb1 = new HBox(); 
+		Label abstand3 = new Label("                 ");
+		hb1.getChildren().addAll(lbl3, datePicker1, abstand3, lbl4, datePicker2);
 
 		// BUTTONS
 		Button bt1 = new Button("SKI");
-		bt1.setPrefSize(120, 60);
+		bt1.setPrefSize(150, 60);
+		bt1.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
 		bt1.setTextFill(Color.BLUE);
 		bt1.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt1.setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		// Achtung: mit Hintergrundfarbe sieht man anklicken nicht mehr?!?
+				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		// Achtung: mit Hintergrundfarbe sieht man anklicken nicht mehr
 		Button bt2 = new Button("SNOWBOARD");
-		bt2.setPrefSize(120, 60);
-		bt2.setTextFill(Color.BLUE);
+		bt2.setPrefSize(150, 60);
+		bt2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+		bt2.setTextFill(Color.BLUE); 
+		bt2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt2.setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+				new BorderStroke(Color.GRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		HBox hb2 = new HBox();
-		hb2.getChildren().addAll(bt1, bt2);
+		
+		// Abstandlabels - sind LEER!
+		Label abstand1 = new Label("                                       ");
+		Label abstand2 = new Label("            ");
+		hb2.getChildren().addAll(abstand1, bt1, abstand2, bt2);
 
 		bt1.setOnAction(gd -> {
 			System.out.println("SKI Button clicked");
@@ -138,6 +146,7 @@ public class KundenGUI_main extends Application {
 			new KundenGUI_Dialog1("Snowboard", datePicker1.getValue(), datePicker2.getValue(), a).showAndWait();
 		});
 
+		
 		// VBOXES
 		VBox vb1 = new VBox();
 		VBox vb2 = new VBox();

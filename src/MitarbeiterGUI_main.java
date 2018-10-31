@@ -35,7 +35,7 @@ public class MitarbeiterGUI_main extends Application {
 
 	// ACCORDION 
 	Accordion accordion = new Accordion(); 
-	TitledPane tp1 = new TitledPane();
+	TitledPane tp1 = new TitledPane(); 
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
 	TitledPane tp4 = new TitledPane();
@@ -308,6 +308,8 @@ public class MitarbeiterGUI_main extends Application {
 		TableColumn<AusleiheFX, Double> gesamtpreisCol = new TableColumn<>("gesamtpreis");
 		gesamtpreisCol.setCellValueFactory(new PropertyValueFactory<>("gesamtpreis"));
 		gesamtpreisCol.setMinWidth(100);
+		
+		
 
 		TableView<AusleiheFX> table = new TableView<>();
 		ObservableList<AusleiheFX> ausleihenFXListe = FXCollections.observableArrayList();
@@ -447,11 +449,13 @@ public class MitarbeiterGUI_main extends Application {
 
 		borderPanetp4.setCenter(table);
 		tp4.setContent(borderPanetp4);
-
+		
+		// NEUEN SKI ANLEGEN
 		bt1tp4.setOnAction(bt -> {
 			System.out.println("Neuen Ski anlegen");
 			String s = "Ski";
 			Optional<Integer> newSki = new MitarbeiterGUI_Dialog1(s).showAndWait(); // Dialog liefert 1 zurück
+			// LISTE für TableView NEU laden!
 			if (newSki.isPresent()) { // ja - weil newSki = 1
 				ArrayList<Ski> skiNrs1 = Datenbank.getSki();
 				skiFXListe.clear();
@@ -462,12 +466,13 @@ public class MitarbeiterGUI_main extends Application {
 				}
 			}
 		});
-
+		
+		// Ski LÖSCHEN
 		bt2tp4.setOnAction(bt -> {
 			SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
 			Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
 			// table.getItems().remove(selectedItem);
-			skiFXListe.remove(selectedItem);
+			skiFXListe.remove(selectedItem); // direkt von der liste löschen - denn bei NEU wird liste ja erneut geladen!
 		});
 	}
 

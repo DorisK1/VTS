@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 
@@ -19,7 +20,7 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 	GridPane gridPane = new GridPane();
 	Label lb1 = new Label("Ihre Abholnummer lautet: ");
 	Label lb1a = new Label(); //Abholnummer
-	Label lb2 = new Label("Rückgabe am: ");
+	Label lb2 = new Label("Rückgabe am: "); 
 	Label lb2a = new Label(); //Rückgabedatum
 	Label lb3 = new Label("Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt");
 
@@ -32,7 +33,10 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 
 		// VBOX
 		vb1.getChildren().addAll(lb1, lb1a, lb2, lb2a);
-
+		// Labeltext Abholnummer
+		lb1a.setFont(Font.font("Verdana", 20));
+		// Labeltext "Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt"
+		lb3.setFont(Font.font("Verdana", 20));
 		// BILD
 		URI uri = Paths.get("C:\\Users\\Doris\\Documents\\WIFI\\PROJEKT_PRUEFUNG\\Bilder\\002.jpg").toUri();
 		ImageView imageView = new ImageView(uri.toString());

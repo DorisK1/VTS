@@ -282,8 +282,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							}
 
 							// Ausleihe Obj anlegen - für NEU- und Bestandskunden
-							a.setKaution(200); // immer 200
-							a.setNachzahlung(0); // kann sich noch ändern
+							a.setKaution(200); // zuerst immer 200 - kann sich später noch ändern
+							a.setNachzahlung(0); // zuerst im 0 - kann sich später noch ändern
 							a.setGesamtpreis(a.getMietpreis() + a.getKaution() + a.getNachzahlung());
 
 							// Ausleihe in DB anlegen und holen
