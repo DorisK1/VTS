@@ -387,7 +387,7 @@ public class MitarbeiterGUI_main extends Application {
 
 		borderPanetp5.setCenter(table1);
 		tp5.setContent(borderPanetp5);
-		
+
 		bt1tp5.setOnAction(bt -> { // Snowboard NEU ANLEGEN
 			System.out.println("Neues Snowboard anlegen");
 			String s = "Snowboard";
@@ -406,24 +406,24 @@ public class MitarbeiterGUI_main extends Application {
 		});
 
 		bt2tp5.setOnAction(bt -> { // Snowboard LÖSCHEN
-			
+
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("WARNUNG!");
 			alert.setContentText("Wollen Sie das Produkt wirklich löschen?");
-			//alert.showAndWait();
+			// alert.showAndWait();
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
-		    Optional<ButtonType> result = alert.showAndWait();
-		    if(result.isPresent() && result.get() == ButtonType.YES) {
-		   
-			
-			SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
-			Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); // LÖSCHEN aus DB
-			// table1.getItems().remove(selectedItem);
-			sbFXListe.remove(selectedItem);// LÖSCHEN aus Anzeige
-			
-		    }
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() == ButtonType.YES) {
+
+				SnowboardFX selectedItem = table1.getSelectionModel().getSelectedItem();
+				Datenbank.deleteSnowboard(table1.getSelectionModel().getSelectedItem().getSnowboardNr()); // LÖSCHEN aus
+																											// DB
+				// table1.getItems().remove(selectedItem);
+				sbFXListe.remove(selectedItem);// LÖSCHEN aus Anzeige
+
+			}
 		});
 
 	}
@@ -492,20 +492,24 @@ public class MitarbeiterGUI_main extends Application {
 		});
 
 		// Ski LÖSCHEN
-		// final Button btOk = (Button)
-		// this.getDialogPane().lookupButton(ButtonType.OK);
+
 		bt2tp4.setOnAction(bt -> {
 			// Pop up Alert - Rückfrage ob man wirklich löschen will
-			Alert alert = new Alert(AlertType.WARNING);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("WARNUNG!");
 			alert.setContentText("Wollen Sie das Produkt wirklich löschen?");
-			alert.showAndWait();
+			alert.getButtonTypes().clear();
+			alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
-			SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
-			Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
-			// table.getItems().remove(selectedItem);
-			skiFXListe.remove(selectedItem); // direkt von der liste löschen - denn bei NEU wird liste ja erneut
-												// geladen!
+			Optional<ButtonType> result = alert.showAndWait();
+			// nur wenn man OK klickt dann wird gelöscht - sonst Abbruch
+			if (result.isPresent() && result.get() == ButtonType.YES) {
+				SkiFX selectedItem = table.getSelectionModel().getSelectedItem();
+				Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
+				// table.getItems().remove(selectedItem); --> falsch
+				// direkt von der liste löschen - denn bei NEU wird liste ja erneut geladen!
+				skiFXListe.remove(selectedItem); 
+			} 
 		});
 
 	}
