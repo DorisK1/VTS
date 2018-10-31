@@ -71,7 +71,7 @@ public class KundenGUI_main extends Application {
 		ImageView imageView = new ImageView(uri.toString());
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
-
+ 
 		// ÜBERSCHRIFT
 		Label lbl1 = new Label("Willkommen bei Ski- und Snowboardverleih AlpineStar!");
 		lbl1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));

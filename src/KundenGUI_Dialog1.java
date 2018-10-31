@@ -29,6 +29,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 
 public class KundenGUI_Dialog1 extends Dialog<Integer> {
@@ -44,7 +46,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb2 = new Label();
 	TextField tf1 = new TextField();
 	HBox hb1 = new HBox();
-	VBox vb1 = new VBox();
+	VBox vb1 = new VBox(); 
 	Button bt1 = new Button("Suche");
 	Boolean b = false;
 	// ACCORDION
@@ -850,11 +852,14 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		if (s.equals("Ski")) {
 			Datenbank.getSki(i);
 			rb1tp2.setText(Datenbank.getSki(i).get(0).getSkiProduktname());
-			lb6tp2.setText(" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag");
+			rb1tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb6tp2.setText(" für EUR " + Datenbank.getSki(i).get(0).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb2tp2.setText(Datenbank.getSki(i).get(1).getSkiProduktname());
-			lb7tp2.setText(" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag");
+			rb2tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb7tp2.setText(" für EUR " + Datenbank.getSki(i).get(1).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 			rb3tp2.setText(Datenbank.getSki(i).get(2).getSkiProduktname());
-			lb8tp2.setText(" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag");
+			rb3tp2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+			lb8tp2.setText(" für EUR " + Datenbank.getSki(i).get(2).getTagespreis() + " pro Tag (zzgl. Kaution EUR 200.-)");
 
 			URI uri1 = Paths.get(Datenbank.getSki(i).get(0).getSkiBildpfad()).toUri();
 			ImageView imageView1 = new ImageView(uri1.toString());
