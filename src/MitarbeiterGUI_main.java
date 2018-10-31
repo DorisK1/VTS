@@ -34,7 +34,7 @@ public class MitarbeiterGUI_main extends Application {
 	Button bt1 = new Button("Suche");
 
 	// ACCORDION 
-	Accordion accordion = new Accordion();
+	Accordion accordion = new Accordion(); 
 	TitledPane tp1 = new TitledPane();
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
@@ -45,6 +45,7 @@ public class MitarbeiterGUI_main extends Application {
 	// TP1
 	VBox vb1tp1 = new VBox();
 	GridPane gridPanetp1 = new GridPane();
+	Button bt1tp1 = new Button("OK");
 	TextField tf1tp1 = new TextField();
 	TextField tf2tp1 = new TextField();
 	TextField tf3tp1 = new TextField();
@@ -57,6 +58,7 @@ public class MitarbeiterGUI_main extends Application {
 	// TP2
 	VBox vb1tp2 = new VBox();
 	GridPane gridPanetp2 = new GridPane();
+	Button bt1tp2 = new Button("OK");
 	TextField tf1tp2 = new TextField();
 	TextField tf2tp2 = new TextField();
 	TextField tf3tp2 = new TextField();
@@ -440,29 +442,6 @@ public class MitarbeiterGUI_main extends Application {
 		}
 		table.setItems(skiFXListe);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-		// nur info wenn änderung in der tableview! --> auskommentieren
-		// table.getSelectionModel().getSelectedItems().addListener(new
-		// ListChangeListener<SkiFX>() {
-		// @SuppressWarnings("unused")
-		// public void onChanged(javafx.collections.ListChangeListener<? extends SkiFX>
-		// c) {
-		// ObservableList<SkiFX> changesList = (ObservableList<SkiFX>) ((Change<?
-		// extends SkiFX>) c).getList();
-		// String s = "";
-		// for (SkiFX sk : changesList) {
-		// // s += sk.getSkiNr() + sk.getSkiKategorieNr();
-		// // lb1tp4.setText(s.substring(0, s.length() - 2));
-		// table.getItems().add(sk);
-		// }
-		// }
-		//
-		// @Override
-		// public void onChanged(Change<? extends SkiFX> c) {
-		// // TODO Auto-generated method stub
-		// }
-		// });
-
 		table.getColumns().addAll(skiNrCol, skiKategorieNrCol, skiProduktnameCol, skiTypCol, regalNrCol, tagespreisCol,
 				farbeCol); // Anzeige OHNE skiBildpfad!!!!
 
@@ -559,8 +538,12 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp2.setPadding(new Insets(5));
 		borderPanetp2.setPrefSize(700, 580);
 		borderPanetp2.setCenter(gridPanetp2);
-
+		borderPanetp2.setBottom(bt1tp2);
 		tp2.setContent(borderPanetp2);
+		
+		bt1tp2.setOnAction(bt -> {
+			tp2.setExpanded(false);
+		});
 
 	}
 
@@ -586,8 +569,12 @@ public class MitarbeiterGUI_main extends Application {
 		borderPanetp1.setPadding(new Insets(5));
 		borderPanetp1.setPrefSize(700, 580);
 		borderPanetp1.setCenter(gridPanetp1);
-
+		borderPanetp1.setBottom(bt1tp1);
 		tp1.setContent(borderPanetp1);
+		
+		bt1tp1.setOnAction(bt -> {
+			tp1.setExpanded(false);
+		});
 
 	}
 
