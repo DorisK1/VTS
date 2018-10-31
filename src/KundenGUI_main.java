@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -109,10 +110,16 @@ public class KundenGUI_main extends Application {
 		Label abstand3 = new Label("                 ");
 		hb1.getChildren().addAll(lbl3, datePicker1, abstand3, lbl4, datePicker2);
 
+		// Schatten
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		
 		// BUTTONS
 		Button bt1 = new Button("SKI");
 		bt1.setPrefSize(150, 60);
 		bt1.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+		bt1.setEffect(ds);
 		bt1.setTextFill(Color.BLUE);
 		bt1.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt1.setBorder(new Border(
@@ -121,6 +128,7 @@ public class KundenGUI_main extends Application {
 		Button bt2 = new Button("SNOWBOARD");
 		bt2.setPrefSize(150, 60);
 		bt2.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+		bt2.setEffect(ds);
 		bt2.setTextFill(Color.BLUE); 
 		bt2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
 		bt2.setBorder(new Border(
@@ -129,7 +137,7 @@ public class KundenGUI_main extends Application {
 		
 		// Abstandlabels - sind LEER!
 		Label abstand1 = new Label("                                       ");
-		Label abstand2 = new Label("            ");
+		Label abstand2 = new Label("         ");
 		hb2.getChildren().addAll(abstand1, bt1, abstand2, bt2);
 
 		bt1.setOnAction(gd -> {
