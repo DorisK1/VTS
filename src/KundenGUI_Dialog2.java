@@ -45,7 +45,7 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		lb2a.setText(Datenbank.getAusleihe(abholNr).getLeihende().toString());
 		lb1.setText("Sehr geehrte/r " + Datenbank.getKunde(kundenNr).getVorname() + " " 
 				+ Datenbank.getKunde(kundenNr).getNachname()
-				+ ", vielen Dank für Buchung! Ihre Abholnummer lautet:   " + " ");
+				+ ", vielen Dank für Ihre Buchung! Ihre Abholnummer lautet:   " + " ");
 		lb5.setText("   Miete: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getMietpreis()) + ".-");
 		lb6.setText("   Kaution: EUR 200.-");
 		lb7.setText("   Gesamtpreis: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getGesamtpreis()));
