@@ -998,7 +998,7 @@ public class Datenbank {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM ausleihen WHERE kundenNr =" + kundenNr);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		try {
 			while (rs.next()) {
@@ -1015,10 +1015,10 @@ public class Datenbank {
 				// a.setSnowboardNr(rs.getInt("snowboardNr"));
 				// a.setLeihstart(rs.getDate("leihstart"));
 				a.setLeihende(rs.getDate("leihende"));
-				// a.setMietpreis(rs.getDouble("mietpreis"));
-				// a.setKaution(rs.getDouble("kaution"));
-				// a.setNachzahlung(rs.getDouble("nachzahlung"));
-				// a.setGesamtpreis(rs.getDouble("gesamtpreis"));
+				a.setMietpreis(rs.getDouble("mietpreis"));
+				a.setKaution(rs.getDouble("kaution"));
+				a.setNachzahlung(rs.getDouble("nachzahlung"));
+				a.setGesamtpreis(rs.getDouble("gesamtpreis"));
 
 			}
 		} catch (SQLException e) {

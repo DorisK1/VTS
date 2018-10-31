@@ -38,7 +38,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Ski sk = new Ski();
 	SkiFX skfx = new SkiFX();
 	Snowboard sb = new Snowboard();
-	Kreditkarte kk = new Kreditkarte();
+	Kreditkarte kk = new Kreditkarte(); 
 	// SUCHE Kundennummer
 	Label lb1 = new Label("Falls Sie bereits eine Kundennummer haben, bitte hier eingeben: ");
 	Label lb2 = new Label();
@@ -291,7 +291,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen - Falsch?
 							Datenbank.getAusleihen(); // alle Ausleihen anzeigen
 
-							new KundenGUI_Dialog2(a.getKundenNr()).showAndWait(); // nächsten Dialog öffnen
+							new KundenGUI_Dialog2(a.getAbholNr(), a.getKundenNr()).showAndWait(); // nächsten Dialog öffnen
 
 						} catch (IOException e) {
 							e.printStackTrace();
