@@ -542,6 +542,7 @@ public class MitarbeiterGUI_main extends Application {
 		tp2.setContent(borderPanetp2);
 		
 		bt1tp2.setOnAction(bt -> {
+			Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()), Integer.parseInt(tf5tp2.getText())); //kaution updaten
 			tp2.setExpanded(false);
 		});
 
