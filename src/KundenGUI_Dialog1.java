@@ -636,6 +636,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 				if (rb1tp2.isSelected()) {
 					if (s.equals("Ski")) {
+						a.setSnowboardNr(0);
 						a.setSkiNr(Datenbank.getSki(rb1tp2.getText())); // Auswahl ins Ausleihe-Obj speichern
 					} else {
 						a.setSkiNr(0);
@@ -647,6 +648,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					System.out.println(rb1tp2.getText() + " gewählt");
 				} else if (rb2tp2.isSelected()) {
 					if (s.equals("Ski")) {
+						a.setSnowboardNr(0);
 						a.setSkiNr(Datenbank.getSki(rb2tp2.getText()));
 					} else {
 						a.setSkiNr(0);
