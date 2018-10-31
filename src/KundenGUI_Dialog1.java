@@ -36,7 +36,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	// OBJEKTE
 	Kunde k = new Kunde();
 	Ski sk = new Ski();
-	SkiFX skfx = new SkiFX();
+	SkiFX skfx = new SkiFX(); 
 	Snowboard sb = new Snowboard();
 	Kreditkarte kk = new Kreditkarte(); 
 	// SUCHE Kundennummer

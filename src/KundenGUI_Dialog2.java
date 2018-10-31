@@ -22,7 +22,7 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 	HBox hb1 = new HBox();
 	HBox hb2 = new HBox();
 	HBox hb3 = new HBox(); // Bild + vbox2
-	GridPane gridPane = new GridPane();
+	//GridPane gridPane = new GridPane();
 	Label lb1 = new Label(); //Abholtext
 	Label lb1a = new Label(); //Abholnummer
 	Label lb2 = new Label("Rückgabe am "); 
@@ -69,10 +69,6 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		
 		vb2.getChildren().addAll(lb5, lb6, lb7, lb8); 
 		hb3.getChildren().addAll(labelBild, vb2);
-		
-		//gridPane
-		
-		
 		
 		// BORDERPANE
 		BorderPane borderPane = new BorderPane();
