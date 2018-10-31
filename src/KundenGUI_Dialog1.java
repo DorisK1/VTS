@@ -133,7 +133,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb14tp3 = new Label("Kreditkartenprüfnummer");
 	Label lb15tp3 = new Label("Kreditkartengültigkeit");
 	Label lb16tp3 = new Label("");
-	// Fehleranzeigen ff
+	// Fehleranzeigen 
 	Label lb17tp3 = new Label("");
 	Label lb18tp3 = new Label("");
 	Label lb19tp3 = new Label("");
@@ -148,8 +148,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	Label lb28tp3 = new Label("");
 	Label lb29tp3 = new Label("");
 
-	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) { // AUFBAU des
-																										// Dialogs
+	public KundenGUI_Dialog1(String s, LocalDate selpickupDate, LocalDate selreturnDate, Ausleihe a) { 
 		super();
 		this.setTitle("DIALOG 1");
 		this.setHeaderText("Details zu ");
@@ -165,7 +164,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		bt1.setOnAction(gd -> {
 			System.out.println("Kundennummersuche");
 			if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
-				lb2.setText("Kundennummer gefunden!");
+				lb2.setText("Kundennummer gefunden! Guten Tag " 
+			+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname() 
+			+ " " + Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname() + "!");
 				tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
 				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
 				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
@@ -231,8 +232,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					//if (isInputValid()) { // prüft ob alle Felder befüllt sind - Komboboxen?
-						try {
+					try {
 							// Kundenobjekt anlegen NUR wenn NEUKUNDE
 							if (b == false) { // = NEUKUNDE
 								// TP1 TF INPUT abfragen und

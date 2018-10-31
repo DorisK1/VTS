@@ -1671,7 +1671,7 @@ public class Datenbank {
 
 	}
 
-	public static void updateAusleihe(int abholNr, int kaution) { // aktualisiert eine Ausleihe mit neuem Wert für Kaution
+	public static void updateAusleiheKaution(int abholNr, double kaution) { // aktualisiert eine Ausleihe mit neuem Wert für Kaution
 		// der Nachzahlung bei verspäteter Rückgabe
 
 		System.out.println("Ausleihe ändern");

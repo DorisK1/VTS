@@ -21,18 +21,19 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 	VBox vb2 = new VBox(); //Produktinfos
 	HBox hb1 = new HBox();
 	HBox hb2 = new HBox();
+	HBox hb3 = new HBox(); // Bild + vbox2
 	GridPane gridPane = new GridPane();
-	Label lb1 = new Label();
+	Label lb1 = new Label(); //Abholtext
 	Label lb1a = new Label(); //Abholnummer
 	Label lb2 = new Label("Rückgabe am "); 
 	Label lb2a = new Label(); //Rückgabedatum
 	Label lb2b = new Label(" bitte bis spätestens 18 Uhr!");
-	Label lb3 = new Label("Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt");
+	Label lb3 = new Label("Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt!");
 	Label lb4 = new Label("Zahlungsinformationen");
-	Label lb5 = new Label();
-	Label lb6 = new Label();
-	Label lb7 = new Label();
-	Label lb8 = new Label();
+	Label lb5 = new Label(); // Miete
+	Label lb6 = new Label(); // Kaution
+	Label lb7 = new Label(); // Gesamtpreis
+	Label lb8 = new Label(); // Kundennummer
 	
 	
 
@@ -45,14 +46,15 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		lb1.setText("Sehr geehrte/r " + Datenbank.getKunde(kundenNr).getVorname() + " " 
 				+ Datenbank.getKunde(kundenNr).getNachname()
 				+ ", vielen Dank für Buchung! Ihre Abholnummer lautet:   " + " ");
-		lb5.setText("Miete: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getMietpreis()) + ".-");
-		lb6.setText("Kaution: EUR 200.-");
-		lb7.setText("Gesamtpreis: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getGesamtpreis()));
+		lb5.setText("   Miete: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getMietpreis()) + ".-");
+		lb6.setText("   Kaution: EUR 200.-");
+		lb7.setText("   Gesamtpreis: " + "EUR " + Double.toString(Datenbank.getAusleihe(abholNr).getGesamtpreis()));
+		lb8.setText("   Kundennummer: " + Integer.toString(kundenNr));
 
 		// BOXEN
-		hb1.getChildren().addAll(lb2, lb2a, lb2b);
-		hb2.getChildren().addAll(lb1, lb1a);
-		vb1.getChildren().addAll(hb2, hb1);
+		hb1.getChildren().addAll(lb2, lb2a, lb2b); //Rückgabedatum
+		hb2.getChildren().addAll(lb1, lb1a); // Abholdaten
+		vb1.getChildren().addAll(hb2, hb1); 
 		// Labeltext Abholnummer
 		lb1a.setFont(Font.font("Verdana", 20));
 		// Labeltext "Ihr AlpineStar Team wünscht Ihnen viel Spaß mit Ihrem Produkt"
@@ -65,7 +67,9 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		Label labelBild = new Label();
 		labelBild.setGraphic(imageView);
 		
-		vb2.getChildren().addAll(labelBild, lb5, lb6, lb7);
+		vb2.getChildren().addAll(lb5, lb6, lb7, lb8); 
+		hb3.getChildren().addAll(labelBild, vb2);
+		
 		//gridPane
 		
 		
@@ -76,7 +80,7 @@ public class KundenGUI_Dialog2 extends Dialog<ButtonType> {
 		borderPane.setPrefSize(700, 400);
 		borderPane.setTop(vb1);
 		//borderPane.setCenter();
-		borderPane.setLeft(vb2);
+		borderPane.setLeft(hb3);
 		borderPane.setBottom(lb3);
 
 		this.getDialogPane().setContent(borderPane);

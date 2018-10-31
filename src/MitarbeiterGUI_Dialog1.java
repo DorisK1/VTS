@@ -24,7 +24,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	Label lb5 = new Label("RegalNr");
 	Label lb6 = new Label("Tagespreis");
 	Label lb7 = new Label("Farbe");
-	// input validation messages
+	// input validation messages 
 	Label lb8 = new Label();
 	Label lb9 = new Label();
 	Label lb10 = new Label();

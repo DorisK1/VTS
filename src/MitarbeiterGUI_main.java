@@ -30,12 +30,12 @@ public class MitarbeiterGUI_main extends Application {
 	VBox vb1 = new VBox();
 	Label lb1 = new Label("Bitte Abholnummer eingeben:");
 	Label lb2 = new Label(); // input validation message
-	TextField tf1 = new TextField();
+	TextField tf1 = new TextField(); 
 	Button bt1 = new Button("Suche");
 
 	// ACCORDION 
 	Accordion accordion = new Accordion(); 
-	TitledPane tp1 = new TitledPane(); 
+	TitledPane tp1 = new TitledPane();  
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
 	TitledPane tp4 = new TitledPane();
@@ -112,6 +112,9 @@ public class MitarbeiterGUI_main extends Application {
 		displayTp4();
 		displayTp5();
 		displayTp6();
+		
+		accordion.setExpandedPane(tp6); // Ausleihen werden als ersten angezeigt
+		
 		// Input validation der Abholnummer  - nur Zahlen erlaubt
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { 
 			if (observable != null) {
@@ -547,7 +550,7 @@ public class MitarbeiterGUI_main extends Application {
 		tp2.setContent(borderPanetp2);
 		
 		bt1tp2.setOnAction(bt -> {
-			Datenbank.updateAusleihe(Integer.parseInt(tf1.getText()), Integer.parseInt(tf5tp2.getText())); //kaution updaten
+			Datenbank.updateAusleiheKaution(Integer.parseInt(tf1.getText()), Double.parseDouble(tf5tp2.getText())); //kaution updaten
 			tp2.setExpanded(false);
 		});
 
