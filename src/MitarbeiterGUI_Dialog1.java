@@ -23,7 +23,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	Label lb4 = new Label("Bildpfad");
 	Label lb5 = new Label("RegalNr");
 	Label lb6 = new Label("Tagespreis");
-	Label lb7 = new Label("Farbe");
+	Label lb7 = new Label("Farbe"); 
 	// input validation messages 
 	Label lb8 = new Label();
 	Label lb9 = new Label();
@@ -84,9 +84,9 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		// Input validation
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
 			if (observable != null) {
-				if (!tf1.getText().matches("[0-9]*")) {
+				if (!tf1.getText().matches("[1-3]")) {
 					tf1.setStyle("-fx-background-color: khaki;");
-					lb8.setText("Falsche Eingabe - nur Zahlen!");
+					lb8.setText("Bitte Kategorie 1, 2 oder 3 wählen!");
 				} else {
 					tf1.setStyle("-fx-background-color: white;");
 					lb8.setText("");
