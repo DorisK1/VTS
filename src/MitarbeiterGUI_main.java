@@ -286,11 +286,11 @@ public class MitarbeiterGUI_main extends Application {
 
 	private double calcNachzahlung(LocalDate selreturnDate, int abholNr) { // berechnet Nachzahlung wenn das Produkt
 																			// nach dem Leihende retourniert wird
-
+		
 		Period period = Period.between(selreturnDate, LocalDate.now());
 		int tage = period.getDays();
 		double nachzahlung = 0;
-		if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
+		if (Datenbank.getAusleihe(abholNr).getSkiNr() > 0) {
 			nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
 			System.out.println("Tage: " + tage);
 			System.out.println("Nachzahlung: " + nachzahlung);

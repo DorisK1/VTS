@@ -13,10 +13,6 @@ public class Datenbank {
 	public static Statement stmt = null;
 	public static Connection conn = null;
 	public static PreparedStatement pstmt = null;
-	// Kunde k = new Kunde();
-	// Ausleihe a = new Ausleihe();
-	// Ski sk = new Ski();
-	// Snowboard sb = new Snowboard();
 
 	public static void createTables() { // erstellt Tabellen in der Datenbank
 
@@ -663,7 +659,7 @@ public class Datenbank {
 
 	}
 
-	public static void insertCreditCardRows(Kreditkarte kk) throws SQLException {
+	public static void insertCreditCardRows(Kreditkarte kk) throws SQLException { // legt Kreditkarteninformationen an
 
 		conn = DriverManager.getConnection(connString);
 		stmt = conn.createStatement();
@@ -932,7 +928,7 @@ public class Datenbank {
 
 	}
 
-	public static Ausleihe getAusleihe(int abholNr) { // FALSCH?!? holt sich Ausleihe über die Abholnummer
+	public static Ausleihe getAusleihe(int abholNr) { // holt sich Ausleihe über die Abholnummer
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -952,10 +948,7 @@ public class Datenbank {
 				// AUSLEIHE OBJ ANLEGeN aus DB
 				a.setAbholNr(rs.getInt("abholNr"));
 				a.setKundenNr(rs.getInt("kundenNr"));
-				// a.setSkiNr(rs.getInt("skiNr") > 0 ? a.setSkiNr(rs.getInt("skiNr")) :
-				// a.setSnowboardNr(rs.getInt("snowboardNr")));
-				a.setSkiNr(rs.getInt("skiNr")); // pstmt.setInt(2, a.getSkiNr() > 0 ? a.getSkiNr() :
-												// a.getSnowboardNr());
+				a.setSkiNr(rs.getInt("skiNr")); 
 				a.setSnowboardNr(rs.getInt("snowboardNr"));
 				a.setLeihstart(rs.getDate("leihstart"));
 				a.setLeihende(rs.getDate("leihende"));
@@ -1177,7 +1170,7 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static ArrayList<SkiFX> getSkiFX() throws SQLException { // UNNÖTIG?? Testklasse für denn ListChangeListener
+	public static ArrayList<SkiFX> getSkiFX() throws SQLException { // Testklasse für denn ListChangeListener
 																	// in MitarbeiterGUI
 		ArrayList<SkiFX> array2 = new ArrayList<SkiFX>();
 		Connection conn = null;
@@ -1440,7 +1433,7 @@ public class Datenbank {
 		return sl;
 	}
 
-	public static ArrayList<Snowboard> getSnowboard() { // // gibt eine ArrayList aller Snowboards zurück
+	public static ArrayList<Snowboard> getSnowboard() { // gibt eine ArrayList aller Snowboards zurück
 
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1747,7 +1740,7 @@ public class Datenbank {
 
 	}
 
-	public static Boolean postKreditkarte(Kreditkarte kk) {
+	public static Boolean postKreditkarte(Kreditkarte kk) { // legt für einen Kunden eine neue Kreditkarte an
 
 		System.out.println("neue Kreditkarte anlegen");
 		try {
