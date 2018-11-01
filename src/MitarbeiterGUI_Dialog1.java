@@ -175,6 +175,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 
 		this.getDialogPane().setContent(borderPane1);
 		this.getDialogPane().getButtonTypes().addAll(close, cancel);
+		this.getDialogPane().setPrefSize(400, 200);
 		final Button btOk = (Button) this.getDialogPane().lookupButton(ButtonType.OK);
 		btOk.addEventFilter(ActionEvent.ACTION, event -> {
 			if (!isInputValid()) {
