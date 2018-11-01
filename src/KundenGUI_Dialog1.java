@@ -209,7 +209,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 					lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
 					b = false;
 				}
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) { //wenn gar keine Kundennummer eingegeben wurde
 				lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
 				b = false;
 			}

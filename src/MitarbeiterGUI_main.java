@@ -38,7 +38,7 @@ public class MitarbeiterGUI_main extends Application {
 	Button bt1 = new Button("Suche");
 
 	// ACCORDION
-	Accordion accordion = new Accordion(); 
+	Accordion accordion = new Accordion();
 	TitledPane tp1 = new TitledPane();
 	TitledPane tp2 = new TitledPane();
 	TitledPane tp3 = new TitledPane();
@@ -151,30 +151,29 @@ public class MitarbeiterGUI_main extends Application {
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
 			// muss die Ausleihe befüllt werden --> TP1
 			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime!!!
+			
+			
 			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getAbholNr() > 0) {
 				lb2.setText("Abholnummer gefunden!"); // lb2 wird auch für die input validation message verwendet!
+				// wenn LEIHSTART != LEIHENDE
 				if (!Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart()
-						.equals(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) { // wenn
-																											// LEIHSTART
-																											// !=
-																											// LEIHENDE
-					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() // wenn LEIHSTART = HEUTE
-																								// Befüllung der
-																								// Ausleihe
+						.equals(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihende())) { 
+					// wenn LEIHSTART = HEUTE --> Ausleihe
+					if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getLeihstart() 
 							.equals(java.sql.Date.valueOf(LocalDate.now()))) {
-						// Prüfen ob SKI oder SNOWBOARD
-						if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) { // PRÜFEN OB SKINR
-																										// vorhanden
+						// Prüfen ob SKI oder SNOWBOARD (wenn SkiNr vorhanden...)
+						if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) { 
 							tf1tp1.setText(Integer
 									.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())); // skiNr
 							tf2tp1.setText(Datenbank
 									.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
 									.getRegalNr()); // regalNr SKI
+						// Snowboard
 						} else {
 							tf1tp1.setText(Integer
 									.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
 							tf2tp1.setText(Datenbank
-									.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+									.getNewSnowboard(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
 									.getRegalNr()); // regalNr Snowboard
 						}
 						tf3tp1.setText(
@@ -182,8 +181,8 @@ public class MitarbeiterGUI_main extends Application {
 						tf4tp1.setText(
 								Integer.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getKundenNr())); // Kundennummer
 						tp1.setExpanded(true);
-
-					} else { // BEFÜLLUNG der Rücknahme in TP2 WENN Leihstart in der Vergangenheit liegt
+						// TP2
+					} else { // Rücknahme WENN Leihstart in der Vergangenheit liegt
 						// Wenn SKI NR vorhanden dann..
 						if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
 							tf1tp2.setText(Integer
@@ -191,11 +190,13 @@ public class MitarbeiterGUI_main extends Application {
 							tf2tp2.setText(Datenbank
 									.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr())
 									.getRegalNr()); // regalNr Ski
+						// Snowboard
 						} else {
 							tf1tp2.setText(Integer
 									.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
 							tf2tp2.setText(Datenbank
-									.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+									.getNewSnowboard(
+											Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
 									.getRegalNr()); // regalNr Snowboard
 						}
 
@@ -252,7 +253,8 @@ public class MitarbeiterGUI_main extends Application {
 							tf1tp2.setText(Integer
 									.toString(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())); // snowb.Nr
 							tf2tp2.setText(Datenbank
-									.getNewSki(Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
+									.getNewSnowboard(
+											Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSnowboardNr())
 									.getRegalNr()); // regalNr Snowboard
 						}
 
@@ -287,10 +289,16 @@ public class MitarbeiterGUI_main extends Application {
 
 		Period period = Period.between(selreturnDate, LocalDate.now());
 		int tage = period.getDays();
-
-		double nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
-		System.out.println("Tage: " + tage);
-		System.out.println("Nachzahlung: " + nachzahlung);
+		double nachzahlung = 0;
+		if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getSkiNr() > 0) {
+			nachzahlung = Datenbank.getNewSki(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
+			System.out.println("Tage: " + tage);
+			System.out.println("Nachzahlung: " + nachzahlung);
+		} else {
+			nachzahlung = Datenbank.getNewSnowboard(Integer.parseInt(tf1tp2.getText())).getTagespreis() * tage;
+			System.out.println("Tage: " + tage);
+			System.out.println("Nachzahlung: " + nachzahlung);
+		}
 		return nachzahlung;
 	}
 
@@ -508,8 +516,8 @@ public class MitarbeiterGUI_main extends Application {
 				Datenbank.deleteSki(table.getSelectionModel().getSelectedItem().getSkiNr());
 				// table.getItems().remove(selectedItem); --> falsch
 				// direkt von der liste löschen - denn bei NEU wird liste ja erneut geladen!
-				skiFXListe.remove(selectedItem); 
-			} 
+				skiFXListe.remove(selectedItem);
+			}
 		});
 
 	}
@@ -550,9 +558,9 @@ public class MitarbeiterGUI_main extends Application {
 		TableColumn<KundeFX, String> pisteCol = new TableColumn<>("PistenPraef");
 		pisteCol.setCellValueFactory(new PropertyValueFactory<>("pistenPraef"));
 		pisteCol.setMinWidth(50);
-//		TableColumn<KundeFX, Boolean> beinCol = new TableColumn<>("Beinstellung");
-//		beinCol.setCellValueFactory(new PropertyValueFactory<>("beinstellung"));
-//		beinCol.setMinWidth(70);
+		// TableColumn<KundeFX, Boolean> beinCol = new TableColumn<>("Beinstellung");
+		// beinCol.setCellValueFactory(new PropertyValueFactory<>("beinstellung"));
+		// beinCol.setMinWidth(70);
 
 		TableView<KundeFX> table = new TableView<>();
 		ObservableList<KundeFX> kundenFXListe = FXCollections.observableArrayList();
@@ -567,8 +575,8 @@ public class MitarbeiterGUI_main extends Application {
 		}
 
 		table.setItems(kundenFXListe);
-		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ortCol, landCol, 
-				phoneCol, ageCol, weightCol, sizeCol, pisteCol);
+		table.getColumns().addAll(customerIdCol, firstNameCol, lastNameCol, ortCol, landCol, phoneCol, ageCol,
+				weightCol, sizeCol, pisteCol);
 
 		borderPanetp3.setCenter(table);
 		tp3.setContent(borderPanetp3);

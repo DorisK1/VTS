@@ -1350,6 +1350,49 @@ public class Datenbank {
 		}
 		return sk;
 	}
+	
+	public static Snowboard getNewSnowboard(int snowboardNr) { // gibt ein Snowboardobjekt über die SbNr zurück
+
+		Connection conn = null;
+		ResultSet rs = null;
+		Snowboard sb = new Snowboard();
+		System.out.println("Query Snowboard mit Nr: " + snowboardNr);
+
+		try {
+			conn = DriverManager.getConnection(connString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM snowboard WHERE snowboardNr =" + snowboardNr);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				System.out.println("snowboardNr = " + rs.getInt("snowboardNr") + " snowboardKategorieNr = " + rs.getInt("snowboardKategorieNr")
+						+ " snowboardProduktname = " + rs.getString("snowboardProduktname"));
+
+				sb.setTagespreis(rs.getDouble("tagespreis"));
+				sb.setSnowboardNr(rs.getInt("snowboardNr"));
+				sb.setRegalNr(rs.getString("regalNr"));
+				// ff!
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				stmt = null;
+				if (conn != null)
+					conn.close();
+				conn = null;
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+
+			}
+		}
+		return sb;
+	}
 
 	public static ArrayList<Snowboard> getSnowboard(int snowboardKategorieNr) { // gibt eine ArrayList aller Snowboards
 																				// einer bestimmten Kat.Nr zurück
