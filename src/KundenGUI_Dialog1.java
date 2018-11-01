@@ -169,44 +169,50 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 		bt1.setOnAction(gd -> {
 			System.out.println("Kundennummersuche");
-			if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
-				lb2.setText("Kundennummer gefunden! Guten Tag "
-						+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname() + " "
-						+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname() + "!");
-				tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
-				tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
-				tf3tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
+			try {
+				if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
+					lb2.setText("Kundennummer gefunden! Guten Tag "
+							+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname() + " "
+							+ Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname() + "!");
+					tf1tp1.setText(Integer.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAlter()));
+					tf2tp1.setText(Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getGewicht()));
+					tf3tp1.setText(
+							Double.toString(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getSchuhgroesse()));
 
-				cob1tp3.getItems();
-				if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 1) {
-					cob1tp3.setValue("Frau");
-				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 2) {
-					cob1tp3.setValue("Herr");
-				} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 3) {
-					cob1tp3.setValue("divers");
+					cob1tp3.getItems();
+					if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 1) {
+						cob1tp3.setValue("Frau");
+					} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 2) {
+						cob1tp3.setValue("Herr");
+					} else if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getAnrede() == 3) {
+						cob1tp3.setValue("divers");
+					}
+
+					tf2tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname());
+					tf3tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname());
+					tf4tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getTelefonNr());
+					tf5tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getStrasse());
+					tf6tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getHausNr());
+					tf7tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getWohnort());
+					tf8tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getPlz());
+					tf9tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getLand());
+					tf10tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenNr());
+					tf11tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenName());
+					tf12tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getInhaberName());
+					tf13tp3.setText(
+							Integer.toString(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getPruefzahl()));
+					tf14tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getGueltigkeit());
+
+					b = true; // später KEIN neues KundenOBJ sondern NUR Ausleihe speichern!
+
+				} else {
+					lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
+					b = false;
 				}
-
-				tf2tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getVorname());
-				tf3tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getNachname());
-				tf4tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getTelefonNr());
-				tf5tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getStrasse());
-				tf6tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getHausNr());
-				tf7tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getWohnort());
-				tf8tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getPlz());
-				tf9tp3.setText(Datenbank.getKunde(Integer.parseInt(tf1.getText())).getLand());
-				tf10tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenNr());
-				tf11tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getKreditkartenName());
-				tf12tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getInhaberName());
-				tf13tp3.setText(
-						Integer.toString(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getPruefzahl()));
-				tf14tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getGueltigkeit());
-
-				b = true; // später KEIN neues KundenOBJ sondern NUR Ausleihe speichern!
-			} else {
+			} catch (NumberFormatException e) {
 				lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
 				b = false;
 			}
-
 		});
 
 		// TP Methoden
