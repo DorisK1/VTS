@@ -146,13 +146,13 @@ public class MitarbeiterGUI_main extends Application {
 		// Suche nach der Abhonummer UND Auswahl ob es sich um eine Ausgabe oder
 		// Rücknahme handelt
 		bt1.setOnAction(gd -> {
-
+			
 			System.out.println("Abholnummer " + tf1.getText() + " suchen");
 			// wenn das vom kunden angegebene startdatum dem heutigen tag entspricht, dann
 			// muss die Ausleihe befüllt werden --> TP1
 			// wenn LEIHSTART = LEIHENDE --> entscheidet die Uhrzeit LocalDateTime!!!
 			
-			
+			try {
 			if (Datenbank.getAusleihe(Integer.parseInt(tf1.getText())).getAbholNr() > 0) {
 				lb2.setText("Abholnummer gefunden!"); // lb2 wird auch für die input validation message verwendet!
 				// wenn LEIHSTART != LEIHENDE
@@ -280,6 +280,9 @@ public class MitarbeiterGUI_main extends Application {
 				}
 			} else {
 				lb2.setText("Abholnummer NICHT gefunden! Bitte um erneute Eingabe einer korrekten Nummer");
+			}
+			} catch (NumberFormatException e) {
+				lb2.setText("Sie haben keine Abholnummer eingegeben!");
 			}
 		});
 	}
