@@ -35,26 +35,26 @@ public class KundenGUI_main extends Application {
 	// statischer Initialisierer: DB wird nur 1x
 	// erstellt --> MUSS auskommentiert werden sobald die Datenbank steht
 	// Achtung: NACH der Auskommentierung ändert sich die Logik der IDnr vergabe auf
-	// +100!?
+	// +100!
 
-//	 static {
-//	 try {
-//	 Ski sk = new Ski(); 
-//	 Snowboard sb = new Snowboard();
-//	 Kunde k = new Kunde();
-//	 Kreditkarte kk = new Kreditkarte();
-//	 Datenbank.createTables();
-//	 Datenbank.insertSkiRows(sk);
-//	 Datenbank.insertSnowboardRows(sb);
-//	 Datenbank.insertCustomerRows(k);
-//	 Datenbank.insertCreditCardRows(kk);
-//	
-//	
-//	 } catch (SQLException e) {
-//	 // TODO Auto-generated catch block
-//	 e.printStackTrace();
-//	 }
-//	 }
+	 static {
+	 try {
+	 Ski sk = new Ski(); 
+	 Snowboard sb = new Snowboard();
+	 Kunde k = new Kunde();
+	 Kreditkarte kk = new Kreditkarte();
+	 Datenbank.createTables();
+	 Datenbank.insertSkiRows(sk);
+	 Datenbank.insertSnowboardRows(sb);
+	 Datenbank.insertCustomerRows(k);
+	 Datenbank.insertCreditCardRows(kk);
+	
+	
+	 } catch (SQLException e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -88,6 +88,7 @@ public class KundenGUI_main extends Application {
 		datePicker1.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
 		datePicker2.setValue(LocalDate.now()); // Anzeige des aktuellen Datums
 
+		// Das Enddatum darf nicht VOR dem Startdatum sein
 		final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
 			@Override
 			public DateCell call(final DatePicker datePicker) {
@@ -110,7 +111,7 @@ public class KundenGUI_main extends Application {
 		Label abstand3 = new Label("                 ");
 		hb1.getChildren().addAll(lbl3, datePicker1, abstand3, lbl4, datePicker2);
 
-		// Schatten
+		// Schatteneffekt für Buttons
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(3.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));

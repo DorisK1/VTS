@@ -421,7 +421,6 @@ public class MitarbeiterGUI_main extends Application {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("WARNUNG!");
 			alert.setContentText("Wollen Sie das Produkt wirklich löschen?");
-			// alert.showAndWait();
 			alert.getButtonTypes().clear();
 			alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.CANCEL);
 
@@ -561,9 +560,6 @@ public class MitarbeiterGUI_main extends Application {
 		TableColumn<KundeFX, String> pisteCol = new TableColumn<>("PistenPraef");
 		pisteCol.setCellValueFactory(new PropertyValueFactory<>("pistenPraef"));
 		pisteCol.setMinWidth(50);
-		// TableColumn<KundeFX, Boolean> beinCol = new TableColumn<>("Beinstellung");
-		// beinCol.setCellValueFactory(new PropertyValueFactory<>("beinstellung"));
-		// beinCol.setMinWidth(70);
 
 		TableView<KundeFX> table = new TableView<>();
 		ObservableList<KundeFX> kundenFXListe = FXCollections.observableArrayList();

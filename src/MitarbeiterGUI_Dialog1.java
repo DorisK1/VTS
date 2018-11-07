@@ -81,7 +81,8 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 		tf5.setPromptText("R999");
 		tf6.setPromptText("19.5");
 		tf7.setPromptText("ROT");
-		// Input validation
+		
+		// Input validation NEUES Produkt
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> { // Kategorienummer
 			if (observable != null) {
 				if (!tf1.getText().matches("[1-3]")) {
@@ -189,7 +190,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 			@Override
 			public Integer call(ButtonType arg0) {
 				if (arg0 == close)
-					if (!tf1.getText().isEmpty() && !tf2.getText().isEmpty()) { // alle TF??
+					if (!tf1.getText().isEmpty() && !tf2.getText().isEmpty()) { 
 						if (s.equals("Ski")) {
 							sk.setSkiKategorieNr(Integer.parseInt(tf1.getText()));
 							sk.setSkiProduktname(tf2.getText());
@@ -224,8 +225,7 @@ public class MitarbeiterGUI_Dialog1 extends Dialog<Integer> {
 	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
 
 		Boolean b = false;
-		// String s = null;
-		// ALTER
+		
 		if (!(tf1.getText() == null || tf1.getText().length() == 0)
 				&& !(tf2.getText() == null || tf2.getText().length() == 0)
 				&& !(tf3.getText() == null || tf3.getText().length() == 0)

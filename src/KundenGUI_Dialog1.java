@@ -63,7 +63,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 	TextField tf3tp1 = new TextField(); // SChuhgrösse
 	ComboBox<String> cob1tp1 = new ComboBox<>(); // Techn.
 	ComboBox<String> cob2tp1 = new ComboBox<>(); // Pisten
-	ComboBox<String> cob3tp1 = new ComboBox<>(); // BEinst.
+	ComboBox<String> cob3tp1 = new ComboBox<>(); // Beinst.
 	ComboBox<String> cob4tp1 = new ComboBox<>(); // schuh
 	Label lb1tp1 = new Label("Vielen Dank. Sie haben Ski gewählt. Bitte vervollständigen Sie untenstehende Angaben: ");
 	Label lb2tp1 = new Label("Alter");
@@ -163,11 +163,12 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp1.setText("SCHRITT 1: Basisangaben");
 		tp2.setText("SCHRITT 2: Produktauswahl");
 		tp3.setText("SCHRITT 3: Dateneingabe");
-		// Kundennummernsuche
+		// setup der Kundennummernsuche
 		tf1.setPromptText("Kundennummer");
 		hb1.getChildren().addAll(lb1, tf1, bt1);
-
-		bt1.setOnAction(gd -> {
+		
+		// Suche nach einer bereits bestehenden Kundennummer UND befüllen der Textfelder mit den vorgespeicherten Daten
+		bt1.setOnAction(gd -> { 
 			System.out.println("Kundennummersuche");
 			try {
 				if (Datenbank.getKunde(Integer.parseInt(tf1.getText())).getKundenNr() > 0) {
@@ -203,7 +204,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 							Integer.toString(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getPruefzahl()));
 					tf14tp3.setText(Datenbank.getKreditkarte(Integer.parseInt(tf1.getText())).getGueltigkeit());
 
-					b = true; // später KEIN neues KundenOBJ sondern NUR Ausleihe speichern!
+					b = true; // später wird KEIN neuer Kunde angelegt sondern NUR eine neue Ausleihe mit der bestehenden KNr!
 
 				} else {
 					lb2.setText("Kundennummer nicht gefunden! Bitte geben Sie Ihre Daten ein.");
@@ -238,7 +239,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 				event.consume();
 
 			}
-			// getDialogPane().isDisable();
+			
 		});
 		this.setResultConverter(new Callback<ButtonType, Integer>() {
 			@Override
@@ -300,7 +301,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 						// Ausleihe in DB anlegen und holen
 						Datenbank.postAusleihe(a); // Ausleihe in der Datenbank speichern
-						Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen - Falsch?
+						Datenbank.getAusleihe(a.getAbholNr()); // letzte Ausleihe anzeigen 
 						Datenbank.getAusleihen(); // alle Ausleihen anzeigen
 
 						new KundenGUI_Dialog2(a.getAbholNr(), a.getKundenNr()).showAndWait(); // nächsten Dialog öffnen
@@ -317,7 +318,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 
 	}
 
-	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt warnhinweis
+	public boolean isInputValid() { // prüft ob alle Inputfelder befüllt wurden; falls nicht kommt Warnhinweis
 
 		Boolean b = false;
 		if (!(tf1tp1.getText() == null || tf1tp1.getText().length() == 0)
@@ -347,11 +348,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		}
 		return b;
 	}
-
-	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) { // berechnet
-																													// Miete
-																													// aus
-																													// Datum
+	
+	// Methode berechnet Miete aus den Datumswerten Leihstart und Leihende
+	private double calcMietpreis(LocalDate selpickupDate, LocalDate selreturnDate, String produktname, String s) { 
 
 		Period period = Period.between(selpickupDate, selreturnDate);
 		int tage = period.getDays() + 1;
@@ -419,11 +418,9 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		gridPanetp3.add(tf14tp3, 1, 13);
 		cob1tp3.setItems(FXCollections.observableArrayList("Frau", "Herr", "divers"));
 
-		// tf13tp3.setPromptText("999");
-
 		// Validation user input - Textfelder Kundendaten
 
-		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorn
+		tf2tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Vorname
 
 			if (observable != null) {
 				if (!tf2tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) { // keine Beschränkung in der Länge
@@ -436,7 +433,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Nachn
+		tf3tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // Nachname
 
 			if (observable != null) {
 				if (!tf3tp3.getText().matches("[a-zA-ZäöüÖÄÜß]*")) { // keine Beschränkung in der Länge
@@ -449,7 +446,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // tel
+		tf4tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // telNr
 
 			if (observable != null) {
 				if (!tf4tp3.getText().matches("[0-9+ ]*")) { // keine Beschränkung in der Länge
@@ -462,7 +459,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // str
+		tf5tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // strasse
 
 			if (observable != null) {
 				if (!tf5tp3.getText().matches("[a-zA-ZäöüÖÄÜß ]*")) { // keine Beschränkung in der Länge
@@ -566,7 +563,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkprüf
+		tf13tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkprüfNr
 
 			if (observable != null) {
 				if (!tf13tp3.getText().matches("[0-9]{3}")) { // genau 3 Stellen
@@ -579,7 +576,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 			}
 		});
 
-		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkgült
+		tf14tp3.focusedProperty().addListener((observable, oldValue, newValue) -> { // kkgültigkeit
 
 			if (observable != null) {
 				if (!tf14tp3.getText().matches("[0-9]{2}[/]{1}[0-9]{2}")) { // zb 10/20
@@ -729,7 +726,7 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		// Check ALTER
 		tf1tp1.focusedProperty().addListener((observable, oldValue, newValue) -> {
 
-			if (observable != null) { // ("[0-9]*")
+			if (observable != null) { // 
 				if (!tf1tp1.getText().matches("[1-9]{1}[0-9]{0,1}")) { // Alter zwischen 1-99
 					tf1tp1.setStyle("-fx-background-color: khaki;");
 					lb9tp1.setText("Bitte Altersangabe machen.");
@@ -776,8 +773,8 @@ public class KundenGUI_Dialog1 extends Dialog<Integer> {
 		tp1.setContent(borderPanetp1);
 		accordion.getPanes().add(tp1);
 
-		// KATEGORIE-BERECHNUNG für TP2 mit Weiter Button
-		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 2xif
+		// KATEGORIE-BERECHNUNG (Ski- oder Snowboardkategorie abhängig von Kundenpräferenzen) für TP2 mit Weiter Button TP1
+		bt1tp1.setOnAction(bp -> { // --> Ski KAT1 
 			if (s.equals("Ski") && cob1tp1.getSelectionModel().getSelectedItem().equals("schlecht")
 					&& (cob2tp1.getSelectionModel().getSelectedItem().equals("blau")
 							|| cob2tp1.getSelectionModel().getSelectedItem().equals("rot")
